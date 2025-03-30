@@ -151,10 +151,12 @@ def main():
         display: block;
       }
       .sidebar {
-        position: relative;
+        position: relative; /* Not fixed - will scroll away naturally */
         width: 100%;
+        height: auto; /* Only take space needed for content */
         border-right: none;
         border-bottom: 1px solid #ddd;
+        overflow-y: visible; /* No scrolling within the sidebar on mobile */
       }
       .container {
         margin-left: 0;
