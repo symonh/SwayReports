@@ -34,6 +34,13 @@ def redact_instructor_info(html):
     pattern = r'(<div\s+class="col-5\s+col-label">\s*Instructor:\s*</div>\s*<div\s+class="col-7\s+col-value">)([^<]*)(</div>)'
     return re.sub(pattern, r'\1[redacted]\3', html, flags=re.DOTALL)
 
+# Read the entire file and return the content within <body>...</body>
+def extract_body(html):
+    match = re.search(r"<body[^>]*>(.*?)</body>", html, flags=re.DOTALL|re.IGNORECASE)
+    if match:
+        return match.group(1).strip()
+    return html
+
 def main():
     # Look for all .html files in the "html" folder
     report_files = glob.glob("html/*.html")
@@ -49,7 +56,7 @@ def main():
         with open(filename, "r", encoding="utf-8") as f:
             content = f.read()
         
-        # Extract information before redacting
+        # Extract title and deadline before redacting
         title = extract_generated_title(content)
         if not title:
             title = os.path.basename(filename)  # fallback if title not found
@@ -62,7 +69,7 @@ def main():
         with open(filename, "w", encoding="utf-8") as f:
             f.write(redacted_content)
         
-        # Store the file info for creating the index
+        # Store info for index.html creation
         file_info.append({
             "filename": filename,
             "title": title,
@@ -75,21 +82,15 @@ def main():
     # Create an offset-aware maximum datetime for sorting.
     max_dt = datetime.datetime(9999, 12, 31, tzinfo=datetime.timezone.utc)
     file_info.sort(key=lambda x: x["deadline"] if x["deadline"] is not None else max_dt)
-    
-    # Build the index.html file
-    create_index_html(file_info)
-    
-    print(f"Successfully redacted instructor information in {len(report_files)} files.")
-    print("Created index.html file that links to files in the html folder.")
 
-def create_index_html(file_info):
+    # Build the combined HTML file.
     html_parts = []
     html_parts.append("""<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Instructor Reports</title>
+  <title>Sway Instructor Reports</title>
   <style>
     html, body {
       height: 100%;
@@ -126,106 +127,78 @@ def create_index_html(file_info):
       margin: 0;
     }
     .sidebar li {
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
     .sidebar a {
       text-decoration: none;
       color: #2c3e50;
       font-size: 0.95em;
-      display: block;
-      padding: 5px;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    .sidebar a:hover {
-      background-color: #f0f0f0;
     }
     .sidebar .deadline {
       font-size: 0.8em;
       color: #777;
-      margin-top: 3px;
     }
-    /* Main container */
+    /* Main container for reports */
     .container {
       margin-left: 250px;
-      padding: 30px;
-      box-sizing: border-box;
+      height: 100vh;
+      overflow-y: scroll;
+      scroll-snap-type: y mandatory;
       width: calc(100% - 250px);
     }
-    .header {
-      margin-bottom: 30px;
-    }
-    .report-list {
-      list-style-type: none;
-      padding: 0;
-    }
-    .report-item {
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      margin-bottom: 20px;
+    .report-section {
+      scroll-snap-align: start;
+      height: 100vh;
       padding: 20px;
+      box-sizing: border-box;
+      border-bottom: 1px solid #ddd;
+      position: relative;
+      background: #fff;
     }
-    .report-item h3 {
+    .report-section h2 {
       margin-top: 0;
-      color: #2c3e50;
     }
-    .report-item .deadline {
+    .deadline {
       font-size: 0.9em;
       color: #777;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
-    .report-item a {
-      display: inline-block;
-      background-color: #4a6fa5;
-      color: white;
-      padding: 8px 16px;
-      text-decoration: none;
-      border-radius: 4px;
-      transition: background-color 0.2s;
-    }
-    .report-item a:hover {
-      background-color: #3a5a80;
+    iframe {
+      width: 100%;
+      border: none;
+      height: 100%;
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
-    <h2>Reports Index</h2>
+    <h2>Index</h2>
     <ul>
 """)
-    # Create sidebar index entries
+    # Create sidebar index entries.
     for info in file_info:
-        relative_path = info["filename"]  # Should be like "html/filename.html"
-        filename_only = os.path.basename(relative_path)
-        deadline_str = info["deadline"].strftime("%Y-%m-%d %H:%M:%S %Z") if info["deadline"] else "No deadline"
-        html_parts.append(f'      <li><a href="{relative_path}">{info["title"]}</a><div class="deadline">({deadline_str})</div></li>')
-    
+        section_id = os.path.splitext(os.path.basename(info["filename"]))[0]
+        html_parts.append(f'      <li><a href="#{section_id}">{info["title"]}</a></li>')
     html_parts.append("    </ul>\n  </div>\n")
     html_parts.append('<div class="container">')
-    html_parts.append('  <div class="header">')
-    html_parts.append('    <h1>Instructor Reports</h1>')
-    html_parts.append('    <p>Select a report from the sidebar or from the list below.</p>')
-    html_parts.append('  </div>')
-    html_parts.append('  <ul class="report-list">')
-    
-    # Add main content list items
+    # Add each report section with iframe pointing to the original file.
     for info in file_info:
-        relative_path = info["filename"]  # Should be like "html/filename.html"
+        section_id = os.path.splitext(os.path.basename(info["filename"]))[0]
         deadline_str = info["deadline"].strftime("%Y-%m-%d %H:%M:%S %Z") if info["deadline"] else "No deadline"
-        html_parts.append('    <li class="report-item">')
-        html_parts.append(f'      <h3>{info["title"]}</h3>')
-        html_parts.append(f'      <div class="deadline">Deadline: {deadline_str}</div>')
-        html_parts.append(f'      <a href="{relative_path}">View Report</a>')
-        html_parts.append('    </li>')
+        html_parts.append(f'<section id="{section_id}" class="report-section">')
+        html_parts.append(f'  <h2>{info["title"]}</h2>')
+        html_parts.append(f'  <p class="deadline">Deadline: {deadline_str}</p>')
+        html_parts.append(f'  <iframe src="{info["filename"]}"></iframe>')
+        html_parts.append("</section>")
+    html_parts.append("</div>")  # close container
+    html_parts.append("</body>\n</html>")
     
-    html_parts.append('  </ul>')
-    html_parts.append('</div>')
-    html_parts.append('</body>\n</html>')
-    
-    # Write the index.html file
-    with open("index.html", "w", encoding="utf-8") as f:
+    output_filename = "index.html"
+    with open(output_filename, "w", encoding="utf-8") as f:
         f.write("\n".join(html_parts))
+    
+    print(f"Successfully redacted instructor information in {len(report_files)} files.")
+    print(f"Created {output_filename} that references the files in the html folder.")
 
 if __name__ == "__main__":
     main()
