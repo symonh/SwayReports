@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+import urllib.parse  # Add this import for URL encoding
 
 def extract_generated_title(html):
     # First try the original pattern
@@ -36,6 +37,11 @@ def main():
 
     file_info = []
     for filename in html_files:
+        # Skip .DS_Store files and the index.html file itself
+        base_name = os.path.basename(filename)
+        if base_name == '.DS_Store' or base_name == 'index.html':
+            continue
+            
         # Read the file to extract title
         with open(filename, "r", encoding="utf-8") as f:
             content = f.read()
@@ -176,10 +182,13 @@ def main():
     for info in file_info:
         filename = info["filename"]
         title = info["title"]
-        absolute_url = f"https://symonh.github.io/SwayReports/html/{filename}"
+        
+        # Properly encode the filename for URLs
+        encoded_filename = urllib.parse.quote(filename)
+        absolute_url = f"https://symonh.github.io/SwayReports/html/{encoded_filename}"
         
         html_parts.append(f"""      <li class="file-item">
-        <a href="{filename}" class="file-link">{title}</a>
+        <a href="{encoded_filename}" class="file-link">{title}</a>
         <button class="copy-button" data-url="{absolute_url}">Copy Link</button>
       </li>""")
     
@@ -226,7 +235,7 @@ def main():
     with open(output_path, "w", encoding="utf-8") as f:
         f.write("\n".join(html_parts))
     
-    print(f"Successfully created {output_path} with links to {len(html_files)} reports.")
+    print(f"Successfully created {output_path} with links to {len(file_info)} reports.")
 
 if __name__ == "__main__":
     main() 
