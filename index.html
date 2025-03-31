@@ -5,15 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sway Instructor Reports</title>
   <style>
+    :root {
+      --bg-color: #f7f7f7;
+      --text-color: #333;
+      --bg-sidebar: #fff;
+      --border-color: #ddd;
+      --link-color: #2c3e50;
+      --muted-color: #777;
+      --container-bg: #fff;
+    }
+    
+    .dark-mode {
+      --bg-color: #1a1a1a;
+      --text-color: #e6e6e6;
+      --bg-sidebar: #252525;
+      --border-color: #444;
+      --link-color: #88afd3;
+      --muted-color: #aaa;
+      --container-bg: #2a2a2a;
+    }
+    
     html, body {
       height: 100%;
       margin: 0;
       scroll-behavior: smooth;
+      transition: background-color 0.3s, color 0.3s;
     }
     body {
       font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
-      color: #333;
+      background-color: var(--bg-color);
+      color: var(--text-color);
       display: flex;
     }
     /* Sidebar index */
@@ -23,12 +44,13 @@
       left: 0;
       width: 250px;
       height: 100%;
-      background: #fff;
-      border-right: 1px solid #ddd;
+      background: var(--bg-sidebar);
+      border-right: 1px solid var(--border-color);
       overflow-y: auto;
       padding: 20px;
       box-sizing: border-box;
       z-index: 100;
+      transition: background-color 0.3s;
     }
     .sidebar h2 {
       margin-top: 0;
@@ -44,12 +66,13 @@
     }
     .sidebar a {
       text-decoration: none;
-      color: #2c3e50;
+      color: var(--link-color);
       font-size: 0.95em;
+      transition: color 0.3s;
     }
     .sidebar .deadline {
       font-size: 0.8em;
-      color: #777;
+      color: var(--muted-color);
     }
     /* Main container for reports */
     .container {
@@ -64,124 +87,251 @@
       height: 100vh;
       padding: 20px;
       box-sizing: border-box;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid var(--border-color);
       position: relative;
-      background: #fff;
+      background: var(--container-bg);
+      transition: background-color 0.3s;
     }
     .report-section h2 {
       margin-top: 0;
     }
     .deadline {
       font-size: 0.9em;
-      color: #777;
+      color: var(--muted-color);
       margin-bottom: 10px;
     }
     iframe {
       width: 100%;
       border: none;
       height: 100%;
+      background: var(--container-bg);
+    }
+    
+    /* Night mode toggle */
+    .mode-toggle {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border-color);
+    }
+    
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 50px;
+      height: 24px;
+    }
+    
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+    
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      transition: .4s;
+      border-radius: 24px;
+    }
+    
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      transition: .4s;
+      border-radius: 50%;
+    }
+    
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+    
+    input:checked + .slider:before {
+      transform: translateX(26px);
     }
   </style>
 </head>
 <body>
   <div class="sidebar">
+    <div class="mode-toggle">
+      <span>Night Mode</span>
+      <label class="switch">
+        <input type="checkbox" id="darkModeToggle">
+        <span class="slider"></span>
+      </label>
+    </div>
     <h2>Index</h2>
     <ul>
 
-      <li><a href="#Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec">Marquis on Abortion, Hendricks on Abortion and Related Topics</a></li>
-      <li><a href="#Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9">Singer on Abortion, Thomson on Abortion and Related Topics</a></li>
-      <li><a href="#Apotemnophilia Medical Paternalism and Related Topics_b774c6f556">Apotemnophilia, Medical Paternalism and Related Topics</a></li>
-      <li><a href="#Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)">Patient Autonomy, Medical Paternalism and Related Topics</a></li>
-      <li><a href="#Meat consumption Animal Pain and Related Topics_662a4aa84f">Meat consumption, Animal Pain and Related Topics</a></li>
-      <li><a href="#Animal Pain Meat consumption and Related Topics_fa1b83e687">Animal Pain, Meat consumption and Related Topics</a></li>
-      <li><a href="#Discussions on veganism abortion_f186064496 (1)">Discussions on veganism, abortion</a></li>
-      <li><a href="#Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9">Killing and Letting Die, Aurelia Brouwers and Related Topics</a></li>
-      <li><a href="#Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce">Aurelia Brouwers, Active Euthanasia and Related Topics</a></li>
-      <li><a href="#Government Shut-down Initiative 83 Funding and Related Topics_102b29385c">Government Shut-down, Initiative 83 Funding and Related Topics</a></li>
-      <li><a href="#Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)">Occupational Therapists &amp; equipment, Physiotherapists &amp; exercise prescription and Related Topics</a></li>
-      <li><a href="#No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2)">No Moral Status, Medical Experimentation and Related Topics</a></li>
+      <li><a href="#Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e">Technology investment, Wealthy Nation Obligations and Related Topics</a></li>
       <li><a href="#Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d">Distribution, Alcoholism and Liver Transplantation and Related Topics</a></li>
       <li><a href="#Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f">Alcoholism and Liver Transplanation, Distribution and Related Topics</a></li>
-      <li><a href="#Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e">Technology investment, Wealthy Nation Obligation and Related Topics</a></li>
+      <li><a href="#No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2)">No Moral Status, Medical Experimentation and Related Topics</a></li>
+      <li><a href="#Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)">Occupational Therapists &amp; equipment, Physiotherapists &amp; exercise prescription and Related Topics</a></li>
+      <li><a href="#Government Shut-down Initiative 83 Funding and Related Topics_102b29385c">Government Shut-down, Initiative 83 Funding and Related Topics</a></li>
+      <li><a href="#Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9">Killing and Letting Die, Aurelia Brouwers and Related Topics</a></li>
+      <li><a href="#Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce">Aurelia Brouwers, Active Euthanasia and Related Topics</a></li>
+      <li><a href="#Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573">Ghosting Group Members, Lone Wolves and Related Topics</a></li>
+      <li><a href="#Discussions on veganism abortion_f186064496 (1)">Discussions on veganism, abortion</a></li>
+      <li><a href="#Meat consumption Animal Pain and Related Topics_662a4aa84f">Meat consumption, Animal Pain and Related Topics</a></li>
+      <li><a href="#Animal Pain Meat consumption and Related Topics_fa1b83e687">Animal Pain, Meat consumption and Related Topics</a></li>
+      <li><a href="#Apotemnophilia Medical Paternalism and Related Topics_b774c6f556">Apotemnophilia, Medical Paternalism and Related Topics</a></li>
+      <li><a href="#Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)">Patient Autonomy, Medical Paternalism and Related Topics</a></li>
+      <li><a href="#Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec">Marquis on Abortion, Hendricks on Abortion and Related Topics</a></li>
+      <li><a href="#Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9">Singer on Abortion, Thomson on Abortion and Related Topics</a></li>
     </ul>
   </div>
 
 <div class="container">
-<section id="Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec" class="report-section">
-  <h2>Marquis on Abortion, Hendricks on Abortion and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-01 05:59:00 UTC</p>
-  <iframe src="html/Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec.html"></iframe>
-</section>
-<section id="Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9" class="report-section">
-  <h2>Singer on Abortion, Thomson on Abortion and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-01 05:59:00 UTC</p>
-  <iframe src="html/Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9.html"></iframe>
-</section>
-<section id="Apotemnophilia Medical Paternalism and Related Topics_b774c6f556" class="report-section">
-  <h2>Apotemnophilia, Medical Paternalism and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-13 05:59:00 UTC</p>
-  <iframe src="html/Apotemnophilia Medical Paternalism and Related Topics_b774c6f556.html"></iframe>
-</section>
-<section id="Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)" class="report-section">
-  <h2>Patient Autonomy, Medical Paternalism and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-13 05:59:00 UTC</p>
-  <iframe src="html/Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1).html"></iframe>
-</section>
-<section id="Meat consumption Animal Pain and Related Topics_662a4aa84f" class="report-section">
-  <h2>Meat consumption, Animal Pain and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-23 05:59:00 UTC</p>
-  <iframe src="html/Meat consumption Animal Pain and Related Topics_662a4aa84f.html"></iframe>
-</section>
-<section id="Animal Pain Meat consumption and Related Topics_fa1b83e687" class="report-section">
-  <h2>Animal Pain, Meat consumption and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-23 05:59:00 UTC</p>
-  <iframe src="html/Animal Pain Meat consumption and Related Topics_fa1b83e687.html"></iframe>
-</section>
-<section id="Discussions on veganism abortion_f186064496 (1)" class="report-section">
-  <h2>Discussions on veganism, abortion</h2>
-  <p class="deadline">Deadline: 2025-02-27 22:00:00 UTC</p>
-  <iframe src="html/Discussions on veganism abortion_f186064496 (1).html"></iframe>
-</section>
-<section id="Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9" class="report-section">
-  <h2>Killing and Letting Die, Aurelia Brouwers and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-05 05:59:00 UTC</p>
-  <iframe src="html/Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9.html"></iframe>
-</section>
-<section id="Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce" class="report-section">
-  <h2>Aurelia Brouwers, Active Euthanasia and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-05 05:59:00 UTC</p>
-  <iframe src="html/Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce.html"></iframe>
-</section>
-<section id="Government Shut-down Initiative 83 Funding and Related Topics_102b29385c" class="report-section">
-  <h2>Government Shut-down, Initiative 83 Funding and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-18 22:40:00 UTC</p>
-  <iframe src="html/Government Shut-down Initiative 83 Funding and Related Topics_102b29385c.html"></iframe>
-</section>
-<section id="Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)" class="report-section">
-  <h2>Occupational Therapists &amp; equipment, Physiotherapists &amp; exercise prescription and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-20 14:50:00 UTC</p>
-  <iframe src="html/Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3).html"></iframe>
-</section>
-<section id="No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2)" class="report-section">
-  <h2>No Moral Status, Medical Experimentation and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-20 18:10:00 UTC</p>
-  <iframe src="html/No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2).html"></iframe>
+<section id="Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e" class="report-section">
+  <h2>Technology investment, Wealthy Nation Obligations and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-03-30 10:30:00 UTC</p>
+  <iframe src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html" class="report-iframe" data-src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html"></iframe>
 </section>
 <section id="Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d" class="report-section">
   <h2>Distribution, Alcoholism and Liver Transplantation and Related Topics</h2>
   <p class="deadline">Deadline: 2025-03-24 04:59:00 UTC</p>
-  <iframe src="html/Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d.html"></iframe>
+  <iframe src="html/Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d.html" class="report-iframe" data-src="html/Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d.html"></iframe>
 </section>
 <section id="Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f" class="report-section">
   <h2>Alcoholism and Liver Transplanation, Distribution and Related Topics</h2>
   <p class="deadline">Deadline: 2025-03-24 04:59:00 UTC</p>
-  <iframe src="html/Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f.html"></iframe>
+  <iframe src="html/Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f.html" class="report-iframe" data-src="html/Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f.html"></iframe>
 </section>
-<section id="Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e" class="report-section">
-  <h2>Technology investment, Wealthy Nation Obligation and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-30 10:30:00 UTC</p>
-  <iframe src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html"></iframe>
+<section id="No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2)" class="report-section">
+  <h2>No Moral Status, Medical Experimentation and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-03-20 18:10:00 UTC</p>
+  <iframe src="html/No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2).html" class="report-iframe" data-src="html/No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2).html"></iframe>
+</section>
+<section id="Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)" class="report-section">
+  <h2>Occupational Therapists &amp; equipment, Physiotherapists &amp; exercise prescription and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-03-20 14:50:00 UTC</p>
+  <iframe src="html/Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3).html" class="report-iframe" data-src="html/Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3).html"></iframe>
+</section>
+<section id="Government Shut-down Initiative 83 Funding and Related Topics_102b29385c" class="report-section">
+  <h2>Government Shut-down, Initiative 83 Funding and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-03-18 22:40:00 UTC</p>
+  <iframe src="html/Government Shut-down Initiative 83 Funding and Related Topics_102b29385c.html" class="report-iframe" data-src="html/Government Shut-down Initiative 83 Funding and Related Topics_102b29385c.html"></iframe>
+</section>
+<section id="Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9" class="report-section">
+  <h2>Killing and Letting Die, Aurelia Brouwers and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-03-05 05:59:00 UTC</p>
+  <iframe src="html/Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9.html" class="report-iframe" data-src="html/Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9.html"></iframe>
+</section>
+<section id="Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce" class="report-section">
+  <h2>Aurelia Brouwers, Active Euthanasia and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-03-05 05:59:00 UTC</p>
+  <iframe src="html/Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce.html" class="report-iframe" data-src="html/Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce.html"></iframe>
+</section>
+<section id="Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573" class="report-section">
+  <h2>Ghosting Group Members, Lone Wolves and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-03-01 06:59:00 UTC</p>
+  <iframe src="html/Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573.html" class="report-iframe" data-src="html/Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573.html"></iframe>
+</section>
+<section id="Discussions on veganism abortion_f186064496 (1)" class="report-section">
+  <h2>Discussions on veganism, abortion</h2>
+  <p class="deadline">Deadline: 2025-02-27 22:00:00 UTC</p>
+  <iframe src="html/Discussions on veganism abortion_f186064496 (1).html" class="report-iframe" data-src="html/Discussions on veganism abortion_f186064496 (1).html"></iframe>
+</section>
+<section id="Meat consumption Animal Pain and Related Topics_662a4aa84f" class="report-section">
+  <h2>Meat consumption, Animal Pain and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-02-23 05:59:00 UTC</p>
+  <iframe src="html/Meat consumption Animal Pain and Related Topics_662a4aa84f.html" class="report-iframe" data-src="html/Meat consumption Animal Pain and Related Topics_662a4aa84f.html"></iframe>
+</section>
+<section id="Animal Pain Meat consumption and Related Topics_fa1b83e687" class="report-section">
+  <h2>Animal Pain, Meat consumption and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-02-23 05:59:00 UTC</p>
+  <iframe src="html/Animal Pain Meat consumption and Related Topics_fa1b83e687.html" class="report-iframe" data-src="html/Animal Pain Meat consumption and Related Topics_fa1b83e687.html"></iframe>
+</section>
+<section id="Apotemnophilia Medical Paternalism and Related Topics_b774c6f556" class="report-section">
+  <h2>Apotemnophilia, Medical Paternalism and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-02-13 05:59:00 UTC</p>
+  <iframe src="html/Apotemnophilia Medical Paternalism and Related Topics_b774c6f556.html" class="report-iframe" data-src="html/Apotemnophilia Medical Paternalism and Related Topics_b774c6f556.html"></iframe>
+</section>
+<section id="Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)" class="report-section">
+  <h2>Patient Autonomy, Medical Paternalism and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-02-13 05:59:00 UTC</p>
+  <iframe src="html/Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1).html" class="report-iframe" data-src="html/Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1).html"></iframe>
+</section>
+<section id="Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec" class="report-section">
+  <h2>Marquis on Abortion, Hendricks on Abortion and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-02-01 05:59:00 UTC</p>
+  <iframe src="html/Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec.html" class="report-iframe" data-src="html/Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec.html"></iframe>
+</section>
+<section id="Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9" class="report-section">
+  <h2>Singer on Abortion, Thomson on Abortion and Related Topics</h2>
+  <p class="deadline">Deadline: 2025-02-01 05:59:00 UTC</p>
+  <iframe src="html/Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9.html" class="report-iframe" data-src="html/Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9.html"></iframe>
 </section>
 </div>
-</body>
-</html>
+
+  <script>
+    // Dark mode toggle functionality
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    
+    // More reliable approach to apply dark mode to iframes
+    function applyDarkModeToIframes(isDarkMode) {
+      // Add a style tag directly to each HTML file loaded in the iframe
+      const iframes = document.querySelectorAll('.report-iframe');
+      
+      iframes.forEach(iframe => {
+        // Get the base src
+        const baseSrc = iframe.getAttribute('data-src');
+        
+        // Update iframe src with or without dark mode parameter
+        if (isDarkMode) {
+          iframe.src = baseSrc + (baseSrc.includes('?') ? '&' : '?') + 'darkmode=true&timestamp=' + new Date().getTime();
+        } else {
+          iframe.src = baseSrc + (baseSrc.includes('?') ? '&' : '?') + 'timestamp=' + new Date().getTime();
+        }
+      });
+    }
+    
+    // Function to toggle dark mode
+    function toggleDarkMode(isDarkMode) {
+      if (isDarkMode) {
+        body.classList.add('dark-mode');
+        localStorage.setItem('darkMode', 'enabled');
+      } else {
+        body.classList.remove('dark-mode');
+        localStorage.setItem('darkMode', 'disabled');
+      }
+      
+      // Apply dark mode to iframes
+      applyDarkModeToIframes(isDarkMode);
+    }
+    
+    // Check for saved preference
+    const isDarkModeEnabled = localStorage.getItem('darkMode') === 'enabled';
+    
+    // Set initial state
+    if (isDarkModeEnabled) {
+      darkModeToggle.checked = true;
+      body.classList.add('dark-mode');
+    }
+    
+    // Apply to iframes when page has fully loaded
+    window.addEventListener('load', function() {
+      if (isDarkModeEnabled) {
+        applyDarkModeToIframes(true);
+      }
+    });
+    
+    // Toggle dark mode on change
+    darkModeToggle.addEventListener('change', function() {
+      toggleDarkMode(this.checked);
+    });
+  </script>

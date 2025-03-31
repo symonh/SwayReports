@@ -81,7 +81,7 @@ def main():
     
     # Create an offset-aware maximum datetime for sorting.
     max_dt = datetime.datetime(9999, 12, 31, tzinfo=datetime.timezone.utc)
-    file_info.sort(key=lambda x: x["deadline"] if x["deadline"] is not None else max_dt, reverse=True)
+    file_info.sort(key=lambda x: x["deadline"] if x["deadline"] is not None else max_dt)
 
     # Build the combined HTML file.
     html_parts = []
@@ -511,7 +511,9 @@ def main():
       [style*="rgb(75, 0, 130)"], [style*="rgb(106, 90, 205)"],
       [style*="rgb(147, 112, 219)"], [style*="rgb(153, 50, 204)"],
       [style*="color: #800080"], [style*="color: #8a2be2"],
-      [style*="color: #4b0082"], [style*="color: #6a5acd"] {
+      [style*="color: #4b0082"], [style*="color: #6a5acd"],
+      [style*="color: #23004d"], [style*="color:#23004d"],
+      [style*="rgb(35, 0, 77)"] {
         color: #bb86fc !important; /* Light purple that works on dark backgrounds */
       }
       
@@ -525,17 +527,13 @@ def main():
       [id*="abortion"], [class*="abortion"] {
         color: #bb86fc !important; /* Light purple */
       }
-
-      /* Add specific targeting for the #23004D dark purple color */
-      [style*="color: #23004D"], [style*="color:#23004D"],
-      [style*="color: rgb(35, 0, 77)"], [style*="color:rgb(35, 0, 77)"],
-      [style*="color: rgba(35, 0, 77"], [style*="color:rgba(35, 0, 77"],
-      [class*="text-primary"], /* Common bootstrap class that might use this color */
-      .assignment-details h1 + div, /* Target divs immediately after headings in assignment details */
-      .topic-list span, /* Target spans in topic lists */
-      .topic-container * /* Target all elements in topic containers */
-      {
-        color: #bb86fc !important; /* Light purple for readability */
+      
+      /* Direct fix for the exact color mentioned */
+      [style*="#23004d"], [style*="#23004D"], 
+      [style*="rgb(35, 0, 77)"], [style*="rgb(35,0,77)"],
+      [style*="color: #23004d"], [style*="color:#23004d"],
+      [style*="color: #23004D"], [style*="color:#23004D"] {
+        color: #bb86fc !important; /* Light purple */
       }
     `;
     
@@ -569,6 +567,7 @@ def main():
             textColor.includes('rgb(147, 112, 219)') || // medium purple
             textColor.includes('rgb(153, 50, 204)') || // dark orchid
             textColor.includes('rgb(102, 51, 153)') || // rebecca purple
+            textColor.includes('rgb(35, 0, 77)') || // #23004D - explicitly check for this dark purple
             (textColor.includes('rgb(') && 
              parseInt(textColor.match(/\d+/g)[0]) < 150 && 
              parseInt(textColor.match(/\d+/g)[1]) < 100 && 
@@ -576,18 +575,6 @@ def main():
           
           // Replace with a lighter purple that's readable on dark backgrounds
           el.style.setProperty('color', '#bb86fc', 'important'); // Material Design purple
-        }
-
-        // Add specific check for the #23004D dark purple
-        if (textColor === 'rgb(35, 0, 77)' || 
-            textColor.includes('#23004D') ||
-            (textColor.includes('rgb(') && 
-             parseInt(textColor.match(/\d+/g)[0]) === 35 && 
-             parseInt(textColor.match(/\d+/g)[1]) === 0 && 
-             parseInt(textColor.match(/\d+/g)[2]) === 77)) {
-          
-          // Replace with a lighter purple that's readable on dark backgrounds
-          el.style.setProperty('color', '#bb86fc', 'important');
         }
       });
     }
@@ -604,7 +591,7 @@ def main():
     });
   })();
 </script>
-</body>"""
+</body>""
             content = content.replace("</body>", body_script)
             
             # Write the updated content back to the file
