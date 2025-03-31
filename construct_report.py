@@ -92,7 +92,7 @@ def debug_html_structure(html, filename):
 
 def main():
     # Look for all .html files in the "html" folder
-    report_files = glob.glob("html/*.html")
+    report_files = [f for f in glob.glob("html/*.html") if os.path.basename(f) != "index.html"]
     if not report_files:
         print("No .html files found in the 'html' folder.")
         return
@@ -199,7 +199,10 @@ def main():
       padding: 20px;
       box-sizing: border-box;
       z-index: 100;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
+    }
+    .sidebar.collapsed {
+      left: -250px;
     }
     .sidebar h2 {
       margin-top: 0;
@@ -223,6 +226,30 @@ def main():
       font-size: 0.8em;
       color: var(--muted-color);
     }
+    /* Toggle button for sidebar */
+    .sidebar-toggle {
+      position: fixed;
+      top: 7px; /* Position at half of the header height */
+      left: 270px;
+      z-index: 101;
+      background: var(--container-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .sidebar-toggle.collapsed {
+      left: 20px;
+    }
+    .sidebar-toggle:hover {
+      background: var(--bg-color);
+    }
     /* Main container for reports */
     .container {
       margin-left: 250px;
@@ -231,6 +258,11 @@ def main():
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
       width: calc(100% - 250px);
+      transition: margin-left 0.3s ease, width 0.3s ease;
+    }
+    .container.full-width {
+      margin-left: 0;
+      width: 100%;
     }
     .report-section {
       scroll-snap-align: start;
@@ -321,7 +353,22 @@ def main():
       background: var(--container-bg);
       z-index: 99;
       border-bottom: 1px solid var(--border-color);
-      transition: background-color 0.3s;
+      transition: left 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 0 15px 0 80px; /* Added left padding to prevent overlap with toggle button */
+    }
+    
+    .fixed-header.full-width {
+      left: 0;
+      padding-left: 80px; /* Increased left padding when sidebar is collapsed */
+    }
+
+    .fixed-header h1 {
+      color: #23004D;
+      margin: 0;
+      padding: 15px 0;
+      font-size: 24px;
     }
 
     .dark-mode .fixed-header h1 {
@@ -347,12 +394,19 @@ def main():
         html_parts.append(f'      <li><a href="#{section_id}">{info["title"]}</a></li>')
     html_parts.append("    </ul>\n  </div>\n")
 
+    # Add the sidebar toggle button
+    html_parts.append('''
+  <div class="sidebar-toggle">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="toggle-icon">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </div>
+    ''')
+
     # Add the new heading in a fixed header div before the container
     html_parts.append('''
       <div class="fixed-header">
-        <h1 style="color: #23004D; margin: 0; padding: 15px 20px; font-size: 24px; text-align: left;">
-          Instructor Reports From Real Sway Chats
-        </h1>
+        <h1>Instructor Reports From Real Sway Chats</h1>
       </div>
     ''')
 
@@ -425,6 +479,50 @@ def main():
     darkModeToggle.addEventListener('change', function() {
       toggleDarkMode(this.checked);
     });
+    
+    // Sidebar toggle functionality
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const container = document.querySelector('.container');
+    const fixedHeader = document.querySelector('.fixed-header');
+    
+    // Check for saved sidebar state
+    const isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    
+    // Set initial sidebar state
+    if (isSidebarCollapsed) {
+      sidebar.classList.add('collapsed');
+      sidebarToggle.classList.add('collapsed');
+      container.classList.add('full-width');
+      fixedHeader.classList.add('full-width');
+    }
+    
+    // Toggle sidebar on click
+    sidebarToggle.addEventListener('click', function() {
+      sidebar.classList.toggle('collapsed');
+      sidebarToggle.classList.toggle('collapsed');
+      container.classList.toggle('full-width');
+      fixedHeader.classList.toggle('full-width');
+      
+      // Update the toggle icon direction
+      const toggleIcon = sidebarToggle.querySelector('.toggle-icon');
+      if (sidebar.classList.contains('collapsed')) {
+        // Change to right arrow when sidebar is collapsed
+        toggleIcon.innerHTML = '<polyline points="9 18 15 12 9 6"></polyline>';
+      } else {
+        // Change to left arrow when sidebar is expanded
+        toggleIcon.innerHTML = '<polyline points="15 18 9 12 15 6"></polyline>';
+      }
+      
+      // Save preference
+      localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+    });
+    
+    // Update the toggle icon based on initial state
+    const toggleIcon = sidebarToggle.querySelector('.toggle-icon');
+    if (isSidebarCollapsed) {
+      toggleIcon.innerHTML = '<polyline points="9 18 15 12 9 6"></polyline>';
+    }
   </script>""")
 
     # Now inject the dark mode handler script into each HTML file as well

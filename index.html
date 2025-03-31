@@ -50,7 +50,10 @@
       padding: 20px;
       box-sizing: border-box;
       z-index: 100;
-      transition: background-color 0.3s;
+      transition: all 0.3s ease;
+    }
+    .sidebar.collapsed {
+      left: -250px;
     }
     .sidebar h2 {
       margin-top: 0;
@@ -74,6 +77,30 @@
       font-size: 0.8em;
       color: var(--muted-color);
     }
+    /* Toggle button for sidebar */
+    .sidebar-toggle {
+      position: fixed;
+      top: 7px; /* Position at half of the header height */
+      left: 270px;
+      z-index: 101;
+      background: var(--container-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+    .sidebar-toggle.collapsed {
+      left: 20px;
+    }
+    .sidebar-toggle:hover {
+      background: var(--bg-color);
+    }
     /* Main container for reports */
     .container {
       margin-left: 250px;
@@ -82,6 +109,11 @@
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
       width: calc(100% - 250px);
+      transition: margin-left 0.3s ease, width 0.3s ease;
+    }
+    .container.full-width {
+      margin-left: 0;
+      width: 100%;
     }
     .report-section {
       scroll-snap-align: start;
@@ -172,7 +204,22 @@
       background: var(--container-bg);
       z-index: 99;
       border-bottom: 1px solid var(--border-color);
-      transition: background-color 0.3s;
+      transition: left 0.3s ease;
+      display: flex;
+      align-items: center;
+      padding: 0 15px 0 80px; /* Added left padding to prevent overlap with toggle button */
+    }
+    
+    .fixed-header.full-width {
+      left: 0;
+      padding-left: 80px; /* Increased left padding when sidebar is collapsed */
+    }
+
+    .fixed-header h1 {
+      color: #23004D;
+      margin: 0;
+      padding: 15px 0;
+      font-size: 24px;
     }
 
     .dark-mode .fixed-header h1 {
@@ -192,7 +239,6 @@
     <h2>Index</h2>
     <ul>
 
-      <li><a href="#index">Sway Reports Directory</a></li>
       <li><a href="#Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e">Technology investment Wealthy Nation Obligation and Related Topics</a></li>
       <li><a href="#Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d">Distribution Alcoholism and Liver Transplantation and Related Topics</a></li>
       <li><a href="#Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f">Alcoholism and Liver Transplanation Distribution and Related Topics</a></li>
@@ -214,17 +260,18 @@
   </div>
 
 
+  <div class="sidebar-toggle">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="toggle-icon">
+      <polyline points="15 18 9 12 15 6"></polyline>
+    </svg>
+  </div>
+    
+
       <div class="fixed-header">
-        <h1 style="color: #23004D; margin: 0; padding: 15px 20px; font-size: 24px; text-align: left;">
-          Instructor Reports From Real Sway Chats
-        </h1>
+        <h1>Instructor Reports From Real Sway Chats</h1>
       </div>
     
 <div class="container">
-<section id="index" class="report-section">
-  <h2>Sway Reports Directory</h2>
-  <iframe src="html/index.html" class="report-iframe" data-src="html/index.html"></iframe>
-</section>
 <section id="Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e" class="report-section">
   <h2>Technology investment Wealthy Nation Obligation and Related Topics</h2>
   <iframe src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html" class="report-iframe" data-src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html"></iframe>
@@ -352,4 +399,48 @@
     darkModeToggle.addEventListener('change', function() {
       toggleDarkMode(this.checked);
     });
+    
+    // Sidebar toggle functionality
+    const sidebarToggle = document.querySelector('.sidebar-toggle');
+    const sidebar = document.querySelector('.sidebar');
+    const container = document.querySelector('.container');
+    const fixedHeader = document.querySelector('.fixed-header');
+    
+    // Check for saved sidebar state
+    const isSidebarCollapsed = localStorage.getItem('sidebarCollapsed') === 'true';
+    
+    // Set initial sidebar state
+    if (isSidebarCollapsed) {
+      sidebar.classList.add('collapsed');
+      sidebarToggle.classList.add('collapsed');
+      container.classList.add('full-width');
+      fixedHeader.classList.add('full-width');
+    }
+    
+    // Toggle sidebar on click
+    sidebarToggle.addEventListener('click', function() {
+      sidebar.classList.toggle('collapsed');
+      sidebarToggle.classList.toggle('collapsed');
+      container.classList.toggle('full-width');
+      fixedHeader.classList.toggle('full-width');
+      
+      // Update the toggle icon direction
+      const toggleIcon = sidebarToggle.querySelector('.toggle-icon');
+      if (sidebar.classList.contains('collapsed')) {
+        // Change to right arrow when sidebar is collapsed
+        toggleIcon.innerHTML = '<polyline points="9 18 15 12 9 6"></polyline>';
+      } else {
+        // Change to left arrow when sidebar is expanded
+        toggleIcon.innerHTML = '<polyline points="15 18 9 12 15 6"></polyline>';
+      }
+      
+      // Save preference
+      localStorage.setItem('sidebarCollapsed', sidebar.classList.contains('collapsed'));
+    });
+    
+    // Update the toggle icon based on initial state
+    const toggleIcon = sidebarToggle.querySelector('.toggle-icon');
+    if (isSidebarCollapsed) {
+      toggleIcon.innerHTML = '<polyline points="9 18 15 12 9 6"></polyline>';
+    }
   </script>
