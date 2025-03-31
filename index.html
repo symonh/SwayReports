@@ -77,7 +77,8 @@
     /* Main container for reports */
     .container {
       margin-left: 250px;
-      height: 100vh;
+      margin-top: 60px; /* Height of the fixed header */
+      height: calc(100vh - 60px); /* Subtract header height */
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
       width: calc(100% - 250px);
@@ -161,6 +162,22 @@
     input:checked + .slider:before {
       transform: translateX(26px);
     }
+
+    /* Fixed header with the main title */
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 250px; /* Same as sidebar width */
+      right: 0;
+      background: var(--container-bg);
+      z-index: 99;
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode .fixed-header h1 {
+      color: #bb86fc !important; /* Light purple in dark mode */
+    }
   </style>
 </head>
 <body>
@@ -175,104 +192,95 @@
     <h2>Index</h2>
     <ul>
 
-      <li><a href="#Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e">Technology investment, Wealthy Nation Obligations and Related Topics</a></li>
-      <li><a href="#Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d">Distribution, Alcoholism and Liver Transplantation and Related Topics</a></li>
-      <li><a href="#Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f">Alcoholism and Liver Transplanation, Distribution and Related Topics</a></li>
-      <li><a href="#No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2)">No Moral Status, Medical Experimentation and Related Topics</a></li>
-      <li><a href="#Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)">Occupational Therapists &amp; equipment, Physiotherapists &amp; exercise prescription and Related Topics</a></li>
-      <li><a href="#Government Shut-down Initiative 83 Funding and Related Topics_102b29385c">Government Shut-down, Initiative 83 Funding and Related Topics</a></li>
-      <li><a href="#Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9">Killing and Letting Die, Aurelia Brouwers and Related Topics</a></li>
-      <li><a href="#Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce">Aurelia Brouwers, Active Euthanasia and Related Topics</a></li>
+      <li><a href="#Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e">Technology investment Wealthy Nation Obligation and Related Topics</a></li>
+      <li><a href="#Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d">Distribution Alcoholism and Liver Transplantation and Related Topics</a></li>
+      <li><a href="#Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f">Alcoholism and Liver Transplanation Distribution and Related Topics</a></li>
+      <li><a href="#No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2)">No Moral Status Medical Experimentation and Related Topics</a></li>
+      <li><a href="#Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)">Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics</a></li>
+      <li><a href="#Government Shut-down Initiative 83 Funding and Related Topics_102b29385c">Government Shut-down Initiative 83 Funding and Related Topics</a></li>
+      <li><a href="#Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9">Killing and Letting Die Aurelia Brouwers and Related Topics</a></li>
+      <li><a href="#Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce">Aurelia Brouwers Active Euthanasia and Related Topics</a></li>
       <li><a href="#Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573">Ghosting Group Members, Lone Wolves and Related Topics</a></li>
-      <li><a href="#Discussions on veganism abortion_f186064496 (1)">Discussions on veganism, abortion</a></li>
-      <li><a href="#Meat consumption Animal Pain and Related Topics_662a4aa84f">Meat consumption, Animal Pain and Related Topics</a></li>
-      <li><a href="#Animal Pain Meat consumption and Related Topics_fa1b83e687">Animal Pain, Meat consumption and Related Topics</a></li>
-      <li><a href="#Apotemnophilia Medical Paternalism and Related Topics_b774c6f556">Apotemnophilia, Medical Paternalism and Related Topics</a></li>
-      <li><a href="#Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)">Patient Autonomy, Medical Paternalism and Related Topics</a></li>
-      <li><a href="#Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec">Marquis on Abortion, Hendricks on Abortion and Related Topics</a></li>
-      <li><a href="#Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9">Singer on Abortion, Thomson on Abortion and Related Topics</a></li>
+      <li><a href="#Discussions on veganism abortion_f186064496 (1)">Discussions on veganism abortion</a></li>
+      <li><a href="#Meat consumption Animal Pain and Related Topics_662a4aa84f">Meat consumption Animal Pain and Related Topics</a></li>
+      <li><a href="#Animal Pain Meat consumption and Related Topics_fa1b83e687">Animal Pain Meat consumption and Related Topics</a></li>
+      <li><a href="#Apotemnophilia Medical Paternalism and Related Topics_b774c6f556">Apotemnophilia Medical Paternalism and Related Topics</a></li>
+      <li><a href="#Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)">Patient Autonomy Medical Paternalism and Related Topics</a></li>
+      <li><a href="#Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec">Marquis on Abortion Hendricks on Abortion and Related Topics</a></li>
+      <li><a href="#Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9">Singer on Abortion Thomson on Abortion and Related Topics</a></li>
     </ul>
   </div>
 
+
+      <div class="fixed-header">
+        <h1 style="color: #23004D; margin: 0; padding: 15px 20px; font-size: 24px; text-align: left;">
+          Instructor Reports From Real Sway Chats
+        </h1>
+      </div>
+    
 <div class="container">
 <section id="Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e" class="report-section">
-  <h2>Technology investment, Wealthy Nation Obligations and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-30 10:30:00 UTC</p>
+  <h2>Technology investment Wealthy Nation Obligation and Related Topics</h2>
   <iframe src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html" class="report-iframe" data-src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html"></iframe>
 </section>
 <section id="Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d" class="report-section">
-  <h2>Distribution, Alcoholism and Liver Transplantation and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-24 04:59:00 UTC</p>
+  <h2>Distribution Alcoholism and Liver Transplantation and Related Topics</h2>
   <iframe src="html/Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d.html" class="report-iframe" data-src="html/Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d.html"></iframe>
 </section>
 <section id="Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f" class="report-section">
-  <h2>Alcoholism and Liver Transplanation, Distribution and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-24 04:59:00 UTC</p>
+  <h2>Alcoholism and Liver Transplanation Distribution and Related Topics</h2>
   <iframe src="html/Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f.html" class="report-iframe" data-src="html/Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f.html"></iframe>
 </section>
 <section id="No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2)" class="report-section">
-  <h2>No Moral Status, Medical Experimentation and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-20 18:10:00 UTC</p>
+  <h2>No Moral Status Medical Experimentation and Related Topics</h2>
   <iframe src="html/No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2).html" class="report-iframe" data-src="html/No Moral Status Medical Experimentation and Related Topics_e346bfa57f (2).html"></iframe>
 </section>
 <section id="Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)" class="report-section">
-  <h2>Occupational Therapists &amp; equipment, Physiotherapists &amp; exercise prescription and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-20 14:50:00 UTC</p>
+  <h2>Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics</h2>
   <iframe src="html/Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3).html" class="report-iframe" data-src="html/Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3).html"></iframe>
 </section>
 <section id="Government Shut-down Initiative 83 Funding and Related Topics_102b29385c" class="report-section">
-  <h2>Government Shut-down, Initiative 83 Funding and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-18 22:40:00 UTC</p>
+  <h2>Government Shut-down Initiative 83 Funding and Related Topics</h2>
   <iframe src="html/Government Shut-down Initiative 83 Funding and Related Topics_102b29385c.html" class="report-iframe" data-src="html/Government Shut-down Initiative 83 Funding and Related Topics_102b29385c.html"></iframe>
 </section>
 <section id="Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9" class="report-section">
-  <h2>Killing and Letting Die, Aurelia Brouwers and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-05 05:59:00 UTC</p>
+  <h2>Killing and Letting Die Aurelia Brouwers and Related Topics</h2>
   <iframe src="html/Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9.html" class="report-iframe" data-src="html/Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9.html"></iframe>
 </section>
 <section id="Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce" class="report-section">
-  <h2>Aurelia Brouwers, Active Euthanasia and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-05 05:59:00 UTC</p>
+  <h2>Aurelia Brouwers Active Euthanasia and Related Topics</h2>
   <iframe src="html/Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce.html" class="report-iframe" data-src="html/Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce.html"></iframe>
 </section>
 <section id="Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573" class="report-section">
   <h2>Ghosting Group Members, Lone Wolves and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-03-01 06:59:00 UTC</p>
   <iframe src="html/Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573.html" class="report-iframe" data-src="html/Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573.html"></iframe>
 </section>
 <section id="Discussions on veganism abortion_f186064496 (1)" class="report-section">
-  <h2>Discussions on veganism, abortion</h2>
-  <p class="deadline">Deadline: 2025-02-27 22:00:00 UTC</p>
+  <h2>Discussions on veganism abortion</h2>
   <iframe src="html/Discussions on veganism abortion_f186064496 (1).html" class="report-iframe" data-src="html/Discussions on veganism abortion_f186064496 (1).html"></iframe>
 </section>
 <section id="Meat consumption Animal Pain and Related Topics_662a4aa84f" class="report-section">
-  <h2>Meat consumption, Animal Pain and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-23 05:59:00 UTC</p>
+  <h2>Meat consumption Animal Pain and Related Topics</h2>
   <iframe src="html/Meat consumption Animal Pain and Related Topics_662a4aa84f.html" class="report-iframe" data-src="html/Meat consumption Animal Pain and Related Topics_662a4aa84f.html"></iframe>
 </section>
 <section id="Animal Pain Meat consumption and Related Topics_fa1b83e687" class="report-section">
-  <h2>Animal Pain, Meat consumption and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-23 05:59:00 UTC</p>
+  <h2>Animal Pain Meat consumption and Related Topics</h2>
   <iframe src="html/Animal Pain Meat consumption and Related Topics_fa1b83e687.html" class="report-iframe" data-src="html/Animal Pain Meat consumption and Related Topics_fa1b83e687.html"></iframe>
 </section>
 <section id="Apotemnophilia Medical Paternalism and Related Topics_b774c6f556" class="report-section">
-  <h2>Apotemnophilia, Medical Paternalism and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-13 05:59:00 UTC</p>
+  <h2>Apotemnophilia Medical Paternalism and Related Topics</h2>
   <iframe src="html/Apotemnophilia Medical Paternalism and Related Topics_b774c6f556.html" class="report-iframe" data-src="html/Apotemnophilia Medical Paternalism and Related Topics_b774c6f556.html"></iframe>
 </section>
 <section id="Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)" class="report-section">
-  <h2>Patient Autonomy, Medical Paternalism and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-13 05:59:00 UTC</p>
+  <h2>Patient Autonomy Medical Paternalism and Related Topics</h2>
   <iframe src="html/Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1).html" class="report-iframe" data-src="html/Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1).html"></iframe>
 </section>
 <section id="Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec" class="report-section">
-  <h2>Marquis on Abortion, Hendricks on Abortion and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-01 05:59:00 UTC</p>
+  <h2>Marquis on Abortion Hendricks on Abortion and Related Topics</h2>
   <iframe src="html/Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec.html" class="report-iframe" data-src="html/Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec.html"></iframe>
 </section>
 <section id="Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9" class="report-section">
-  <h2>Singer on Abortion, Thomson on Abortion and Related Topics</h2>
-  <p class="deadline">Deadline: 2025-02-01 05:59:00 UTC</p>
+  <h2>Singer on Abortion Thomson on Abortion and Related Topics</h2>
   <iframe src="html/Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9.html" class="report-iframe" data-src="html/Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9.html"></iframe>
 </section>
 </div>

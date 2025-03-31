@@ -9,10 +9,27 @@ import datetime
 sys.path.append('/Users/simon/Documents/GitHub')
 
 # Function to extract the generated title from the HTML content.
+# Update this to use a more robust pattern that matches your actual HTML structure
 def extract_generated_title(html):
+    # First try the original pattern
     match = re.search(r'<div\s+class="generated-title\s+text-info\s+mb-1">(.*?)</div>', html, flags=re.DOTALL)
     if match:
         return match.group(1).strip()
+    
+    # If that fails, try looking for any h1 or h2 element that might contain the title
+    match = re.search(r'<h1[^>]*>(.*?)</h1>', html, flags=re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    
+    match = re.search(r'<h2[^>]*>(.*?)</h2>', html, flags=re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    
+    # If still no match, try looking for "Assignment Details" section title
+    match = re.search(r'<div[^>]*>Assignment Details</div>\s*<div[^>]*>(.*?)</div>', html, flags=re.DOTALL)
+    if match:
+        return match.group(1).strip()
+    
     return None
 
 # Function to extract the completion deadline (UTC) from the HTML content.
@@ -41,6 +58,38 @@ def extract_body(html):
         return match.group(1).strip()
     return html
 
+# Add a debugging function to help understand what's in the HTML
+def debug_html_structure(html, filename):
+    """Print key parts of the HTML to understand its structure"""
+    print(f"\nDebugging HTML structure for {filename}:")
+    
+    # Look for div elements with class containing "title"
+    title_divs = re.findall(r'<div[^>]*class="[^"]*title[^"]*"[^>]*>(.*?)</div>', html, flags=re.DOTALL)
+    if title_divs:
+        print("Found potential title divs:")
+        for i, div in enumerate(title_divs[:3]):  # Show just the first few
+            print(f"  {i+1}. {div.strip()[:100]}...")
+    else:
+        print("No div elements with 'title' in class found.")
+    
+    # Look for h1/h2 elements
+    headers = re.findall(r'<h[12][^>]*>(.*?)</h[12]>', html, flags=re.DOTALL)
+    if headers:
+        print("Found h1/h2 elements:")
+        for i, header in enumerate(headers[:3]):
+            print(f"  {i+1}. {header.strip()[:100]}...")
+    else:
+        print("No h1/h2 elements found.")
+    
+    # Look for Assignment Details section
+    assignment_section = re.search(r'<div[^>]*>Assignment Details</div>\s*<div[^>]*>(.*?)</div>', 
+                                  html, flags=re.DOTALL)
+    if assignment_section:
+        print("Found Assignment Details section:")
+        print(f"  Content: {assignment_section.group(1).strip()[:100]}...")
+    else:
+        print("No Assignment Details section found with expected pattern.")
+
 def main():
     # Look for all .html files in the "html" folder
     report_files = glob.glob("html/*.html")
@@ -56,10 +105,23 @@ def main():
         with open(filename, "r", encoding="utf-8") as f:
             content = f.read()
         
+        # Debug the HTML structure to see what we're working with
+        debug_html_structure(content, filename)
+        
         # Extract title and deadline before redacting
         title = extract_generated_title(content)
         if not title:
-            title = os.path.basename(filename)  # fallback if title not found
+            # Use better fallback - remove file extension and clean up the filename
+            base_name = os.path.splitext(os.path.basename(filename))[0]
+            # Remove any random hex/id strings at the end
+            cleaned_name = re.sub(r'_[0-9a-f]{8,}.*$', '', base_name)
+            # Replace underscores with spaces
+            cleaned_name = cleaned_name.replace('_', ' ')
+            title = cleaned_name
+            print(f"  WARNING: Could not extract title, using cleaned filename: {title}")
+        else:
+            print(f"  Successfully extracted title: {title}")
+            
         deadline = extract_completion_deadline(content)
         
         # Redact instructor information
@@ -164,7 +226,8 @@ def main():
     /* Main container for reports */
     .container {
       margin-left: 250px;
-      height: 100vh;
+      margin-top: 60px; /* Height of the fixed header */
+      height: calc(100vh - 60px); /* Subtract header height */
       overflow-y: scroll;
       scroll-snap-type: y mandatory;
       width: calc(100% - 250px);
@@ -248,6 +311,22 @@ def main():
     input:checked + .slider:before {
       transform: translateX(26px);
     }
+
+    /* Fixed header with the main title */
+    .fixed-header {
+      position: fixed;
+      top: 0;
+      left: 250px; /* Same as sidebar width */
+      right: 0;
+      background: var(--container-bg);
+      z-index: 99;
+      border-bottom: 1px solid var(--border-color);
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode .fixed-header h1 {
+      color: #bb86fc !important; /* Light purple in dark mode */
+    }
   </style>
 </head>
 <body>
@@ -267,14 +346,22 @@ def main():
         section_id = os.path.splitext(os.path.basename(info["filename"]))[0]
         html_parts.append(f'      <li><a href="#{section_id}">{info["title"]}</a></li>')
     html_parts.append("    </ul>\n  </div>\n")
+
+    # Add the new heading in a fixed header div before the container
+    html_parts.append('''
+      <div class="fixed-header">
+        <h1 style="color: #23004D; margin: 0; padding: 15px 20px; font-size: 24px; text-align: left;">
+          Instructor Reports From Real Sway Chats
+        </h1>
+      </div>
+    ''')
+
     html_parts.append('<div class="container">')
     # Add each report section with iframe pointing to the original file.
     for info in file_info:
         section_id = os.path.splitext(os.path.basename(info["filename"]))[0]
-        deadline_str = info["deadline"].strftime("%Y-%m-%d %H:%M:%S %Z") if info["deadline"] else "No deadline"
         html_parts.append(f'<section id="{section_id}" class="report-section">')
         html_parts.append(f'  <h2>{info["title"]}</h2>')
-        html_parts.append(f'  <p class="deadline">Deadline: {deadline_str}</p>')
         html_parts.append(f'  <iframe src="{info["filename"]}" class="report-iframe" data-src="{info["filename"]}"></iframe>')
         html_parts.append("</section>")
     html_parts.append("</div>")  # close container
