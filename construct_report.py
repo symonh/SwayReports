@@ -51,6 +51,86 @@ def redact_instructor_info(html):
     pattern = r'(<div\s+class="col-5\s+col-label">\s*Instructor:\s*</div>\s*<div\s+class="col-7\s+col-value">)([^<]*)(</div>)'
     return re.sub(pattern, r'\1[redacted]\3', html, flags=re.DOTALL)
 
+# Function to modify the HTML structure of individual reports
+def modify_report_structure(html, title):
+    # Clean the title - replace dashes with spaces and handle colons correctly
+    cleaned_title = title.replace("-", " ")
+    
+    # Handle colons in filenames - they might be encoded as special characters
+    if ":" not in cleaned_title:
+        # Try to restore colons in places like "Debate", "Ethics", etc. which likely had a colon
+        common_title_patterns = [
+            "Debate",
+            "Ethics",
+            "Exploring",
+            "Debating",
+            "Frontiers",
+            "Dimensions of",
+            "Worth",
+            "A Debate",
+            "Norms",
+        ]
+        
+        for pattern in common_title_patterns:
+            if pattern in cleaned_title:
+                # Make sure to add the colon right after the pattern, not before the next word
+                cleaned_title = cleaned_title.replace(pattern, pattern + ":")
+                break
+    
+    # Create CSS for styling
+    css_to_add = """
+    <style>
+    /* Style for our custom title */
+    .custom-report-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #23004D;
+        margin: 0 0 15px;
+        padding: 15px 15px 0;
+        line-height: 1.3;
+    }
+    
+    /* Style for social sharing section */
+    .social-sharing {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    </style>
+    """
+    
+    # Insert the CSS before the closing </head> tag
+    html = re.sub('</head>', f'{css_to_add}</head>', html, flags=re.IGNORECASE)
+    
+    # Create the new custom title div
+    custom_title_html = f'<div class="custom-report-title">{cleaned_title}</div>'
+    
+    # Completely replace the card-header with our custom title
+    # Match from the opening of card-header to the social sharing section
+    html = re.sub(
+        r'<div class="card-header">.*?<!-- Social Sharing Buttons - only visible in shared mode -->',
+        f'{custom_title_html}\n<!-- Social Sharing Buttons - only visible in shared mode -->', 
+        html, 
+        flags=re.DOTALL
+    )
+    
+    return html
+
+# New function to add a custom title to the HTML file based on the extracted title
+def add_custom_title(html, title):
+    # Convert dashes to spaces and clean up the title if it's from a filename
+    if "-" in title:
+        title = title.replace("-", " ")
+    
+    # Create a div with the custom title
+    custom_title_div = f'<div class="custom-report-title">{title}</div>'
+    
+    # Insert the custom title right after the opening of the container-fluid
+    html = re.sub(r'(<div\s+class="container-fluid"[^>]*>)', 
+                  r'\1\n' + custom_title_div, 
+                  html, flags=re.DOTALL)
+    
+    return html
+
 # Read the entire file and return the content within <body>...</body>
 def extract_body(html):
     match = re.search(r"<body[^>]*>(.*?)</body>", html, flags=re.DOTALL|re.IGNORECASE)
@@ -115,8 +195,6 @@ def main():
             base_name = os.path.splitext(os.path.basename(filename))[0]
             # Remove any random hex/id strings at the end
             cleaned_name = re.sub(r'_[0-9a-f]{8,}.*$', '', base_name)
-            # Replace underscores with spaces
-            cleaned_name = cleaned_name.replace('_', ' ')
             title = cleaned_name
             print(f"  WARNING: Could not extract title, using cleaned filename: {title}")
         else:
@@ -127,14 +205,26 @@ def main():
         # Redact instructor information
         redacted_content = redact_instructor_info(content)
         
-        # Write the redacted content back to the same file
+        # Modify the HTML structure and add custom title in one go
+        modified_content = modify_report_structure(redacted_content, title)
+        
+        # Write the modified content back to the same file
         with open(filename, "w", encoding="utf-8") as f:
-            f.write(redacted_content)
+            f.write(modified_content)
+        
+        # Process title for the index
+        index_title = title.replace("-", " ")
+        # Handle colon restoration for the index too
+        if ":" not in index_title:
+            for pattern in ["Debate", "Ethics", "Exploring", "Debating", "Frontiers", "Dimensions of", "Worth", "A Debate", "Norms"]:
+                if pattern in index_title:
+                    index_title = index_title.replace(pattern, pattern + ":")
+                    break
         
         # Store info for index.html creation
         file_info.append({
             "filename": filename,
-            "title": title,
+            "title": index_title,
             "deadline": deadline  # may be None if not found
         })
         
@@ -277,15 +367,37 @@ def main():
     .report-section h2 {
       margin-top: 0;
     }
-    .deadline {
-      font-size: 0.9em;
-      color: var(--muted-color);
-      margin-bottom: 10px;
+    
+    /* Report assignment title styling */
+    .report-assignment-title {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      margin-bottom: 15px;
+      padding: 0 10px;
+      background-color: var(--container-bg);
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 5;
     }
+    
+    .report-assignment-title h3 {
+      margin: 0;
+      color: #23004D;
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+    
+    .dark-mode .report-assignment-title h3 {
+      color: #bb86fc;
+    }
+    
     iframe {
       width: 100%;
       border: none;
-      height: 100%;
+      height: calc(100% - 75px); /* Adjust for title height */
       background: var(--container-bg);
     }
     
@@ -406,6 +518,7 @@ def main():
     # Add the new heading in a fixed header div before the container
     html_parts.append('''
       <div class="fixed-header">
+        <img src="sway-logo.png" alt="Sway Logo" style="height:40px; margin-right: 15px;">
         <h1>Instructor Reports From Real Sway Chats</h1>
       </div>
     ''')
@@ -415,7 +528,9 @@ def main():
     for info in file_info:
         section_id = os.path.splitext(os.path.basename(info["filename"]))[0]
         html_parts.append(f'<section id="{section_id}" class="report-section">')
-        html_parts.append(f'  <h2>{info["title"]}</h2>')
+        html_parts.append(f'  <div class="report-assignment-title">')
+        html_parts.append(f'    <h3>{info["title"]}</h3>')
+        html_parts.append(f'  </div>')
         html_parts.append(f'  <iframe src="{info["filename"]}" class="report-iframe" data-src="{info["filename"]}"></iframe>')
         html_parts.append("</section>")
     html_parts.append("</div>")  # close container

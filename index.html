@@ -128,15 +128,37 @@
     .report-section h2 {
       margin-top: 0;
     }
-    .deadline {
-      font-size: 0.9em;
-      color: var(--muted-color);
-      margin-bottom: 10px;
+    
+    /* Report assignment title styling */
+    .report-assignment-title {
+      position: relative;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      margin-bottom: 15px;
+      padding: 0 10px;
+      background-color: var(--container-bg);
+      border-radius: 5px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+      z-index: 5;
     }
+    
+    .report-assignment-title h3 {
+      margin: 0;
+      color: #23004D;
+      font-size: 1.4rem;
+      font-weight: 500;
+      line-height: 1.3;
+    }
+    
+    .dark-mode .report-assignment-title h3 {
+      color: #bb86fc;
+    }
+    
     iframe {
       width: 100%;
       border: none;
-      height: 100%;
+      height: calc(100% - 75px); /* Adjust for title height */
       background: var(--container-bg);
     }
     
@@ -239,23 +261,26 @@
     <h2>Index</h2>
     <ul>
 
-      <li><a href="#Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e">Technology investment Wealthy Nation Obligation and Related Topics</a></li>
-      <li><a href="#Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d">Distribution Alcoholism and Liver Transplantation and Related Topics</a></li>
-      <li><a href="#Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f">Alcoholism and Liver Transplanation Distribution and Related Topics</a></li>
-      <li><a href="#No Moral Status Medical Experimentation and Related Topics_e346bfa57f">No Moral Status, Medical Experimentation and Related Topics</a></li>
-      <li><a href="#Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)">Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics</a></li>
-      <li><a href="#Government Shut-down Initiative 83 Funding and Related Topics_102b29385c">Government Shut-down Initiative 83 Funding and Related Topics</a></li>
-      <li><a href="#Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9">Killing and Letting Die Aurelia Brouwers and Related Topics</a></li>
-      <li><a href="#Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce">Aurelia Brouwers Active Euthanasia and Related Topics</a></li>
-      <li><a href="#Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573">Ghosting Group Members, Lone Wolves and Related Topics</a></li>
-      <li><a href="#Discussions on veganism abortion_f186064496 (1)">Discussions on veganism abortion</a></li>
-      <li><a href="#Meat consumption Animal Pain and Related Topics_662a4aa84f">Meat consumption Animal Pain and Related Topics</a></li>
-      <li><a href="#Animal Pain Meat consumption and Related Topics_fa1b83e687">Animal Pain Meat consumption and Related Topics</a></li>
-      <li><a href="#Apotemnophilia Medical Paternalism and Related Topics_b774c6f556">Apotemnophilia Medical Paternalism and Related Topics</a></li>
-      <li><a href="#Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)">Patient Autonomy Medical Paternalism and Related Topics</a></li>
-      <li><a href="#Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec">Marquis on Abortion Hendricks on Abortion and Related Topics</a></li>
-      <li><a href="#Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9">Singer on Abortion Thomson on Abortion and Related Topics</a></li>
-      <li><a href="#Moral Boundaries in Humor Self-Deprecating Humor and Related Topics_ff8abe9ec4">Moral Boundaries in Humor, Self-Deprecating Humor and Related Topics</a></li>
+      <li><a href="#Redefining-Health-And-Gender-Norms-A-Debate-On-Medicalization-Parenting-And-Social-Policies_4665ceba57">Redefining Health And Gender Norms A Debate: On Medicalization Parenting And Social Policies</a></li>
+      <li><a href="#Debating-Organ-Markets-Legalizing-Kidney-Sales-Permitting-Heart-Transactions-and-Protecting-Weak-Agency_55405271b4">Debating: Organ Markets Legalizing Kidney Sales Permitting Heart Transactions and Protecting Weak Agency</a></li>
+      <li><a href="#Debating-Equity-Expression-and-Creative-Integrity-in-a-Divided-Academic-Landscape_57f529657e">Debating: Equity Expression and Creative Integrity in a Divided Academic Landscape</a></li>
+      <li><a href="#Global-Accountability-Technological-Solutions-and-Fiscal-Reforms-for-a-Sustainable-Future_3559e6688e">Global Accountability Technological Solutions and Fiscal Reforms for a Sustainable Future</a></li>
+      <li><a href="#Controversial-Healthcare-Ethics-Alcoholism-Resource-Allocation-and-Disability-Discrimination-Debate_de0511837f">Controversial Healthcare Ethics Alcoholism Resource Allocation and Disability Discrimination Debate:</a></li>
+      <li><a href="#Animal-Ethics-Debate-Moral-Worth-Utilitarianism-and-Experimentation-Ethics_e346bfa57f">Animal Ethics Debate: Moral Worth Utilitarianism and Experimentation Ethics</a></li>
+      <li><a href="#Challenging-Professional-Boundaries-And-NHS-Provision-In-Rehabilitation-Debate_d22f52855f">Challenging Professional Boundaries And NHS Provision In Rehabilitation Debate:</a></li>
+      <li><a href="#Forcing-Bipartisanship-Government-Shutdown-Bipartisan-Strategy-And-Renewable-Data-Center-Regulation_102b29385c">Forcing Bipartisanship Government Shutdown Bipartisan Strategy And Renewable Data Center Regulation</a></li>
+      <li><a href="#Exploring-Euthanasia-Ethics-Permissibility-Global-Legalization-and-Moral-Distinctions-Between-Killing-and-Letting-Die_e0148b21ce">Exploring Euthanasia Ethics: Permissibility Global Legalization and Moral Distinctions Between Killing and Letting Die</a></li>
+      <li><a href="#Moral-Frontiers-Veganism-Abortion-Divine-Existence-and-The-Israel-Palestine-Dilemma_f186064496">Moral Frontiers: Veganism Abortion Divine Existence and The Israel Palestine Dilemma</a></li>
+      <li><a href="#Exploring-The-Ethical-Boundaries-Of-Animal-Suffering-Meat-Consumption-And-Medical-Experimentation_fa1b83e687">Exploring: The Ethical Boundaries Of Animal Suffering Meat Consumption And Medical Experimentation</a></li>
+      <li><a href="#Navigating-Medical-Ethics-Amputation-Paternalism-And-Patient-Autonomy_b774c6f556">Navigating Medical Ethics: Amputation Paternalism And Patient Autonomy</a></li>
+      <li><a href="#Debating-Patient-Autonomy-Medical-Paternalism-And-The-Ethics-Of-Amputation_f2dc0abad5">Debating Patient Autonomy Medical Paternalism And The Ethics: Of Amputation</a></li>
+      <li><a href="#Debating-Abortion-Personhood-Bodily-Rights-Moral-Futures-and-Ethical-Dilemmas_6f754053a9">Debating: Abortion Personhood Bodily Rights Moral Futures and Ethical Dilemmas</a></li>
+      <li><a href="#Debating-Moral-Dimensions-of-Abortion-Future-Rights-Versus-Bodily-Autonomy_0b925f96ec">Debating: Moral Dimensions of Abortion Future Rights Versus Bodily Autonomy</a></li>
+      <li><a href="#Debating-Gender-Politics-Parental-Leave-Bodily-Autonomy-and-Identity-Considerations_f90aaef224">Debating: Gender Politics Parental Leave Bodily Autonomy and Identity Considerations</a></li>
+      <li><a href="#Debating-Parental-Leave-Mixed-Sports-and-Gender-Policy-Implications_edefe7b363">Debating: Parental Leave Mixed Sports and Gender Policy Implications</a></li>
+      <li><a href="#Exploring-Moral-Boundaries-and-the-Wit-of-Dark-Humor_ff8abe9ec4">Exploring: Moral Boundaries and the Wit of Dark Humor</a></li>
+      <li><a href="#Challenging-Gender-Stereotypes-In-Education-And-Early-Childhood_ed8f9c473c">Challenging Gender Stereotypes In Education And Early Childhood</a></li>
+      <li><a href="#Debating-Gender-Norms-Beyond-Traditional-Divides-In-Toys-Sports-and-Child-Rearing_f353c6313b">Debating: Gender Norms Beyond Traditional Divides In Toys Sports and Child Rearing</a></li>
     </ul>
   </div>
 
@@ -268,77 +293,130 @@
     
 
       <div class="fixed-header">
+        <img src="sway-logo.png" alt="Sway Logo" style="height:40px; margin-right: 15px;">
         <h1>Instructor Reports From Real Sway Chats</h1>
       </div>
     
 <div class="container">
-<section id="Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e" class="report-section">
-  <h2>Technology investment Wealthy Nation Obligation and Related Topics</h2>
-  <iframe src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html" class="report-iframe" data-src="html/Technology investment Wealthy Nation Obligation and Related Topics_3559e6688e.html"></iframe>
+<section id="Redefining-Health-And-Gender-Norms-A-Debate-On-Medicalization-Parenting-And-Social-Policies_4665ceba57" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Redefining Health And Gender Norms A Debate: On Medicalization Parenting And Social Policies</h3>
+  </div>
+  <iframe src="html/Redefining-Health-And-Gender-Norms-A-Debate-On-Medicalization-Parenting-And-Social-Policies_4665ceba57.html" class="report-iframe" data-src="html/Redefining-Health-And-Gender-Norms-A-Debate-On-Medicalization-Parenting-And-Social-Policies_4665ceba57.html"></iframe>
 </section>
-<section id="Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d" class="report-section">
-  <h2>Distribution Alcoholism and Liver Transplantation and Related Topics</h2>
-  <iframe src="html/Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d.html" class="report-iframe" data-src="html/Distribution Alcoholism and Liver Transplantation and Related Topics_876dbcc54d.html"></iframe>
+<section id="Debating-Organ-Markets-Legalizing-Kidney-Sales-Permitting-Heart-Transactions-and-Protecting-Weak-Agency_55405271b4" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating: Organ Markets Legalizing Kidney Sales Permitting Heart Transactions and Protecting Weak Agency</h3>
+  </div>
+  <iframe src="html/Debating-Organ-Markets-Legalizing-Kidney-Sales-Permitting-Heart-Transactions-and-Protecting-Weak-Agency_55405271b4.html" class="report-iframe" data-src="html/Debating-Organ-Markets-Legalizing-Kidney-Sales-Permitting-Heart-Transactions-and-Protecting-Weak-Agency_55405271b4.html"></iframe>
 </section>
-<section id="Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f" class="report-section">
-  <h2>Alcoholism and Liver Transplanation Distribution and Related Topics</h2>
-  <iframe src="html/Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f.html" class="report-iframe" data-src="html/Alcoholism and Liver Transplanation Distribution and Related Topics_de0511837f.html"></iframe>
+<section id="Debating-Equity-Expression-and-Creative-Integrity-in-a-Divided-Academic-Landscape_57f529657e" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating: Equity Expression and Creative Integrity in a Divided Academic Landscape</h3>
+  </div>
+  <iframe src="html/Debating-Equity-Expression-and-Creative-Integrity-in-a-Divided-Academic-Landscape_57f529657e.html" class="report-iframe" data-src="html/Debating-Equity-Expression-and-Creative-Integrity-in-a-Divided-Academic-Landscape_57f529657e.html"></iframe>
 </section>
-<section id="No Moral Status Medical Experimentation and Related Topics_e346bfa57f" class="report-section">
-  <h2>No Moral Status, Medical Experimentation and Related Topics</h2>
-  <iframe src="html/No Moral Status Medical Experimentation and Related Topics_e346bfa57f.html" class="report-iframe" data-src="html/No Moral Status Medical Experimentation and Related Topics_e346bfa57f.html"></iframe>
+<section id="Global-Accountability-Technological-Solutions-and-Fiscal-Reforms-for-a-Sustainable-Future_3559e6688e" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Global Accountability Technological Solutions and Fiscal Reforms for a Sustainable Future</h3>
+  </div>
+  <iframe src="html/Global-Accountability-Technological-Solutions-and-Fiscal-Reforms-for-a-Sustainable-Future_3559e6688e.html" class="report-iframe" data-src="html/Global-Accountability-Technological-Solutions-and-Fiscal-Reforms-for-a-Sustainable-Future_3559e6688e.html"></iframe>
 </section>
-<section id="Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3)" class="report-section">
-  <h2>Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics</h2>
-  <iframe src="html/Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3).html" class="report-iframe" data-src="html/Occupational Therapists  equipment Physiotherapists  exercise prescription and Related Topics_d22f52855f (3).html"></iframe>
+<section id="Controversial-Healthcare-Ethics-Alcoholism-Resource-Allocation-and-Disability-Discrimination-Debate_de0511837f" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Controversial Healthcare Ethics Alcoholism Resource Allocation and Disability Discrimination Debate:</h3>
+  </div>
+  <iframe src="html/Controversial-Healthcare-Ethics-Alcoholism-Resource-Allocation-and-Disability-Discrimination-Debate_de0511837f.html" class="report-iframe" data-src="html/Controversial-Healthcare-Ethics-Alcoholism-Resource-Allocation-and-Disability-Discrimination-Debate_de0511837f.html"></iframe>
 </section>
-<section id="Government Shut-down Initiative 83 Funding and Related Topics_102b29385c" class="report-section">
-  <h2>Government Shut-down Initiative 83 Funding and Related Topics</h2>
-  <iframe src="html/Government Shut-down Initiative 83 Funding and Related Topics_102b29385c.html" class="report-iframe" data-src="html/Government Shut-down Initiative 83 Funding and Related Topics_102b29385c.html"></iframe>
+<section id="Animal-Ethics-Debate-Moral-Worth-Utilitarianism-and-Experimentation-Ethics_e346bfa57f" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Animal Ethics Debate: Moral Worth Utilitarianism and Experimentation Ethics</h3>
+  </div>
+  <iframe src="html/Animal-Ethics-Debate-Moral-Worth-Utilitarianism-and-Experimentation-Ethics_e346bfa57f.html" class="report-iframe" data-src="html/Animal-Ethics-Debate-Moral-Worth-Utilitarianism-and-Experimentation-Ethics_e346bfa57f.html"></iframe>
 </section>
-<section id="Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9" class="report-section">
-  <h2>Killing and Letting Die Aurelia Brouwers and Related Topics</h2>
-  <iframe src="html/Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9.html" class="report-iframe" data-src="html/Killing and Letting Die Aurelia Brouwers and Related Topics_0da40bc9b9.html"></iframe>
+<section id="Challenging-Professional-Boundaries-And-NHS-Provision-In-Rehabilitation-Debate_d22f52855f" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Challenging Professional Boundaries And NHS Provision In Rehabilitation Debate:</h3>
+  </div>
+  <iframe src="html/Challenging-Professional-Boundaries-And-NHS-Provision-In-Rehabilitation-Debate_d22f52855f.html" class="report-iframe" data-src="html/Challenging-Professional-Boundaries-And-NHS-Provision-In-Rehabilitation-Debate_d22f52855f.html"></iframe>
 </section>
-<section id="Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce" class="report-section">
-  <h2>Aurelia Brouwers Active Euthanasia and Related Topics</h2>
-  <iframe src="html/Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce.html" class="report-iframe" data-src="html/Aurelia Brouwers Active Euthanasia and Related Topics_e0148b21ce.html"></iframe>
+<section id="Forcing-Bipartisanship-Government-Shutdown-Bipartisan-Strategy-And-Renewable-Data-Center-Regulation_102b29385c" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Forcing Bipartisanship Government Shutdown Bipartisan Strategy And Renewable Data Center Regulation</h3>
+  </div>
+  <iframe src="html/Forcing-Bipartisanship-Government-Shutdown-Bipartisan-Strategy-And-Renewable-Data-Center-Regulation_102b29385c.html" class="report-iframe" data-src="html/Forcing-Bipartisanship-Government-Shutdown-Bipartisan-Strategy-And-Renewable-Data-Center-Regulation_102b29385c.html"></iframe>
 </section>
-<section id="Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573" class="report-section">
-  <h2>Ghosting Group Members, Lone Wolves and Related Topics</h2>
-  <iframe src="html/Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573.html" class="report-iframe" data-src="html/Ghosting Group Members, Lone Wolves and Related Topics_06c2e91573.html"></iframe>
+<section id="Exploring-Euthanasia-Ethics-Permissibility-Global-Legalization-and-Moral-Distinctions-Between-Killing-and-Letting-Die_e0148b21ce" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Exploring Euthanasia Ethics: Permissibility Global Legalization and Moral Distinctions Between Killing and Letting Die</h3>
+  </div>
+  <iframe src="html/Exploring-Euthanasia-Ethics-Permissibility-Global-Legalization-and-Moral-Distinctions-Between-Killing-and-Letting-Die_e0148b21ce.html" class="report-iframe" data-src="html/Exploring-Euthanasia-Ethics-Permissibility-Global-Legalization-and-Moral-Distinctions-Between-Killing-and-Letting-Die_e0148b21ce.html"></iframe>
 </section>
-<section id="Discussions on veganism abortion_f186064496 (1)" class="report-section">
-  <h2>Discussions on veganism abortion</h2>
-  <iframe src="html/Discussions on veganism abortion_f186064496 (1).html" class="report-iframe" data-src="html/Discussions on veganism abortion_f186064496 (1).html"></iframe>
+<section id="Moral-Frontiers-Veganism-Abortion-Divine-Existence-and-The-Israel-Palestine-Dilemma_f186064496" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Moral Frontiers: Veganism Abortion Divine Existence and The Israel Palestine Dilemma</h3>
+  </div>
+  <iframe src="html/Moral-Frontiers-Veganism-Abortion-Divine-Existence-and-The-Israel-Palestine-Dilemma_f186064496.html" class="report-iframe" data-src="html/Moral-Frontiers-Veganism-Abortion-Divine-Existence-and-The-Israel-Palestine-Dilemma_f186064496.html"></iframe>
 </section>
-<section id="Meat consumption Animal Pain and Related Topics_662a4aa84f" class="report-section">
-  <h2>Meat consumption Animal Pain and Related Topics</h2>
-  <iframe src="html/Meat consumption Animal Pain and Related Topics_662a4aa84f.html" class="report-iframe" data-src="html/Meat consumption Animal Pain and Related Topics_662a4aa84f.html"></iframe>
+<section id="Exploring-The-Ethical-Boundaries-Of-Animal-Suffering-Meat-Consumption-And-Medical-Experimentation_fa1b83e687" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Exploring: The Ethical Boundaries Of Animal Suffering Meat Consumption And Medical Experimentation</h3>
+  </div>
+  <iframe src="html/Exploring-The-Ethical-Boundaries-Of-Animal-Suffering-Meat-Consumption-And-Medical-Experimentation_fa1b83e687.html" class="report-iframe" data-src="html/Exploring-The-Ethical-Boundaries-Of-Animal-Suffering-Meat-Consumption-And-Medical-Experimentation_fa1b83e687.html"></iframe>
 </section>
-<section id="Animal Pain Meat consumption and Related Topics_fa1b83e687" class="report-section">
-  <h2>Animal Pain Meat consumption and Related Topics</h2>
-  <iframe src="html/Animal Pain Meat consumption and Related Topics_fa1b83e687.html" class="report-iframe" data-src="html/Animal Pain Meat consumption and Related Topics_fa1b83e687.html"></iframe>
+<section id="Navigating-Medical-Ethics-Amputation-Paternalism-And-Patient-Autonomy_b774c6f556" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Navigating Medical Ethics: Amputation Paternalism And Patient Autonomy</h3>
+  </div>
+  <iframe src="html/Navigating-Medical-Ethics-Amputation-Paternalism-And-Patient-Autonomy_b774c6f556.html" class="report-iframe" data-src="html/Navigating-Medical-Ethics-Amputation-Paternalism-And-Patient-Autonomy_b774c6f556.html"></iframe>
 </section>
-<section id="Apotemnophilia Medical Paternalism and Related Topics_b774c6f556" class="report-section">
-  <h2>Apotemnophilia Medical Paternalism and Related Topics</h2>
-  <iframe src="html/Apotemnophilia Medical Paternalism and Related Topics_b774c6f556.html" class="report-iframe" data-src="html/Apotemnophilia Medical Paternalism and Related Topics_b774c6f556.html"></iframe>
+<section id="Debating-Patient-Autonomy-Medical-Paternalism-And-The-Ethics-Of-Amputation_f2dc0abad5" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating Patient Autonomy Medical Paternalism And The Ethics: Of Amputation</h3>
+  </div>
+  <iframe src="html/Debating-Patient-Autonomy-Medical-Paternalism-And-The-Ethics-Of-Amputation_f2dc0abad5.html" class="report-iframe" data-src="html/Debating-Patient-Autonomy-Medical-Paternalism-And-The-Ethics-Of-Amputation_f2dc0abad5.html"></iframe>
 </section>
-<section id="Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1)" class="report-section">
-  <h2>Patient Autonomy Medical Paternalism and Related Topics</h2>
-  <iframe src="html/Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1).html" class="report-iframe" data-src="html/Patient Autonomy Medical Paternalism and Related Topics_f2dc0abad5 (1).html"></iframe>
+<section id="Debating-Abortion-Personhood-Bodily-Rights-Moral-Futures-and-Ethical-Dilemmas_6f754053a9" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating: Abortion Personhood Bodily Rights Moral Futures and Ethical Dilemmas</h3>
+  </div>
+  <iframe src="html/Debating-Abortion-Personhood-Bodily-Rights-Moral-Futures-and-Ethical-Dilemmas_6f754053a9.html" class="report-iframe" data-src="html/Debating-Abortion-Personhood-Bodily-Rights-Moral-Futures-and-Ethical-Dilemmas_6f754053a9.html"></iframe>
 </section>
-<section id="Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec" class="report-section">
-  <h2>Marquis on Abortion Hendricks on Abortion and Related Topics</h2>
-  <iframe src="html/Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec.html" class="report-iframe" data-src="html/Marquis on Abortion Hendricks on Abortion and Related Topics_0b925f96ec.html"></iframe>
+<section id="Debating-Moral-Dimensions-of-Abortion-Future-Rights-Versus-Bodily-Autonomy_0b925f96ec" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating: Moral Dimensions of Abortion Future Rights Versus Bodily Autonomy</h3>
+  </div>
+  <iframe src="html/Debating-Moral-Dimensions-of-Abortion-Future-Rights-Versus-Bodily-Autonomy_0b925f96ec.html" class="report-iframe" data-src="html/Debating-Moral-Dimensions-of-Abortion-Future-Rights-Versus-Bodily-Autonomy_0b925f96ec.html"></iframe>
 </section>
-<section id="Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9" class="report-section">
-  <h2>Singer on Abortion Thomson on Abortion and Related Topics</h2>
-  <iframe src="html/Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9.html" class="report-iframe" data-src="html/Singer on Abortion Thomson on Abortion and Related Topics_6f754053a9.html"></iframe>
+<section id="Debating-Gender-Politics-Parental-Leave-Bodily-Autonomy-and-Identity-Considerations_f90aaef224" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating: Gender Politics Parental Leave Bodily Autonomy and Identity Considerations</h3>
+  </div>
+  <iframe src="html/Debating-Gender-Politics-Parental-Leave-Bodily-Autonomy-and-Identity-Considerations_f90aaef224.html" class="report-iframe" data-src="html/Debating-Gender-Politics-Parental-Leave-Bodily-Autonomy-and-Identity-Considerations_f90aaef224.html"></iframe>
 </section>
-<section id="Moral Boundaries in Humor Self-Deprecating Humor and Related Topics_ff8abe9ec4" class="report-section">
-  <h2>Moral Boundaries in Humor, Self-Deprecating Humor and Related Topics</h2>
-  <iframe src="html/Moral Boundaries in Humor Self-Deprecating Humor and Related Topics_ff8abe9ec4.html" class="report-iframe" data-src="html/Moral Boundaries in Humor Self-Deprecating Humor and Related Topics_ff8abe9ec4.html"></iframe>
+<section id="Debating-Parental-Leave-Mixed-Sports-and-Gender-Policy-Implications_edefe7b363" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating: Parental Leave Mixed Sports and Gender Policy Implications</h3>
+  </div>
+  <iframe src="html/Debating-Parental-Leave-Mixed-Sports-and-Gender-Policy-Implications_edefe7b363.html" class="report-iframe" data-src="html/Debating-Parental-Leave-Mixed-Sports-and-Gender-Policy-Implications_edefe7b363.html"></iframe>
+</section>
+<section id="Exploring-Moral-Boundaries-and-the-Wit-of-Dark-Humor_ff8abe9ec4" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Exploring: Moral Boundaries and the Wit of Dark Humor</h3>
+  </div>
+  <iframe src="html/Exploring-Moral-Boundaries-and-the-Wit-of-Dark-Humor_ff8abe9ec4.html" class="report-iframe" data-src="html/Exploring-Moral-Boundaries-and-the-Wit-of-Dark-Humor_ff8abe9ec4.html"></iframe>
+</section>
+<section id="Challenging-Gender-Stereotypes-In-Education-And-Early-Childhood_ed8f9c473c" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Challenging Gender Stereotypes In Education And Early Childhood</h3>
+  </div>
+  <iframe src="html/Challenging-Gender-Stereotypes-In-Education-And-Early-Childhood_ed8f9c473c.html" class="report-iframe" data-src="html/Challenging-Gender-Stereotypes-In-Education-And-Early-Childhood_ed8f9c473c.html"></iframe>
+</section>
+<section id="Debating-Gender-Norms-Beyond-Traditional-Divides-In-Toys-Sports-and-Child-Rearing_f353c6313b" class="report-section">
+  <div class="report-assignment-title">
+    <h3>Debating: Gender Norms Beyond Traditional Divides In Toys Sports and Child Rearing</h3>
+  </div>
+  <iframe src="html/Debating-Gender-Norms-Beyond-Traditional-Divides-In-Toys-Sports-and-Child-Rearing_f353c6313b.html" class="report-iframe" data-src="html/Debating-Gender-Norms-Beyond-Traditional-Divides-In-Toys-Sports-and-Child-Rearing_f353c6313b.html"></iframe>
 </section>
 </div>
 
