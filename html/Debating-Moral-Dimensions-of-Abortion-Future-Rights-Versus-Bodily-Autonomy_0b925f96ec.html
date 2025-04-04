@@ -2219,6 +2219,43 @@
 <style id="darkmode-styles">
   /* Dark mode styles will be enabled via JavaScript */
 </style>
+
+    <style>
+    /* Style for our custom title */
+    .custom-report-title {
+        font-size: 1.75rem;
+        font-weight: 600;
+        color: #23004D;
+        margin: 0 0 15px;
+        padding: 15px 15px 0;
+        line-height: 1.3;
+    }
+    
+    /* Style for social sharing section */
+    .social-sharing {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    </style>
+    
+<script>
+  // Detect dark mode from URL parameter
+  function isDarkModeEnabled() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('darkmode') === 'true';
+  }
+
+  // Initialize dark mode if needed
+  if (isDarkModeEnabled()) {
+    // Add immediate style to prevent flash of light content
+    document.documentElement.style.backgroundColor = '#1a1a1a';
+    document.documentElement.style.color = '#e6e6e6';
+  }
+</script>
+
+<style id="darkmode-styles">
+  /* Dark mode styles will be enabled via JavaScript */
+</style>
 </head>
 <body>
 <div class="dashboard-container">
@@ -4318,6 +4355,237 @@ ${window.location.href}`;
       reportMarkdownEditor.refresh();
     }
   });
+</script>
+
+<script>
+  // Dark mode implementation
+  (function() {
+    // Only apply if the darkmode parameter is true
+    if (!isDarkModeEnabled()) return;
+    
+    // Get our style element
+    const darkStyles = document.getElementById('darkmode-styles');
+    
+    // Set comprehensive dark mode styles
+    darkStyles.textContent = `
+      /* Force literally everything to dark mode */
+      html, body { 
+        background-color: #1a1a1a !important;
+        color: #e6e6e6 !important;
+      }
+      
+      /* Target ALL elements with a wildcard selector */
+      * {
+        background-color: transparent !important;
+        border-color: #444 !important;
+      }
+      
+      /* Explicitly target common containers */
+      div, section, article, aside, header, footer, main, nav,
+      .container, .row, .col, .card, .panel, .jumbotron, .well,
+      [class*="container"], [class*="wrapper"], [class*="panel"], 
+      [class*="card"], [class*="box"], [class*="section"],
+      [id*="container"], [id*="wrapper"], [id*="panel"], 
+      [id*="card"], [id*="box"], [id*="section"] {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+        border-color: #444 !important;
+      }
+      
+      /* Force background colors for specific elements */
+      [class*="bg-"], [class*="background"], 
+      [style*="background"], [style*="bg"] {
+        background-color: #2a2a2a !important;
+      }
+      
+      /* White elements and their children */
+      [class*="white"], [class*="light"],
+      [style*="white"], [style*="rgb(255"], [style*="rgb(248"],
+      [style*="rgb(250"], [style*="rgb(252"], [style*="rgb(240"],
+      [style*="rgb(245"], [style*="#fff"], [style*="#ffffff"] {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+      }
+      
+      /* Bootstrap and common framework classes */
+      .bg-white, .bg-light, .bg-default, .bg-secondary,
+      .text-dark, .text-black {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+      }
+      
+      /* Links */
+      a, a:visited, a:hover, a:active, .link, [class*="link"] {
+        color: #88afd3 !important;
+      }
+      
+      /* Code and pre elements */
+      pre, code, .code, .pre, [class*="code"], [class*="pre"] {
+        background-color: #333 !important;
+        color: #f8f8f8 !important;
+      }
+      
+      /* Tables */
+      table, tr, td, th, thead, tbody, tfoot,
+      .table, [class*="table"] {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+        border-color: #444 !important;
+      }
+      
+      /* Form elements */
+      input, textarea, select, button, .form-control,
+      [class*="input"], [class*="button"], [class*="form"] {
+        background-color: #333 !important;
+        color: #e6e6e6 !important;
+        border-color: #555 !important;
+      }
+      
+      /* Modals and popups */
+      .modal, .popover, .tooltip, .dropdown-menu,
+      [class*="modal"], [class*="popover"], [class*="tooltip"], [class*="dropdown"] {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+        border-color: #444 !important;
+      }
+      
+      /* Sway specific elements observed in screenshot */
+      [class*="assignment-details"], [class*="details"],
+      .card-like, .topic-section, [class*="topic"],
+      [class*="student"], [class*="discuss"], [class*="debate"],
+      [class*="abortion"], [class*="timeline"],
+      .marquis, .hendricks, .thomson, .singer,
+      .guide, .completion {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+      }
+      
+      /* Specific elements in the screenshot */
+      .students-discuss, .student-debate, .debate-section,
+      [class*="discuss"], [class*="debate"], 
+      [style*="background-color: rgb(255, 255, 255)"] {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+      }
+
+      /* General text colors and backgrounds */
+      h1, h2, h3, h4, h5, h6, p, span, li, strong, em, b, i, u,
+      label, small, .text, [class*="text"] {
+        color: #e6e6e6 !important;
+      }
+      
+      /* Target RGB inline styles specifically */
+      [style*="rgb("] {
+        background-color: #2a2a2a !important;
+        color: #e6e6e6 !important;
+      }
+      
+      /* Override any !important inline styles with double !important (hack but effective) */
+      [style*="!important"] {
+        background-color: #2a2a2a !important !important;
+        color: #e6e6e6 !important !important;
+      }
+      
+      /* Fix for dark purple text against dark background */
+      h1, h2, h3, h4, h5, h6, 
+      [style*="purple"], [style*="violet"], 
+      [class*="purple"], [class*="violet"],
+      [style*="rgb(128, 0, 128)"], [style*="rgb(138, 43, 226)"],
+      [style*="rgb(75, 0, 130)"], [style*="rgb(106, 90, 205)"],
+      [style*="rgb(147, 112, 219)"], [style*="rgb(153, 50, 204)"],
+      [style*="color: #800080"], [style*="color: #8a2be2"],
+      [style*="color: #4b0082"], [style*="color: #6a5acd"] {
+        color: #bb86fc !important; /* Light purple that works on dark backgrounds */
+      }
+      
+      /* Specific fix for topic headers and main title */
+      .generated-title, [class*="title"],
+      [id*="topic"], [class*="topic"],
+      [id*="marquis"], [class*="marquis"],
+      [id*="hendricks"], [class*="hendricks"],
+      [id*="thomson"], [class*="thomson"],
+      [id*="singer"], [class*="singer"],
+      [id*="abortion"], [class*="abortion"] {
+        color: #bb86fc !important; /* Light purple */
+      }
+
+      /* Add specific targeting for the #23004D dark purple color */
+      [style*="color: #23004D"], [style*="color:#23004D"],
+      [style*="color: rgb(35, 0, 77)"], [style*="color:rgb(35, 0, 77)"],
+      [style*="color: rgba(35, 0, 77"], [style*="color:rgba(35, 0, 77"],
+      [class*="text-primary"], /* Common bootstrap class that might use this color */
+      .assignment-details h1 + div, /* Target divs immediately after headings in assignment details */
+      .topic-list span, /* Target spans in topic lists */
+      .topic-container * /* Target all elements in topic containers */
+      {
+        color: #bb86fc !important; /* Light purple for readability */
+      }
+    `;
+    
+    // Function to force dark backgrounds on elements that resist
+    function forceDarkElements() {
+      // Get all elements
+      const allElements = document.querySelectorAll('*');
+      
+      // Check the computed style of all elements
+      allElements.forEach(el => {
+        const style = window.getComputedStyle(el);
+        const bgColor = style.backgroundColor;
+        const textColor = style.color;
+        
+        // If it's still white or very light (rgb values close to 255)
+        if (bgColor.includes('rgb(255, 255, 255)') || 
+            bgColor.includes('rgb(248') ||
+            bgColor.includes('rgb(250') ||
+            bgColor.includes('rgb(252') ||
+            bgColor.includes('rgb(245')) {
+          // Force it to be dark with inline style (highest specificity)
+          el.style.setProperty('background-color', '#2a2a2a', 'important');
+          el.style.setProperty('color', '#e6e6e6', 'important');
+        }
+        
+        // Check for dark purple text that would be hard to read
+        if (textColor.includes('rgb(128, 0, 128)') || // purple
+            textColor.includes('rgb(75, 0, 130)') ||  // indigo
+            textColor.includes('rgb(106, 90, 205)') || // slate blue
+            textColor.includes('rgb(138, 43, 226)') || // blue violet
+            textColor.includes('rgb(147, 112, 219)') || // medium purple
+            textColor.includes('rgb(153, 50, 204)') || // dark orchid
+            textColor.includes('rgb(102, 51, 153)') || // rebecca purple
+            (textColor.includes('rgb(') && 
+             parseInt(textColor.match(/\d+/g)[0]) < 150 && 
+             parseInt(textColor.match(/\d+/g)[1]) < 100 && 
+             parseInt(textColor.match(/\d+/g)[2]) > 150)) { // Any dark purplish color
+          
+          // Replace with a lighter purple that's readable on dark backgrounds
+          el.style.setProperty('color', '#bb86fc', 'important'); // Material Design purple
+        }
+
+        // Add specific check for the #23004D dark purple
+        if (textColor === 'rgb(35, 0, 77)' || 
+            textColor.includes('#23004D') ||
+            (textColor.includes('rgb(') && 
+             parseInt(textColor.match(/\d+/g)[0]) === 35 && 
+             parseInt(textColor.match(/\d+/g)[1]) === 0 && 
+             parseInt(textColor.match(/\d+/g)[2]) === 77)) {
+          
+          // Replace with a lighter purple that's readable on dark backgrounds
+          el.style.setProperty('color', '#bb86fc', 'important');
+        }
+      });
+    }
+    
+    // Run once when loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      forceDarkElements();
+      
+      // And again after all images and resources load
+      window.addEventListener('load', forceDarkElements);
+      
+      // And periodically check for any dynamic content
+      setInterval(forceDarkElements, 1000);
+    });
+  })();
 </script>
 
 <script>
