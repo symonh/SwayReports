@@ -64,6 +64,11 @@
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
 
+    /* Hide header when embedded in iframe/Google Site */
+    body.embedded .header {
+      display: none;
+    }
+
     .header h1 {
       font-weight: 700;
       font-size: 2.5rem;
@@ -98,6 +103,11 @@
       padding: 1rem 0;
       background-color: var(--bg-color);
       z-index: 10;
+    }
+
+    /* Adjust top padding when embedded without header */
+    body.embedded .feedback-categories {
+      padding-top: 0.5rem;
     }
 
     .category-pill {
@@ -255,6 +265,29 @@
       }
     }
   </style>
+  <script>
+    // Check if page is embedded in an iframe (like in Google Sites)
+    function checkIfEmbedded() {
+      try {
+        // If window.self is not the same as window.top, we're in an iframe
+        if (window.self !== window.top) {
+          document.body.classList.add('embedded');
+        }
+      } catch (e) {
+        // If security error occurs, assume we're in an iframe
+        document.body.classList.add('embedded');
+      }
+    }
+    
+    // Run this as soon as possible
+    window.addEventListener('DOMContentLoaded', checkIfEmbedded);
+    // In case the script runs after DOMContentLoaded
+    if (document.readyState === 'loading') {
+      window.addEventListener('DOMContentLoaded', checkIfEmbedded);
+    } else {
+      checkIfEmbedded();
+    }
+  </script>
 </head>
 <body>
   <div class="header">
@@ -583,7 +616,7 @@
 
   <footer>
     <div class="container">
-      <p>© 2025 Sway. All student feedback shared with permission.</p>
+      <p>© 2023 Sway. All student feedback shared with permission.</p>
     </div>
   </footer>
 
