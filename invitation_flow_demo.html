@@ -378,7 +378,10 @@
       
       <p>This link will be valid for 7 days. After that, the chat will be automatically deleted unless you create an account.</p>
       
-      <button class="btn" id="continue-to-chat-btn">Continue to your chat</button>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+        <button class="btn" id="continue-to-chat-btn">Continue to your chat</button>
+        <button class="btn btn-secondary" id="go-back-to-account-btn">Go back and create an account</button>
+      </div>
     </div>
     
     <div class="progress-container">
@@ -409,6 +412,7 @@
       const startChatFinalBtn = document.getElementById('start-chat-final-btn');
       const copyPersonalLinkBtn = document.getElementById('copy-personal-link-btn');
       const continueToChatBtn = document.getElementById('continue-to-chat-btn');
+      const goBackToAccountBtn = document.getElementById('go-back-to-account-btn');
       
       // Current step tracker
       let currentStep = 1;
@@ -478,6 +482,11 @@
             document.getElementById('copy-personal-link-btn').innerHTML = `<span class="link-text">${linkText}</span><i class="fas fa-copy"></i>`;
           }, 2000);
         });
+      });
+      
+      // Add event listener for the "Go back and create an account" button
+      goBackToAccountBtn.addEventListener('click', function() {
+        goToStep(4);
       });
       
       // Add event listener for the final continue button
