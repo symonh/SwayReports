@@ -226,11 +226,17 @@
     }
 
     @media (max-width: 640px) {
+      body {
+        background-color: var(--background-color);
+      }
+      
       .container {
-        width: calc(100% - 100px);
+        width: calc(100% - 60px);
         max-width: 500px;
         padding: 30px 20px 60px;
         margin: 15px auto;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        border: 1px solid rgba(0, 0, 0, 0.03);
       }
       
       h1 {
@@ -244,7 +250,7 @@
 
     @media (max-width: 480px) {
       .container {
-        width: calc(100% - 40px);
+        width: calc(100% - 30px);
         padding: 25px 15px 60px;
         margin: 10px auto;
       }
