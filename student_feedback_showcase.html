@@ -2,7 +2,7 @@
 <html lang="en" class="dark-mode">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
   <title>Sway Student Feedback Showcase</title>
   <!-- Immediately-executed iframe detection script -->
   <script>
@@ -136,7 +136,7 @@
 
     .feedback-categories {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
       justify-content: center;
       gap: 0.5rem;
       margin-bottom: 2rem;
@@ -145,6 +145,7 @@
       padding: 1rem 0;
       background-color: var(--bg-color);
       z-index: 10;
+      width: 100%;
     }
 
     /* Adjust top padding when embedded without header */
@@ -189,6 +190,8 @@
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       position: relative;
       overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
     }
 
     .feedback-card:hover {
@@ -246,6 +249,7 @@
       cursor: pointer;
       z-index: 100;
       transition: all 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
     .theme-toggle:hover {
@@ -304,6 +308,165 @@
       
       .header p {
         font-size: 1rem;
+      }
+    }
+
+    /* Responsive adjustments */
+    /* Tablet */
+    @media (max-width: 992px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      
+      .feedback-cards {
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 1.2rem;
+      }
+      
+      .header {
+        padding: 1.5rem 0;
+        margin-bottom: 1.5rem;
+      }
+      
+      .header h1 {
+        font-size: 2.2rem;
+      }
+      
+      .header p {
+        font-size: 1.1rem;
+      }
+      
+      .feedback-categories {
+        padding: 0.8rem 0;
+      }
+    }
+    
+    /* Mobile */
+    @media (max-width: 768px) {
+      .container {
+        padding: 0 1rem;
+        max-width: 100%;
+      }
+      
+      .feedback-cards {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+      }
+      
+      .feedback-card {
+        padding: 1.2rem;
+      }
+      
+      .header {
+        padding: 1.2rem 0;
+        margin-bottom: 1rem;
+      }
+      
+      .header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .header p {
+        font-size: 0.9rem;
+      }
+      
+      .section-header h2 {
+        font-size: 1.5rem;
+      }
+      
+      .feedback-categories {
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 0.7rem 0;
+        margin-bottom: 1.5rem;
+        scrollbar-width: none; /* For Firefox */
+        -ms-overflow-style: none; /* For Internet Explorer and Edge */
+      }
+      
+      .feedback-categories::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Opera */
+      }
+      
+      .category-pill {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.8rem;
+        white-space: nowrap;
+      }
+      
+      .theme-toggle {
+        bottom: 1rem;
+        right: 1rem;
+        width: 40px;
+        height: 40px;
+      }
+    }
+    
+    /* Small Mobile */
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 0.8rem;
+      }
+      
+      .feedback-card {
+        padding: 1rem;
+        margin-bottom: 0.5rem;
+      }
+      
+      .feedback-card p {
+        font-size: 0.9rem;
+      }
+      
+      .feedback-card .category-tag {
+        font-size: 0.7rem;
+        padding: 0.2rem 0.5rem;
+      }
+      
+      .header h1 {
+        font-size: 1.5rem;
+      }
+      
+      .header p {
+        font-size: 0.85rem;
+      }
+      
+      .theme-toggle {
+        bottom: 1rem;
+        right: 1rem;
+        width: 44px;
+        height: 44px;
+      }
+      
+      .category-pill {
+        padding: 0.5rem 0.8rem;
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      
+      footer {
+        padding: 1.5rem 0;
+        margin-top: 2rem;
+      }
+    }
+
+    @media (hover: none) {
+      .feedback-card:hover {
+        transform: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      }
+    }
+
+    /* Fix for notched devices and safe areas */
+    @supports (padding: max(0px)) {
+      .container, .header, .footer {
+        padding-left: max(1rem, env(safe-area-inset-left));
+        padding-right: max(1rem, env(safe-area-inset-right));
+      }
+      
+      .theme-toggle {
+        right: max(1rem, env(safe-area-inset-right));
+        bottom: max(1rem, env(safe-area-inset-bottom));
       }
     }
   </style>
