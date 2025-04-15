@@ -112,25 +112,36 @@
       max-width: 300px;
     }
 
+    .steps-container {
+      position: relative;
+      transition: height 0.4s ease;
+    }
+
     .step {
-      display: none;
+      position: absolute;
+      top: 0;
+      left: 0;
       width: 100%;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.4s ease, transform 0.4s ease, visibility 0.4s ease;
+      transform: translateX(30px);
+      pointer-events: none;
     }
 
     .step.active {
-      display: block;
-      animation: fadeIn 0.5s ease forwards;
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      pointer-events: auto;
+      z-index: 2;
     }
 
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-        transform: translateX(30px);
-      }
-      to {
-        opacity: 1;
-        transform: translateX(0);
-      }
+    .step.leaving {
+      opacity: 0;
+      transform: translateX(-30px);
+      visibility: visible;
+      z-index: 1;
     }
 
     .form-group {
@@ -336,77 +347,79 @@
   <div class="container">
     <a href="https://www.swaybeta.ai" class="sway-logo">SwayBeta.ai</a>
     
-    <!-- Step 1: Initial Invitation -->
-    <div class="step active" id="step1">
-      <h1>Invite a friend/foe to talk on Sway</h1>
-      <p>Discuss anything. Guide will be there to facilitate.</p>
-      <button class="btn" id="generate-btn">Generate invitation</button>
-    </div>
-    
-    <!-- Step 2: Link Generated -->
-    <div class="step" id="step2">
-      <h1>Share this link with your chat partner</h1>
-      <button class="btn btn-copy" id="copy-link-btn">
-        <span class="link-text">https://sway.chat/invite/abcd1234</span>
-        <i class="fas fa-copy"></i>
-      </button>
-      <p>Continue when you're ready to join the chat yourself:</p>
-      <button class="btn" id="start-chat-btn">Continue</button>
-    </div>
-    
-    <!-- Step 3: Name Input -->
-    <div class="step" id="step3">
-      <h1>Please provide your preferred first name</h1>
-      <div class="form-group">
-        <input type="text" class="form-control" id="first-name" placeholder="Your first name">
-      </div>
-      <button class="btn" id="submit-name-btn">Continue</button>
-    </div>
-    
-    <!-- Step 4: Account Creation -->
-    <div class="step" id="step4">
-      <h1>Hey <span id="display-name">there</span>!</h1>
-      <p>If you want to be able to access this chat for longer than one week or from another device, please create an account by providing your email and/or phone number. This will also allow us to send you notifications when you receive new messages. You can permanently delete your account at any time.</p>
-      
-      <div class="form-group">
-        <label for="email">Email <span class="optional-label">(optional)</span></label>
-        <input type="email" class="form-control" id="email" placeholder="your@email.com">
+    <div class="steps-container">
+      <!-- Step 1: Initial Invitation -->
+      <div class="step active" id="step1">
+        <h1>Invite a friend/foe to talk on Sway</h1>
+        <p>Discuss anything. Guide will be there to facilitate.</p>
+        <button class="btn" id="generate-btn">Generate invitation</button>
       </div>
       
-      <div class="form-group">
-        <label for="phone">Phone Number <span class="optional-label">(optional)</span></label>
-        <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 123-4567">
+      <!-- Step 2: Link Generated -->
+      <div class="step" id="step2">
+        <h1>Share this link with your chat partner</h1>
+        <button class="btn btn-copy" id="copy-link-btn">
+          <span class="link-text">https://sway.chat/invite/abcd1234</span>
+          <i class="fas fa-copy"></i>
+        </button>
+        <p>Continue when you're ready to join the chat yourself:</p>
+        <button class="btn" id="start-chat-btn">Continue</button>
       </div>
       
-      <div class="form-group">
-        <label for="password">Password <span class="optional-label">(optional)</span></label>
-        <input type="password" class="form-control" id="password" placeholder="Create a password">
-      </div>
-      
-      <button class="btn" id="start-chat-final-btn">Join your private chat</button>
-    </div>
-    
-    <!-- Step 5: Personal Link (No Account) -->
-    <div class="step" id="step5">
-      <h1>Save your personal link</h1>
-      
-      <p><strong>Important:</strong> Because you chose not to create an account, you'll need this link to return to this chat on this device. Copy and save it somewhere safe:</p>
-      
-      <div class="personal-link-container">
-        <p>Your personal chat link (only works on this device):</p>
-        <div class="link-display">
-          <span class="link-text">https://sway.chat/personal/xyz987</span>
-          <button class="btn" id="copy-personal-link-btn" style="background: var(--primary-color); padding: 8px; width: auto; min-width: 40px; height: 40px;">
-            <i class="fas fa-copy"></i>
-          </button>
+      <!-- Step 3: Name Input -->
+      <div class="step" id="step3">
+        <h1>Please provide your preferred first name</h1>
+        <div class="form-group">
+          <input type="text" class="form-control" id="first-name" placeholder="Your first name">
         </div>
+        <button class="btn" id="submit-name-btn">Continue</button>
       </div>
       
-      <p>This link will be valid for 7 days. After that, the chat will be automatically deleted unless you create an account.</p>
+      <!-- Step 4: Account Creation -->
+      <div class="step" id="step4">
+        <h1>Hey <span id="display-name">there</span>!</h1>
+        <p>If you want to be able to access this chat for longer than one week or from another device, please create an account by providing your email and/or phone number. This will also allow us to send you notifications when you receive new messages. You can permanently delete your account at any time.</p>
+        
+        <div class="form-group">
+          <label for="email">Email <span class="optional-label">(optional)</span></label>
+          <input type="email" class="form-control" id="email" placeholder="your@email.com">
+        </div>
+        
+        <div class="form-group">
+          <label for="phone">Phone Number <span class="optional-label">(optional)</span></label>
+          <input type="tel" class="form-control" id="phone" placeholder="+1 (555) 123-4567">
+        </div>
+        
+        <div class="form-group">
+          <label for="password">Password <span class="optional-label">(optional)</span></label>
+          <input type="password" class="form-control" id="password" placeholder="Create a password">
+        </div>
+        
+        <button class="btn" id="start-chat-final-btn">Join your private chat</button>
+      </div>
       
-      <div class="actions-container">
-        <button class="btn" id="continue-to-chat-btn">Continue to your chat</button>
-        <button class="btn btn-secondary" id="go-back-to-account-btn">Go back and create an account</button>
+      <!-- Step 5: Personal Link (No Account) -->
+      <div class="step" id="step5">
+        <h1>Save your personal link</h1>
+        
+        <p><strong>Important:</strong> Because you chose not to create an account, you'll need this link to return to this chat on this device. Copy and save it somewhere safe:</p>
+        
+        <div class="personal-link-container">
+          <p>Your personal chat link (only works on this device):</p>
+          <div class="link-display">
+            <span class="link-text">https://sway.chat/personal/xyz987</span>
+            <button class="btn" id="copy-personal-link-btn" style="background: var(--primary-color); padding: 8px; width: auto; min-width: 40px; height: 40px;">
+              <i class="fas fa-copy"></i>
+            </button>
+          </div>
+        </div>
+        
+        <p>This link will be valid for 7 days. After that, the chat will be automatically deleted unless you create an account.</p>
+        
+        <div class="actions-container">
+          <button class="btn" id="continue-to-chat-btn">Continue to your chat</button>
+          <button class="btn btn-secondary" id="go-back-to-account-btn">Go back and create an account</button>
+        </div>
       </div>
     </div>
     
@@ -445,26 +458,56 @@
       
       // Function to go to a specific step
       function goToStep(step) {
-        // Hide all steps
-        steps.forEach(s => {
-          s.classList.remove('active');
-        });
+        // Find current active step
+        const currentActiveStep = document.querySelector('.step.active');
+        const targetStep = document.getElementById(`step${step}`);
+        const stepsContainer = document.querySelector('.steps-container');
         
-        // Show the target step
-        document.getElementById(`step${step}`).classList.add('active');
-        
-        // Update progress bar
-        const totalSteps = 5; // Updated to include the new step
-        progressBar.style.width = `${step * (100/totalSteps)}%`;
-        
-        // Update step indicators
-        dots.forEach(dot => {
-          dot.classList.remove('active');
-        });
-        dots[step-1].classList.add('active');
-        
-        // Update current step
-        currentStep = step;
+        if (currentActiveStep) {
+          // Mark current step as leaving
+          currentActiveStep.classList.add('leaving');
+          currentActiveStep.classList.remove('active');
+          
+          // Immediately make target step visible but not yet active
+          targetStep.style.visibility = 'visible';
+          targetStep.style.opacity = '0';
+          
+          // Measure the height of the target step and set container height
+          const targetHeight = targetStep.offsetHeight;
+          stepsContainer.style.height = `${targetHeight}px`;
+          
+          // After a short delay, make target step active
+          setTimeout(() => {
+            targetStep.classList.add('active');
+            
+            // Update progress bar
+            const totalSteps = 5;
+            progressBar.style.width = `${step * (100/totalSteps)}%`;
+            
+            // Update step indicators
+            dots.forEach(dot => {
+              dot.classList.remove('active');
+            });
+            dots[step-1].classList.add('active');
+            
+            // After the transition completes, clean up leaving step
+            setTimeout(() => {
+              currentActiveStep.classList.remove('leaving');
+              currentActiveStep.style.visibility = '';
+              currentActiveStep.style.opacity = '';
+              targetStep.style.visibility = '';
+              targetStep.style.opacity = '';
+            }, 400);
+            
+            // Update current step
+            currentStep = step;
+          }, 10);
+        } else {
+          // First load, no animation needed
+          targetStep.classList.add('active');
+          // Set initial container height
+          stepsContainer.style.height = `${targetStep.offsetHeight}px`;
+        }
       }
       
       // Event Listeners
@@ -532,6 +575,13 @@
           goToStep(5);
         }
       });
+      
+      // Initialize container height on page load
+      const activeStep = document.querySelector('.step.active');
+      const stepsContainer = document.querySelector('.steps-container');
+      if (activeStep && stepsContainer) {
+        stepsContainer.style.height = `${activeStep.offsetHeight}px`;
+      }
     });
   </script>
 </body>
