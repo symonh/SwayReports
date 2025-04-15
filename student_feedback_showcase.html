@@ -4,6 +4,47 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <title>Sway Student Feedback Showcase</title>
+  <!-- Immediately-executed iframe detection script -->
+  <script>
+    (function() {
+      // Multiple methods to detect iframe embedding
+      function detectIframe() {
+        var isEmbedded = false;
+        
+        // Method 1: Try direct comparison
+        try {
+          isEmbedded = window.self !== window.top;
+        } catch (e) {
+          // If access is denied, we're in an iframe
+          isEmbedded = true;
+        }
+        
+        // Method 2: Check for URL parameters
+        if (window.location.href.indexOf('embedded=true') > -1) {
+          isEmbedded = true;
+        }
+        
+        // Method 3: Check referrer
+        if (document.referrer && document.referrer.indexOf('sites.google.com') > -1) {
+          isEmbedded = true;
+        }
+        
+        return isEmbedded;
+      }
+      
+      // Apply the embedded class as early as possible
+      if (detectIframe()) {
+        // Set a flag that can be checked later when body is available
+        window.isEmbedded = true;
+        
+        // Create a style element immediately
+        var style = document.createElement('style');
+        style.textContent = '.header { display: none !important; } ' + 
+                           '.feedback-categories { padding-top: 0.5rem !important; }';
+        document.head.appendChild(style);
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" id="theme-css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <style>
@@ -65,8 +106,9 @@
     }
 
     /* Hide header when embedded in iframe/Google Site */
-    body.embedded .header {
-      display: none;
+    body.embedded .header,
+    html.embedded .header {
+      display: none !important;
     }
 
     .header h1 {
@@ -265,29 +307,6 @@
       }
     }
   </style>
-  <script>
-    // Check if page is embedded in an iframe (like in Google Sites)
-    function checkIfEmbedded() {
-      try {
-        // If window.self is not the same as window.top, we're in an iframe
-        if (window.self !== window.top) {
-          document.body.classList.add('embedded');
-        }
-      } catch (e) {
-        // If security error occurs, assume we're in an iframe
-        document.body.classList.add('embedded');
-      }
-    }
-    
-    // Run this as soon as possible
-    window.addEventListener('DOMContentLoaded', checkIfEmbedded);
-    // In case the script runs after DOMContentLoaded
-    if (document.readyState === 'loading') {
-      window.addEventListener('DOMContentLoaded', checkIfEmbedded);
-    } else {
-      checkIfEmbedded();
-    }
-  </script>
 </head>
 <body>
   <div class="header">
@@ -308,11 +327,11 @@
     </div>
 
     <div class="feedback-cards">
-      <!-- Shy Students -->
+      <!-- Student Comfort -->
       <div class="feedback-card" data-categories="shy-students">
         <p>"This was my first time using Sway, and the experience was great! I like having discussions through Sway more than I like having them in the classroom specifically because I'm a bit shy. I'm introverted and reserved, so I often find myself hesitant to share my honest opinion in the classroom environment. Sway has given me the opportunity to share my honest opinion without feeling like I will be judged."</p>
         <div class="categories">
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
         </div>
       </div>
@@ -320,7 +339,7 @@
       <div class="feedback-card" data-categories="shy-students classroom-comparison">
         <p>"I prefer Guide's approach over in-class discussions mainly because I'm a bit shy, so I don't get my points across in in-class discussions as much as I would like to."</p>
         <div class="categories">
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
         </div>
       </div>
@@ -328,7 +347,7 @@
       <div class="feedback-card" data-categories="shy-students classroom-comparison">
         <p>"I really enjoy talking on Sway because I feel that I am able openly express my opinion without the stresses of speaking in front of a whole class!"</p>
         <div class="categories">
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
         </div>
       </div>
@@ -336,7 +355,7 @@
       <div class="feedback-card" data-categories="shy-students classroom-comparison">
         <p>"I love talking on Sway because I have more time to compose my opinions in an organized and articulate way than if I were talking in class in front of other people"</p>
         <div class="categories">
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
         </div>
       </div>
@@ -344,7 +363,7 @@
       <div class="feedback-card" data-categories="shy-students classroom-comparison">
         <p>"Sway makes it much easier because it is not face to face and it is easier to express your opinion."</p>
         <div class="categories">
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
         </div>
       </div>
@@ -476,7 +495,7 @@
         <p>"it is much less bias, since it is a one-on-one conversation, i also think everyone gets to talk since usually the same people talk in class and others feel like they shouldn't speak out."</p>
         <div class="categories">
           <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
         </div>
       </div>
 
@@ -484,7 +503,7 @@
         <p>"I do think this platform takes away some of the social anxiety of an in-class discussion, while still promoting a respectful and productive conversation."</p>
         <div class="categories">
           <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
         </div>
       </div>
 
@@ -522,7 +541,7 @@
         <p>"You can definitely have more time to think out your statement which is nice for someone who maybe isn't as quick witted or doesn't like to talk aloud a lot"</p>
         <div class="categories">
           <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
         </div>
       </div>
 
@@ -530,7 +549,7 @@
         <p>"It's nice that we can speak our mind without the fear of judgement but also have a space to dig into the topic and learn, maybe even changing our opinion or perspective."</p>
         <div class="categories">
           <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Shy Students</span>
+          <span class="category-tag">Student Comfort</span>
         </div>
       </div>
       
@@ -622,6 +641,12 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Apply embedded class to body if needed
+      if (window.isEmbedded) {
+        document.body.classList.add('embedded');
+        document.documentElement.classList.add('embedded');
+      }
+      
       // Theme toggle functionality
       const themeToggle = document.getElementById('theme-toggle');
       const themeIcon = themeToggle.querySelector('i');
