@@ -1,0 +1,623 @@
+<!doctype html>
+<html lang="en" class="dark-mode">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Sway Student Feedback Showcase</title>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" id="theme-css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+  <style>
+    :root {
+      /* Darkened dark mode theme */
+      --bg-color: #050505;          /* Near-black background */
+      --card-bg: #0e0e1a;           /* Deeper navy card */
+      --card-header-bg: #141422;     /* Darker header */
+      --text-color: #e4e6eb;
+      --muted-text-color: #a9adc1;
+      --border-color: #1f1f2d;
+      --button-bg: #252538;
+      --button-hover-bg: #3a3a59; 
+      --primary-color: #8a8aff;
+      --link-color: #a3a3ff;
+      --input-bg: #252538;
+      --highlight-bg: rgba(138, 138, 255, 0.1);
+      --category-pill-bg: #252538;
+      --category-pill-active-bg: #8a8aff;
+      --category-pill-active-text: #ffffff;
+    }
+
+    /* Light mode theme variables */
+    html.light-mode {
+      /* Base colors */
+      --bg-color: #f5f7fa;
+      --card-bg: #ffffff;
+      --card-header-bg: #f0f5fc;
+      --text-color: #2c3e50;
+      --muted-text-color: #5a6a7e;
+      --border-color: #d1d9e6;
+      --link-color: #2c3e50;
+      
+      /* UI elements - using purple theme */
+      --button-bg: #eef2f7; 
+      --button-hover-bg: #d9e2ec;
+      --primary-color: #23004D; 
+      --input-bg: #ffffff;
+      --highlight-bg: rgba(35, 0, 77, 0.05);
+      --category-pill-bg: #eef2f7;
+      --category-pill-active-bg: #23004D;
+      --category-pill-active-text: #ffffff;
+    }
+    
+    body { 
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header {
+      background-color: var(--card-header-bg);
+      padding: 2rem 0;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+
+    .header h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 0.5rem;
+      background: linear-gradient(90deg, #8a8aff, #ff8a8a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+    }
+
+    .header p {
+      font-size: 1.2rem;
+      color: var(--muted-text-color);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .container {
+      max-width: 1200px;
+      padding: 0 1rem;
+    }
+
+    .feedback-categories {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      position: sticky;
+      top: 0;
+      padding: 1rem 0;
+      background-color: var(--bg-color);
+      z-index: 10;
+    }
+
+    .category-pill {
+      background-color: var(--category-pill-bg);
+      color: var(--text-color);
+      border: none;
+      border-radius: 50px;
+      padding: 0.5rem 1.2rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .category-pill.active {
+      background-color: var(--category-pill-active-bg);
+      color: var(--category-pill-active-text);
+    }
+
+    .feedback-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .feedback-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .feedback-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .feedback-card::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem;
+      left: 0.5rem;
+      font-size: 8rem;
+      line-height: 1;
+      color: var(--primary-color);
+      opacity: 0.1;
+      font-family: Georgia, serif;
+    }
+
+    .feedback-card p {
+      position: relative;
+      z-index: 1;
+      font-size: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .feedback-card .categories {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-top: 1rem;
+    }
+
+    .feedback-card .category-tag {
+      background-color: var(--highlight-bg);
+      color: var(--primary-color);
+      font-size: 0.75rem;
+      font-weight: 500;
+      padding: 0.25rem 0.75rem;
+      border-radius: 50px;
+    }
+
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--card-bg);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+      transform: scale(1.1);
+    }
+
+    .theme-toggle i {
+      font-size: 1.5rem;
+      color: var(--text-color);
+    }
+
+    .section-header {
+      text-align: center;
+      margin: 3rem 0 2rem;
+      position: relative;
+    }
+
+    .section-header h2 {
+      font-weight: 700;
+      position: relative;
+      display: inline-block;
+      color: var(--primary-color);
+    }
+
+    .section-header h2::after {
+      content: '';
+      position: absolute;
+      width: 50%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+      bottom: -0.5rem;
+      left: 25%;
+    }
+
+    footer {
+      background-color: var(--card-bg);
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    footer p {
+      color: var(--muted-text-color);
+      margin-bottom: 0;
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .feedback-cards {
+        grid-template-columns: 1fr;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+      }
+      
+      .header p {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="container text-center">
+      <h1>Student Feedback Showcase</h1>
+      <p>Discover what students love about their Sway experience</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="feedback-categories">
+      <button class="category-pill active" data-category="all">All Feedback</button>
+      <div id="categoriesLoading" class="ml-2">
+        <small>Loading categories...</small>
+      </div>
+    </div>
+
+    <div class="feedback-cards" id="feedbackCards">
+      <div id="feedbackLoading" class="text-center py-5">
+        <div class="spinner-border text-primary" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+        <p class="mt-3">Loading feedback...</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="theme-toggle" id="theme-toggle">
+    <i class="fas fa-moon"></i>
+  </div>
+
+  <footer>
+    <div class="container">
+      <p>© 2023 Sway. All student feedback shared with permission.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Enable Firestore logging
+    firebase.firestore.setLogLevel('debug');
+    
+    const firebaseConfig = {
+      apiKey: "AIzaSyDAJfYUZQQdIJbBzTeuDMPbC0_QoTbxLXk",
+      authDomain: "dashboard-write-db.firebaseapp.com",
+      projectId: "dashboard-write-db",
+      storageBucket: "dashboard-write-db.appspot.com",
+      messagingSenderId: "523382459407",
+      appId: "1:523382459407:web:5ef6c894c31a7e35507995"
+    };
+
+    // Collection names - make sure these match exactly what's in populate-firebase.js
+    const FEEDBACK_COLLECTION = 'feedback';
+    const CATEGORIES_COLLECTION = 'feedbackCategories';
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    
+    // Log connection status
+    console.log("Firebase initialization complete");
+    console.log("Project ID:", firebaseConfig.projectId);
+    console.log("Using collections:", CATEGORIES_COLLECTION, FEEDBACK_COLLECTION);
+
+    const feedbackCards = document.getElementById('feedbackCards');
+    const feedbackCategories = document.querySelector('.feedback-categories');
+    const categoriesLoading = document.getElementById('categoriesLoading');
+    const feedbackLoading = document.getElementById('feedbackLoading');
+
+    const categoryMap = {};
+
+    // Note: These hardcoded arrays are kept as fallbacks in case the Firebase queries fail
+    const HARDCODED_CATEGORIES = [
+      { id: "student-engagement", name: "Student Engagement" },
+      { id: "teaching-strategies", name: "Teaching Strategies" },
+      { id: "classroom-management", name: "Classroom Management" },
+      { id: "lesson-planning", name: "Lesson Planning" },
+      { id: "time-management", name: "Time Management" },
+      { id: "differentiation", name: "Differentiation" },
+      { id: "technology-integration", name: "Technology Integration" },
+      { id: "assessment", name: "Assessment & Feedback" },
+      { id: "student-motivation", name: "Student Motivation" }
+    ];
+
+    const HARDCODED_FEEDBACK = [
+      {
+        id: "feedback-1",
+        text: "Calling on students by name has dramatically improved classroom engagement. I've noticed significantly higher participation rates since implementing this strategy.",
+        categories: ["student-engagement", "teaching-strategies"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-2",
+        text: "Breaking complex activities into smaller timed segments has helped maintain student focus throughout longer lessons. Students report feeling less overwhelmed by difficult material.",
+        categories: ["classroom-management", "lesson-planning", "time-management"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-3",
+        text: "Implementing digital exit tickets through Google Forms has provided valuable immediate feedback while reducing paper waste. This has helped me adjust lessons for the next day.",
+        categories: ["assessment", "technology-integration"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-4",
+        text: "Creating a tiered assignment system with required and optional components has allowed advanced students to push themselves while ensuring all students meet core requirements.",
+        categories: ["differentiation", "student-motivation"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-5",
+        text: "Using the 'think-pair-share' technique has dramatically improved participation from typically quiet students. The structured approach gives them confidence to contribute.",
+        categories: ["student-engagement", "teaching-strategies"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-6",
+        text: "Implementing a digital reward system has positively impacted classroom behavior. Students are more motivated to follow procedures and participate actively.",
+        categories: ["classroom-management", "student-motivation", "technology-integration"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-7",
+        text: "Providing exemplars of high-quality work has clarified expectations and improved overall assignment quality. Students appreciate seeing concrete examples of success.",
+        categories: ["teaching-strategies", "assessment"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-8",
+        text: "Using cooperative learning structures has increased engagement while developing critical social skills. Students report enjoying class more when collaboration is built in.",
+        categories: ["student-engagement", "teaching-strategies"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-9",
+        text: "Implementing student choice in project formats has increased motivation and creativity. Students take more ownership when they can play to their strengths.",
+        categories: ["differentiation", "student-motivation"],
+        createdAt: new Date()
+      },
+      {
+        id: "feedback-10",
+        text: "Using quick formative assessments with digital tools has allowed me to identify and address misconceptions in real-time rather than discovering them on major assessments.",
+        categories: ["assessment", "technology-integration"],
+        createdAt: new Date()
+      }
+    ];
+
+    const themeToggle = document.getElementById('theme-toggle');
+    const themeIcon = themeToggle.querySelector('i');
+    const htmlElement = document.documentElement;
+    
+    themeToggle.addEventListener('click', function() {
+      if (htmlElement.classList.contains('light-mode')) {
+        htmlElement.classList.remove('light-mode');
+        themeIcon.classList.remove('fa-sun');
+        themeIcon.classList.add('fa-moon');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        htmlElement.classList.add('light-mode');
+        themeIcon.classList.remove('fa-moon');
+        themeIcon.classList.add('fa-sun');
+        localStorage.setItem('theme', 'light');
+      }
+    });
+
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+      htmlElement.classList.add('light-mode');
+      themeIcon.classList.remove('fa-moon');
+      themeIcon.classList.add('fa-sun');
+    }
+
+    async function loadCategories() {
+      try {
+        // Try to get categories from Firebase
+        console.log(`Loading categories from Firebase collection: '${CATEGORIES_COLLECTION}'`);
+        const snapshot = await db.collection(CATEGORIES_COLLECTION).get();
+        console.log("Categories snapshot received:", snapshot);
+        console.log("Is snapshot empty?", snapshot.empty);
+        if (snapshot.empty) {
+          console.log("Categories collection is empty");
+        } else {
+          console.log("Categories found. Count:", snapshot.size);
+        }
+        
+        const categories = [];
+        
+        snapshot.forEach(doc => {
+          console.log("Category doc found:", doc.id, doc.data());
+          const category = {
+            id: doc.id,
+            ...doc.data()
+          };
+          categories.push(category);
+          categoryMap[category.id] = category.name;
+        });
+        
+        categoriesLoading.remove();
+        
+        // If Firebase is empty, use hardcoded categories as fallback
+        const categoriesToUse = categories.length > 0 ? categories : HARDCODED_CATEGORIES;
+        
+        if (categories.length === 0) {
+          console.log("No categories found in Firebase, using hardcoded fallback data");
+          HARDCODED_CATEGORIES.forEach(category => {
+            categoryMap[category.id] = category.name;
+          });
+        }
+        
+        categoriesToUse.forEach(category => {
+          const pill = document.createElement('button');
+          pill.className = 'category-pill';
+          pill.setAttribute('data-category', category.id);
+          pill.textContent = category.name;
+          feedbackCategories.appendChild(pill);
+        });
+        
+        setupCategoryFilters();
+        
+        return categoriesToUse;
+      } catch (error) {
+        console.error('Error loading categories from Firebase:', error);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        
+        categoriesLoading.innerHTML = '<small class="text-danger">Error loading categories, using fallback data</small>';
+        
+        // Use hardcoded categories as fallback on error
+        HARDCODED_CATEGORIES.forEach(category => {
+          categoryMap[category.id] = category.name;
+          
+          const pill = document.createElement('button');
+          pill.className = 'category-pill';
+          pill.setAttribute('data-category', category.id);
+          pill.textContent = category.name;
+          feedbackCategories.appendChild(pill);
+        });
+        
+        setupCategoryFilters();
+        return HARDCODED_CATEGORIES;
+      }
+    }
+
+    async function loadFeedback() {
+      try {
+        // Try to get feedback from Firebase
+        console.log(`Loading feedback from Firebase collection: '${FEEDBACK_COLLECTION}'`);
+        const snapshot = await db.collection(FEEDBACK_COLLECTION)
+          .orderBy('createdAt', 'desc')
+          .get();
+        
+        console.log("Feedback snapshot received:", snapshot);
+        console.log("Is snapshot empty?", snapshot.empty);
+        if (snapshot.empty) {
+          console.log("Feedback collection is empty");
+        } else {
+          console.log("Feedback items found. Count:", snapshot.size);
+        }
+        
+        const feedbacks = [];
+        snapshot.forEach(doc => {
+          console.log("Feedback doc found:", doc.id, doc.data());
+          feedbacks.push({
+            id: doc.id,
+            ...doc.data()
+          });
+        });
+        
+        feedbackLoading.remove();
+        
+        // If Firebase is empty, use hardcoded feedback as fallback
+        const feedbackToUse = feedbacks.length > 0 ? feedbacks : HARDCODED_FEEDBACK;
+        
+        if (feedbacks.length === 0) {
+          console.log("No feedback found in Firebase, using hardcoded fallback data");
+        }
+        
+        feedbackToUse.forEach(feedback => {
+          createFeedbackCard(feedback);
+        });
+        
+        return feedbackToUse;
+      } catch (error) {
+        console.error('Error loading feedback from Firebase:', error);
+        console.error('Error code:', error.code);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
+        
+        feedbackLoading.innerHTML = '<p class="text-danger">Error loading feedback, using fallback data</p>';
+        
+        // Use hardcoded feedback as fallback on error
+        setTimeout(() => {
+          feedbackLoading.remove();
+          HARDCODED_FEEDBACK.forEach(feedback => {
+            createFeedbackCard(feedback);
+          });
+        }, 500);
+        
+        return HARDCODED_FEEDBACK;
+      }
+    }
+
+    function createFeedbackCard(feedback) {
+      const card = document.createElement('div');
+      card.className = 'feedback-card';
+      card.setAttribute('data-categories', feedback.categories.join(' '));
+      
+      let categoriesHTML = '';
+      feedback.categories.forEach(catId => {
+        const catName = categoryMap[catId] || catId;
+        categoriesHTML += `<span class="category-tag">${catName}</span>`;
+      });
+      
+      card.innerHTML = `
+        <p>${feedback.text}</p>
+        <div class="categories">
+          ${categoriesHTML}
+        </div>
+      `;
+      
+      feedbackCards.appendChild(card);
+    }
+
+    function setupCategoryFilters() {
+      const categoryPills = document.querySelectorAll('.category-pill');
+      const feedbackCards = document.querySelectorAll('.feedback-card');
+      
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', function() {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          
+          this.classList.add('active');
+          
+          const selectedCategory = this.getAttribute('data-category');
+          
+          document.querySelectorAll('.feedback-card').forEach(card => {
+            if (selectedCategory === 'all') {
+              card.style.display = 'block';
+            } else {
+              const cardCategories = card.getAttribute('data-categories');
+              if (cardCategories && cardCategories.includes(selectedCategory)) {
+                card.style.display = 'block';
+              } else {
+                card.style.display = 'none';
+              }
+            }
+          });
+          
+          document.querySelector('.feedback-cards').style.opacity = '0';
+          setTimeout(() => {
+            document.querySelector('.feedback-cards').style.opacity = '1';
+          }, 50);
+        });
+      });
+    }
+
+    async function init() {
+      await loadCategories();
+      await loadFeedback();
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html> 
