@@ -286,20 +286,6 @@
       box-shadow: none;
     }
 
-    .personal-link-container {
-      background: #f7f5ff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-    }
-
-    .personal-link-container p {
-      font-size: 1.1rem;
-      margin-bottom: 15px;
-      color: #555;
-    }
-
     .personal-link-notice {
       background: #f0eeff;
       border-left: 3px solid var(--primary-color);
@@ -316,12 +302,13 @@
 
     .link-display {
       background: #f0eeff;
-      border-radius: 8px;
-      padding: 12px 16px;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 15px;
       font-weight: 500;
     }
 
@@ -404,14 +391,12 @@
         
         <p><strong>Important:</strong> Because you chose not to create an account, you'll need this link to return to this chat on this device. Copy and save it somewhere safe:</p>
         
-        <div class="personal-link-container">
-          <p>Your personal chat link (only works on this device):</p>
-          <div class="link-display">
-            <span class="link-text">https://sway.chat/personal/xyz987</span>
-            <button class="btn" id="copy-personal-link-btn" style="background: var(--primary-color); padding: 8px; width: auto; min-width: 40px; height: 40px;">
-              <i class="fas fa-copy"></i>
-            </button>
-          </div>
+        <p>Your personal chat link (only works on this device):</p>
+        <div class="link-display">
+          <span class="link-text">https://sway.chat/personal/xyz987</span>
+          <button class="btn" id="copy-personal-link-btn" style="background: var(--primary-color); padding: 8px; width: auto; min-width: 40px; height: 40px;">
+            <i class="fas fa-copy"></i>
+          </button>
         </div>
         
         <p>This link will be valid for 7 days. After that, the chat will be automatically deleted unless you create an account.</p>
