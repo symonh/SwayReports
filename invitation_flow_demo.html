@@ -102,6 +102,7 @@
       padding: 16px 20px;
       border-radius: 12px;
       box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      position: relative;
     }
 
     .btn-copy:hover {
@@ -114,7 +115,7 @@
       white-space: nowrap;
       max-width: 85%;
       color: var(--primary-color);
-      font-size: 1.1rem;
+      font-size: 1rem;
       font-weight: 500;
       text-align: left;
     }
@@ -140,6 +141,8 @@
     .steps-container {
       position: relative;
       transition: height 0.4s ease;
+      min-height: 350px;
+      margin-bottom: 15px;
     }
 
     .step {
@@ -219,8 +222,22 @@
     .step-indicator {
       display: flex;
       justify-content: center;
-      margin-top: 30px;
+      margin-top: 15px;
       gap: 8px;
+      align-items: center;
+    }
+
+    .nav-arrow {
+      color: #d4d4d4;
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: var(--transition);
+      padding: 0 10px;
+      user-select: none;
+    }
+
+    .nav-arrow:hover {
+      color: var(--primary-color);
     }
 
     .dot {
@@ -238,16 +255,24 @@
 
     .sway-logo {
       display: block;
-      margin: 0 auto 30px;
+      margin: 0 0 5px;
       max-width: none;
       width: fit-content;
-      text-align: center;
+      text-align: left;
       font-size: 2rem;
       font-weight: 800;
       color: var(--primary-color);
       letter-spacing: -1px;
       text-decoration: none;
       cursor: pointer;
+    }
+
+    .sway-subtitle {
+      color: #666;
+      font-size: 1rem;
+      margin: 0 0 15px;
+      font-weight: normal;
+      text-align: left;
     }
 
     a.sway-logo:hover {
@@ -281,6 +306,19 @@
       
       p {
         font-size: 1rem;
+      }
+      
+      .sway-logo {
+        font-size: 1.8rem;
+      }
+      
+      .sway-subtitle {
+        font-size: 0.9rem;
+        margin-bottom: 12px;
+      }
+      
+      .step-indicator {
+        margin-top: 12px;
       }
     }
 
@@ -340,51 +378,279 @@
       flex: 1;
       min-width: 200px;
     }
+
+    .alternative-option {
+      margin-top: 30px;
+      margin-bottom: 20px;
+      text-align: center;
+      position: relative;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background-color: #e0e0ff;
+      margin: 10px 0;
+    }
+
+    .divider-text {
+      background-color: var(--card-color);
+      padding: 0 15px;
+      position: absolute;
+      top: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    .email-invite {
+      background: #f7f5ff;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 25px;
+    }
+
+    .email-invite p {
+      margin-bottom: 15px;
+    }
+
+    .form-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .form-row .form-group {
+      flex: 1;
+      margin-bottom: 0;
+    }
+
+    @media (max-width: 640px) {
+      .form-row {
+        flex-direction: column;
+        gap: 15px;
+      }
+    }
+
+    .choice-buttons {
+      display: flex;
+      gap: 15px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .choice-button {
+      flex: 1;
+      min-width: 200px;
+      background: #f7f5ff;
+      border: 2px solid var(--primary-color);
+      color: var(--primary-color);
+      border-radius: 12px;
+      padding: 25px 20px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .choice-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .choice-button i {
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .choice-button h3 {
+      margin: 0;
+      font-size: 1.1rem;
+      font-weight: 600;
+    }
+
+    .choice-button p {
+      margin: 0;
+      font-size: 0.9rem;
+      color: #666;
+    }
+
+    .back-button {
+      display: none;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .button-group .btn {
+      /* Use golden ratio for width (61.8% of container) */
+      width: 61.8%;
+      min-width: 200px;
+      /* Remove max-width to allow the golden ratio to control sizing */
+    }
+
+    /* For smaller screens, use a larger percentage */
+    @media (max-width: 640px) {
+      .button-group .btn {
+        width: 100%;
+      }
+    }
+
+    /* Fix for Step 1 which doesn't need a back button */
+    #step1 .button-group {
+      justify-content: center;
+    }
+
+    @media (max-width: 640px) {
+      .back-button {
+        top: 15px;
+        left: 15px;
+      }
+    }
+
+    /* Add some top margin reduction to the h1 in steps */
+    .step h1 {
+      margin-top: 20;
+      margin-bottom: 20px;
+    }
+
+    /* Add styles for the copied notification */
+    .copied-notification {
+      position: absolute;
+      background-color: rgba(35, 0, 77, 0.9);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.2s ease, top 0.2s ease;
+      pointer-events: none;
+      top: 50%;
+      z-index: 10;
+    }
+
+    .copied-notification.show {
+      opacity: 1;
+    }
+
+    .btn-copy {
+      position: relative; /* For positioning the notification */
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <a href="https://www.swaybeta.ai" class="sway-logo">SwayBeta.ai</a>
+    <p class="sway-subtitle">Invite a friend/foe to talk on Sway. Discuss anything. Guide will facilitate.</p>
     
     <div class="steps-container">
-      <!-- Step 1: Initial Invitation -->
+      <!-- Original Step 2 becomes the first step -->
       <div class="step active" id="step1">
-        <h1>Invite a friend/foe to talk on Sway</h1>
-        <p>Discuss anything. Guide will be there to facilitate.</p>
-        <button class="btn" id="generate-btn">Generate invitation</button>
+        <h1>How would you like to send the invitation?</h1>
+        <div class="choice-buttons">
+          <div class="choice-button" id="send-myself-btn">
+            <i class="fas fa-link"></i>
+            <h3>I'll send it myself</h3>
+            <p>Get a link you can share via text, email, or any messaging app</p>
+          </div>
+          
+          <div class="choice-button" id="send-for-me-btn">
+            <i class="fas fa-envelope"></i>
+            <h3>Send it for me</h3>
+            <p>We'll send an email invitation to your chat partner</p>
+          </div>
+        </div>
       </div>
       
-      <!-- Step 2: Link Generated -->
-      <div class="step" id="step2">
-        <h1>Share this link with your chat partner</h1>
+      <!-- Step 3A becomes Step 2A -->
+      <div class="step" id="step2a">
+        <h1>First, share this link with your chat partner</h1>
         <button class="btn-copy" id="copy-link-btn">
           <span class="link-text">https://chat.swaybeta.ai/invite/abcd1234</span>
           <div class="copy-button">
             <i class="fas fa-copy"></i>
           </div>
+          <div class="copied-notification" id="copy-link-notification">Copied!</div>
         </button>
+        
         <p>Continue when you're ready to join the chat yourself:</p>
-        <button class="btn" id="start-chat-btn">Continue</button>
+        <div class="button-group">
+          <button class="btn" id="start-chat-btn-a">Continue</button>
+        </div>
       </div>
       
-      <!-- Step 3: Name Input -->
+      <!-- Step 3B becomes Step 2B -->
+      <div class="step" id="step2b">
+        <h1>Enter your friend's information. We'll send them an invitation to your chat.</h1>
+        
+        <div class="form-group">
+          <label for="friend-name">Their Name</label>
+          <input type="text" class="form-control" id="friend-name" placeholder="Enter their name">
+        </div>
+        
+        <div class="form-group">
+          <label for="friend-email">Their Email</label>
+          <input type="email" class="form-control" id="friend-email" placeholder="Enter their email address">
+        </div>
+        
+        <div class="form-group">
+          <label for="personal-message">Add a Personal Message (Optional)</label>
+          <textarea class="form-control" id="personal-message" rows="3" placeholder="Write a short message to include with the invitation..."></textarea>
+        </div>
+        
+        <div class="button-group">
+          <button class="btn" id="send-invitation-btn">Send Invitation</button>
+        </div>
+      </div>
+      
+      <!-- Step 4 becomes Step 3 -->
       <div class="step" id="step3">
         <h1>Please provide your preferred first name</h1>
         <div class="form-group">
           <input type="text" class="form-control" id="first-name" placeholder="Your first name">
         </div>
-        <button class="btn" id="submit-name-btn">Continue</button>
+        <div class="button-group">
+          <button class="btn" id="submit-name-btn">Continue</button>
+        </div>
       </div>
       
-      <!-- Step 4: Account Creation -->
+      <!-- Step 5 becomes Step 4 -->
       <div class="step" id="step4">
-        <h1>Hey <span id="display-name">there</span>!</h1>
-        <p>If you want to be able to access this chat for longer than one week or from another device, please create an account by providing your email and/or phone number. This will also allow us to send you notifications when you receive new messages.</p>
-
-        <p>If you create an account now, you can permanently delete it at any time.</p>
+        <h1>Would you like to create an account?</h1>
+        
+        <div class="choice-buttons">
+          <div class="choice-button" id="create-account-btn">
+            <i class="fas fa-user-plus"></i>
+            <h3>Create an account</h3>
+            <p>Save chats for longer than 7 days, access them on any device, and receive notifications</p>
+          </div>
+          
+          <div class="choice-button" id="no-account-btn">
+            <i class="fas fa-bolt"></i>
+            <h3>Use without an account</h3>
+            <p>Get started immediately, but chat expires in 7 days and only works on this device</p>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Step 6 becomes Step 5 -->
+      <div class="step" id="step5">
+        <h1>Hey <span id="display-name">there</span>! Enter your information below.</h1>
         
         <div class="form-group">
-          <label for="email">Email <span class="optional-label">(optional)</span></label>
+          <label for="email">Email</label>
           <input type="email" class="form-control" id="email" placeholder="your@email.com">
         </div>
         
@@ -394,15 +660,17 @@
         </div>
         
         <div class="form-group">
-          <label for="password">Password <span class="optional-label">(optional)</span></label>
+          <label for="password">Password</label>
           <input type="password" class="form-control" id="password" placeholder="Create a password">
         </div>
         
-        <button class="btn" id="start-chat-final-btn">Join your private chat</button>
+        <div class="button-group">
+          <button class="btn" id="start-chat-final-btn">Continue to your chat</button>
+        </div>
       </div>
       
-      <!-- Step 5: Personal Link (No Account) -->
-      <div class="step" id="step5">
+      <!-- Step 7 becomes Step 6 -->
+      <div class="step" id="step6">
         <h1>Save your personal link</h1>
         
         <p><strong>Important:</strong> Because you chose not to create an account, you'll need this link to return to this chat on this device. Copy and save it somewhere safe.</p>
@@ -413,27 +681,29 @@
           <div class="copy-button">
             <i class="fas fa-copy"></i>
           </div>
+          <div class="copied-notification" id="copy-personal-link-notification">Copied!</div>
         </button>
         
-        <p>This link will be valid for 7 days. After that, the chat will be automatically deleted unless you create an account.</p>
+        <p>This link will be valid for 7 days. After that, the chat will be automatically deleted.</p>
         
-        <div class="actions-container">
+        <div class="button-group">
           <button class="btn" id="continue-to-chat-btn">Continue to your chat</button>
-          <button class="btn btn-secondary" id="go-back-to-account-btn">Go back and create an account</button>
         </div>
       </div>
     </div>
     
     <div class="progress-container">
-      <div class="progress-bar" style="width: 25%"></div>
+      <div class="progress-bar" style="width: 16.6%"></div>
     </div>
     
     <div class="step-indicator">
+      <span class="nav-arrow" id="back-arrow">&lt;</span>
       <div class="dot active" data-step="1"></div>
       <div class="dot" data-step="2"></div>
       <div class="dot" data-step="3"></div>
       <div class="dot" data-step="4"></div>
       <div class="dot" data-step="5"></div>
+      <div class="dot" data-step="6"></div>
     </div>
   </div>
 
@@ -445,17 +715,129 @@
       const dots = document.querySelectorAll('.dot');
       
       // Buttons
-      const generateBtn = document.getElementById('generate-btn');
+      const sendMyselfBtn = document.getElementById('send-myself-btn');
+      const sendForMeBtn = document.getElementById('send-for-me-btn');
       const copyLinkBtn = document.getElementById('copy-link-btn');
-      const startChatBtn = document.getElementById('start-chat-btn');
+      const startChatBtnA = document.getElementById('start-chat-btn-a');
+      const sendInvitationBtn = document.getElementById('send-invitation-btn');
       const submitNameBtn = document.getElementById('submit-name-btn');
+      const createAccountBtn = document.getElementById('create-account-btn');
+      const noAccountBtn = document.getElementById('no-account-btn');
       const startChatFinalBtn = document.getElementById('start-chat-final-btn');
       const copyPersonalLinkBtn = document.getElementById('copy-personal-link-btn');
       const continueToChatBtn = document.getElementById('continue-to-chat-btn');
-      const goBackToAccountBtn = document.getElementById('go-back-to-account-btn');
       
       // Current step tracker
       let currentStep = 1;
+      let previousStep = null;
+      
+      // Method choice handlers
+      sendMyselfBtn.addEventListener('click', function() {
+        goToStep('2a'); // Show manual link sharing
+      });
+      
+      sendForMeBtn.addEventListener('click', function() {
+        goToStep('2b'); // Show email form
+      });
+      
+      // Manual link sharing path
+      copyLinkBtn.addEventListener('click', function() {
+        const linkText = copyLinkBtn.querySelector('.link-text').textContent;
+        navigator.clipboard.writeText(linkText).then(() => {
+          copyLinkBtn.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i>';
+          // Show copied notification
+          const notification = document.getElementById('copy-link-notification');
+          notification.classList.add('show');
+          notification.style.top = '40%';
+          
+          setTimeout(() => {
+            copyLinkBtn.querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i>';
+            // Hide copied notification
+            notification.classList.remove('show');
+            notification.style.top = '50%';
+          }, 2000);
+        });
+      });
+      
+      startChatBtnA.addEventListener('click', function() {
+        goToStep(3);
+      });
+      
+      // Email form path
+      sendInvitationBtn.addEventListener('click', function() {
+        const friendName = document.getElementById('friend-name').value.trim();
+        const friendEmail = document.getElementById('friend-email').value.trim();
+        
+        if (friendName === '' || friendEmail === '') {
+          alert('Please enter both name and email of your friend.');
+          return;
+        }
+        
+        // In a real app, this would send the invitation
+        alert(`Invitation sent to ${friendName} at ${friendEmail}!`);
+        
+        // Continue to next step
+        goToStep(3);
+      });
+      
+      submitNameBtn.addEventListener('click', function() {
+        const firstName = document.getElementById('first-name').value;
+        if (firstName.trim() !== '') {
+          document.getElementById('display-name').textContent = firstName;
+          goToStep(4);
+        } else {
+          document.getElementById('first-name').style.borderColor = 'red';
+          setTimeout(() => {
+            document.getElementById('first-name').style.borderColor = '#eaeaea';
+          }, 2000);
+        }
+      });
+      
+      // Account choice handlers
+      createAccountBtn.addEventListener('click', function() {
+        goToStep(5); // Go to account creation
+      });
+      
+      noAccountBtn.addEventListener('click', function() {
+        goToStep(6); // Skip to personal link
+      });
+      
+      // Add event listener for the personal link copy button
+      copyPersonalLinkBtn.addEventListener('click', function() {
+        const linkText = document.getElementById('copy-personal-link-btn').querySelector('.link-text').textContent;
+        navigator.clipboard.writeText(linkText).then(() => {
+          document.getElementById('copy-personal-link-btn').querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i>';
+          // Show copied notification
+          const notification = document.getElementById('copy-personal-link-notification');
+          notification.classList.add('show');
+          notification.style.top = '40%';
+          
+          setTimeout(() => {
+            document.getElementById('copy-personal-link-btn').querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i>';
+            // Hide copied notification
+            notification.classList.remove('show');
+            notification.style.top = '50%';
+          }, 2000);
+        });
+      });
+      
+      // Add event listener for the final continue button
+      continueToChatBtn.addEventListener('click', function() {
+        alert('Chat would start here in the real application!');
+      });
+      
+      startChatFinalBtn.addEventListener('click', function() {
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value.trim();
+        
+        if (email !== '' && password !== '') {
+          // If email and password are provided, proceed to the chat directly
+          alert('Account created and chat would start here in the real application!');
+        } else {
+          // If email or password is missing, show the personal link page
+          goToStep(6);
+        }
+      });
       
       // Function to go to a specific step
       function goToStep(step) {
@@ -463,6 +845,27 @@
         const currentActiveStep = document.querySelector('.step.active');
         const targetStep = document.getElementById(`step${step}`);
         const stepsContainer = document.querySelector('.steps-container');
+        const subtitle = document.querySelector('.sway-subtitle');
+        
+        // Keep track of previous step for back navigation
+        if (currentActiveStep) {
+          previousStep = currentStep;
+        }
+        
+        if (!targetStep) {
+          console.error(`Target step ${step} not found`);
+          return;
+        }
+        
+        // Update back arrow visibility based on the target step
+        updateBackArrowVisibility(step);
+        
+        // Show subtitle only on step 1
+        if (step === 1) {
+          subtitle.style.display = 'block';
+        } else {
+          subtitle.style.display = 'none';
+        }
         
         if (currentActiveStep) {
           // Mark current step as leaving
@@ -481,15 +884,24 @@
           setTimeout(() => {
             targetStep.classList.add('active');
             
-            // Update progress bar
-            const totalSteps = 5;
-            progressBar.style.width = `${step * (100/totalSteps)}%`;
+            // Update progress bar - determine step number for progress
+            let stepNumber;
+            if (step === '2a' || step === '2b') {
+              stepNumber = 2;
+            } else {
+              stepNumber = parseInt(step);
+            }
+            
+            const totalSteps = 6; // Now we have 6 steps total
+            progressBar.style.width = `${stepNumber * (100/totalSteps)}%`;
             
             // Update step indicators
             dots.forEach(dot => {
               dot.classList.remove('active');
             });
-            dots[step-1].classList.add('active');
+            // Both 2a and 2b are represented by the 2nd dot
+            const dotIndex = (step === '2a' || step === '2b') ? 1 : stepNumber - 1;
+            dots[dotIndex].classList.add('active');
             
             // After the transition completes, clean up leaving step
             setTimeout(() => {
@@ -511,78 +923,40 @@
         }
       }
       
-      // Event Listeners
-      generateBtn.addEventListener('click', function() {
-        goToStep(2);
-      });
-      
-      copyLinkBtn.addEventListener('click', function() {
-        const linkText = copyLinkBtn.querySelector('.link-text').textContent;
-        navigator.clipboard.writeText(linkText).then(() => {
-          copyLinkBtn.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i>';
-          setTimeout(() => {
-            copyLinkBtn.querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i>';
-          }, 2000);
-        });
-      });
-      
-      startChatBtn.addEventListener('click', function() {
-        goToStep(3);
-      });
-      
-      submitNameBtn.addEventListener('click', function() {
-        const firstName = document.getElementById('first-name').value;
-        if (firstName.trim() !== '') {
-          document.getElementById('display-name').textContent = firstName;
-          goToStep(4);
-        } else {
-          document.getElementById('first-name').style.borderColor = 'red';
-          setTimeout(() => {
-            document.getElementById('first-name').style.borderColor = '#eaeaea';
-          }, 2000);
-        }
-      });
-      
-      // Add event listener for the personal link copy button
-      copyPersonalLinkBtn.addEventListener('click', function() {
-        const linkText = document.getElementById('copy-personal-link-btn').querySelector('.link-text').textContent;
-        navigator.clipboard.writeText(linkText).then(() => {
-          document.getElementById('copy-personal-link-btn').querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i>';
-          setTimeout(() => {
-            document.getElementById('copy-personal-link-btn').querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i>';
-          }, 2000);
-        });
-      });
-      
-      // Add event listener for the "Go back and create an account" button
-      goBackToAccountBtn.addEventListener('click', function() {
-        goToStep(4);
-      });
-      
-      // Add event listener for the final continue button
-      continueToChatBtn.addEventListener('click', function() {
-        alert('Chat would start here in the real application!');
-      });
-      
-      startChatFinalBtn.addEventListener('click', function() {
-        const email = document.getElementById('email').value.trim();
-        const password = document.getElementById('password').value.trim();
+      // Function to update back arrow visibility
+      function updateBackArrowVisibility(step) {
+        const backArrow = document.getElementById('back-arrow');
         
-        if (email !== '' && password !== '') {
-          // If email and password are provided, proceed to the chat directly
-          alert('Account created and chat would start here in the real application!');
-        } else {
-          // If email or password is missing, show the personal link page
-          goToStep(5);
+        // Hide by default
+        backArrow.style.display = 'none';
+        
+        // Show only on steps 2a, 2b, 5, and 6
+        if (step === '2a' || step === '2b' || step === 5 || step === 6) {
+          backArrow.style.display = 'inline-block';
+        }
+      }
+      
+      // Add back arrow functionality
+      document.getElementById('back-arrow').addEventListener('click', function() {
+        // Determine which step to go back to based on current step
+        if (currentStep === '2a' || currentStep === '2b') {
+          goToStep(1); // Back to invitation method choice
+        } else if (currentStep === 5) {
+          goToStep(4); // Back to account choice
+        } else if (currentStep === 6) {
+          goToStep(4); // Back to account choice
         }
       });
       
-      // Initialize container height on page load
+      // Initialize container height and back arrow visibility on page load
       const activeStep = document.querySelector('.step.active');
       const stepsContainer = document.querySelector('.steps-container');
       if (activeStep && stepsContainer) {
         stepsContainer.style.height = `${activeStep.offsetHeight}px`;
       }
+      
+      // Set initial back arrow visibility
+      updateBackArrowVisibility(1); // Start at step 1
     });
   </script>
 </body>
