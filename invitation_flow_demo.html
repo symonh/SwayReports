@@ -99,6 +99,9 @@
       width: 100%;
       margin-bottom: 16px;
       justify-content: space-between;
+      padding: 16px 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
     }
 
     .btn-copy:hover {
@@ -109,7 +112,29 @@
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
-      max-width: 300px;
+      max-width: 85%;
+      color: var(--primary-color);
+      font-size: 1.1rem;
+      font-weight: 500;
+      text-align: left;
+    }
+
+    .copy-button {
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+
+    .copy-button:hover {
+      opacity: 0.9;
     }
 
     .steps-container {
@@ -301,20 +326,7 @@
     }
 
     .link-display {
-      background: #f0eeff;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 25px;
-      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      font-weight: 500;
-    }
-
-    .link-text {
-      color: var(--primary-color);
-      font-size: 1.1rem;
+      display: none;
     }
 
     .actions-container {
@@ -345,9 +357,11 @@
       <!-- Step 2: Link Generated -->
       <div class="step" id="step2">
         <h1>Share this link with your chat partner</h1>
-        <button class="btn btn-copy" id="copy-link-btn">
+        <button class="btn-copy" id="copy-link-btn">
           <span class="link-text">https://chat.swaybeta.ai/invite/abcd1234</span>
-          <i class="fas fa-copy"></i>
+          <div class="copy-button">
+            <i class="fas fa-copy"></i>
+          </div>
         </button>
         <p>Continue when you're ready to join the chat yourself:</p>
         <button class="btn" id="start-chat-btn">Continue</button>
@@ -394,12 +408,12 @@
         <p><strong>Important:</strong> Because you chose not to create an account, you'll need this link to return to this chat on this device. Copy and save it somewhere safe.</p>
         
         <p>Your personal chat link (only works on this device):</p>
-        <div class="link-display">
+        <button class="btn-copy" id="copy-personal-link-btn">
           <span class="link-text">https://chat.swaybeta.ai/invite/xyz987</span>
-          <button class="btn" id="copy-personal-link-btn" style="background: var(--primary-color); padding: 8px; width: auto; min-width: 40px; height: 40px;">
+          <div class="copy-button">
             <i class="fas fa-copy"></i>
-          </button>
-        </div>
+          </div>
+        </button>
         
         <p>This link will be valid for 7 days. After that, the chat will be automatically deleted unless you create an account.</p>
         
@@ -505,9 +519,9 @@
       copyLinkBtn.addEventListener('click', function() {
         const linkText = copyLinkBtn.querySelector('.link-text').textContent;
         navigator.clipboard.writeText(linkText).then(() => {
-          copyLinkBtn.innerHTML = '<span class="link-text">Copied!</span><i class="fas fa-check"></i>';
+          copyLinkBtn.querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i>';
           setTimeout(() => {
-            copyLinkBtn.innerHTML = `<span class="link-text">${linkText}</span><i class="fas fa-copy"></i>`;
+            copyLinkBtn.querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i>';
           }, 2000);
         });
       });
@@ -531,11 +545,11 @@
       
       // Add event listener for the personal link copy button
       copyPersonalLinkBtn.addEventListener('click', function() {
-        const linkText = document.querySelector('.link-text').textContent;
+        const linkText = document.getElementById('copy-personal-link-btn').querySelector('.link-text').textContent;
         navigator.clipboard.writeText(linkText).then(() => {
-          copyPersonalLinkBtn.innerHTML = '<i class="fas fa-check"></i>';
+          document.getElementById('copy-personal-link-btn').querySelector('.copy-button').innerHTML = '<i class="fas fa-check"></i>';
           setTimeout(() => {
-            copyPersonalLinkBtn.innerHTML = '<i class="fas fa-copy"></i>';
+            document.getElementById('copy-personal-link-btn').querySelector('.copy-button').innerHTML = '<i class="fas fa-copy"></i>';
           }, 2000);
         });
       });
