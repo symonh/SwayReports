@@ -10,16 +10,43 @@ This repository contains a collection of Sway instructor reports and a showcase 
 - `preprocess_reports.py`: Script to preprocess HTML files by removing Sway header and social sharing sections
 - `update_showcase.py`: Script to update the showcase webpage with the latest reports
 - `update_reports.py`: Main script that runs both preprocessing and showcase update
+- `update_reports.sh`: Interactive shell script with menu for update options
+- `recover_showcase_data.py`: Tool to recover from backups if you lose showcase data
 
 ## Scripts
 
-### update_reports.py
+### update_reports.sh (recommended)
 
-The main script that runs both the preprocessing and showcase update. Use this script to perform the complete process.
+The easiest way to manage your reports is with the interactive shell script:
 
 ```bash
-python update_reports.py
+./update_reports.sh
 ```
+
+This will show a menu with options to:
+1. Update showcase (preserves all your manual work)
+2. Update showcase AND refresh existing reports
+3. Recover from backup
+4. Exit
+
+### update_showcase.py
+
+This script updates the showcase webpage with the latest reports from the `instructor_reports` directory.
+
+```bash
+# Regular update (preserves ALL your manual work)
+python update_showcase.py
+
+# Refresh titles, descriptions, and categories from HTML files
+python update_showcase.py --refresh-existing
+```
+
+**By default, this script now preserves ALL your manual work**, including:
+- Report categories you've assigned
+- Custom report ordering
+- Enabled/disabled state of reports
+
+See [Update Showcase Guide](docs/update_showcase.md) for detailed documentation.
 
 ### preprocess_reports.py
 
@@ -29,13 +56,15 @@ This script preprocesses the HTML files by removing the Sway header and social s
 python preprocess_reports.py
 ```
 
-### update_showcase.py
+### recover_showcase_data.py
 
-This script updates the showcase webpage with the latest reports from the `instructor_reports` directory. It automatically extracts titles and infers categories based on the content of each report.
+If you ever lose your showcase data or need to restore from a backup:
 
 ```bash
-python update_showcase.py
+python recover_showcase_data.py
 ```
+
+This will show all available backups and let you choose which one to recover from.
 
 ## Requirements
 
@@ -53,7 +82,7 @@ pip install beautifulsoup4
 1. Place the instructor report HTML files in the `instructor_reports` directory
 2. Run the main script:
    ```bash
-   python update_reports.py
+   ./update_reports.sh
    ```
 3. Open `instructor_reports_showcase.html` in a web browser to view the showcase
 
@@ -72,6 +101,7 @@ If you need to modify the showcase design, you can edit the CSS styles in the `i
 - The preprocessing script uses BeautifulSoup to parse and modify the HTML, preserving the structure while removing unwanted elements.
 - The showcase update script automatically infers categories based on keywords in the report content.
 - Backups are created for all files before any modifications are made.
+- The update script now preserves your manual categorization and ordering work by default.
 
 # Sway Reports PDF Converter
 

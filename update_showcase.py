@@ -5,6 +5,7 @@ import random
 import html
 import json
 import shutil
+import argparse
 from datetime import datetime
 from pathlib import Path
 from bs4 import BeautifulSoup
@@ -212,7 +213,7 @@ def extract_existing_reports_data(showcase_file):
         print(f"Error extracting existing reports: {e}")
         return {'reports': {}, 'order': [], 'categories': []}
 
-def update_showcase(showcase_file, reports_dir):
+def update_showcase(showcase_file, reports_dir, refresh_existing=False):
     """
     Update the showcase HTML file with new report cards while preserving
     existing categorization, order, and settings.
@@ -220,6 +221,7 @@ def update_showcase(showcase_file, reports_dir):
     Args:
         showcase_file: Path to the showcase HTML file
         reports_dir: Path to the directory containing report HTML files
+        refresh_existing: If True, refresh data for existing reports from their HTML files
     """
     if not os.path.exists(showcase_file):
         print(f"Showcase file {showcase_file} not found.")
@@ -250,18 +252,42 @@ def update_showcase(showcase_file, reports_dir):
     # Get all HTML files in the reports directory
     html_files = [f for f in os.listdir(reports_dir) if f.endswith('.html') and not f.startswith('.')]
     
-    # Track new reports
+    # Track new reports and updated reports
     new_reports = []
+    updated_reports = []
     
     # Process each HTML file
     for filename in html_files:
         file_path = os.path.join(reports_dir, filename)
         
         # Check if this report already exists in the showcase
-        if filename in existing_reports:
+        if filename in existing_reports and not refresh_existing:
             # Report exists, reuse existing data
             print(f"Preserving existing data for {filename}")
             continue
+        elif filename in existing_reports and refresh_existing:
+            # Report exists, but we're refreshing all data
+            print(f"Refreshing data for existing report: {filename}")
+            title, categories = extract_title_and_categories(file_path)
+            description = extract_first_paragraph(file_path)
+            
+            # Preserve the enabled/disabled state
+            enabled = existing_reports[filename].get('enabled', True)
+            
+            # Update the report data
+            existing_reports[filename] = {
+                'title': title,
+                'description': description,
+                'categories': categories,
+                'enabled': enabled  # Preserve enabled state
+            }
+            
+            # Add any new categories to the list
+            for category in categories:
+                if category not in all_categories:
+                    all_categories.append(category)
+            
+            updated_reports.append(filename)
         else:
             # This is a new report, process it
             print(f"Processing new report: {filename}")
@@ -432,7 +458,14 @@ def update_showcase(showcase_file, reports_dir):
                 # Create a new report card
                 card = soup.new_tag('div')
                 card['class'] = 'report-card'
-                card['data-categories'] = ' '.join(report_data['categories'])
+                
+                # Ensure categories are normalized (lowercase, no extra spaces)
+                normalized_categories = [c.strip().lower() for c in report_data['categories']]
+                # Remove any empty categories
+                normalized_categories = [c for c in normalized_categories if c]
+                
+                # Set the data-categories attribute - this is critical for filtering
+                card['data-categories'] = ' '.join(normalized_categories)
                 
                 # Add disabled attribute if report is disabled
                 if not report_data.get('enabled', True):
@@ -492,10 +525,47 @@ def update_showcase(showcase_file, reports_dir):
             'categories': all_categories
         }, f, indent=2)
     
-    print(f"Updated showcase with {len(html_files)} reports ({len(new_reports)} new)")
+    print(f"Updated showcase with {len(html_files)} reports ({len(new_reports)} new, {len(updated_reports)} refreshed)")
     print(f"JSON backup of all report data saved to: {json_backup}")
+    
+    return {
+        'reports': existing_reports,
+        'new_reports': new_reports,
+        'updated_reports': updated_reports,
+        'categories': all_categories,
+        'order': updated_order
+    }
 
 if __name__ == "__main__":
-    showcase_file = "/Users/simon/Documents/GitHub/SwayReports/instructor_reports_showcase.html"
-    reports_dir = "/Users/simon/Documents/GitHub/SwayReports/instructor_reports"
-    update_showcase(showcase_file, reports_dir) 
+    # Parse command line arguments
+    parser = argparse.ArgumentParser(description='Update the instructor reports showcase.')
+    parser.add_argument('--refresh-existing', action='store_true',
+                       help='Refresh data for existing reports from their HTML files')
+    parser.add_argument('--showcase-file', type=str,
+                       default="/Users/simon/Documents/GitHub/SwayReports/instructor_reports_showcase.html",
+                       help='Path to the showcase HTML file')
+    parser.add_argument('--reports-dir', type=str,
+                       default="/Users/simon/Documents/GitHub/SwayReports/instructor_reports",
+                       help='Path to the directory containing instructor reports')
+    
+    args = parser.parse_args()
+    
+    # Run the update with the specified options
+    result = update_showcase(args.showcase_file, args.reports_dir, args.refresh_existing)
+    
+    # Show a summary
+    if args.refresh_existing and result['updated_reports']:
+        print("\nRefreshed reports from HTML source:")
+        for filename in result['updated_reports']:
+            print(f"- {filename}")
+    
+    if result['new_reports']:
+        print("\nNew reports added:")
+        for filename in result['new_reports']:
+            print(f"- {filename}")
+    
+    print(f"\nTotal reports: {len(result['reports'])}")
+    print(f"Categories: {', '.join(result['categories'])}")
+    print("\nYour showcase has been updated. All your manual work is preserved.")
+    if not args.refresh_existing:
+        print("\nNote: Use --refresh-existing if you want to update titles/descriptions from HTML files.") 

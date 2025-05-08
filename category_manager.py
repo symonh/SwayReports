@@ -31,7 +31,7 @@ def parse_showcase_file():
     # Extract reports and their assigned categories
     reports = []
     report_cards = soup.select('.report-card')
-    for card in report_cards:
+    for idx, card in enumerate(report_cards):
         # Use get_text() to get the raw text and html.unescape to properly handle entities
         title = html.unescape(card.select_one('.report-title').get_text().strip())
         description = html.unescape(card.select_one('.report-description').get_text().strip())
@@ -51,7 +51,8 @@ def parse_showcase_file():
             'description': description,
             'filename': filename,
             'categories': assigned_categories,
-            'enabled': enabled
+            'enabled': enabled,
+            'position': idx + 1  # Add position information (1-based)
         })
     
     return categories, reports
@@ -82,6 +83,10 @@ def save_showcase_file(categories, reports):
         pill.string = category.replace('-', ' ').title()
         category_bar.append(pill)
     
+    # Sort reports by position if specified
+    if any('position' in report for report in reports):
+        reports.sort(key=lambda r: r.get('position', float('inf')))
+    
     # Update report cards
     report_cards_container = soup.select_one('.report-cards')
     report_cards_container.clear()
@@ -91,7 +96,10 @@ def save_showcase_file(categories, reports):
         # Create a new report card
         card = soup.new_tag('div')
         card['class'] = 'report-card'
-        card['data-categories'] = ' '.join(report['categories'])
+        
+        # Ensure categories are normalized and non-empty
+        valid_categories = [c.strip().lower() for c in report['categories'] if c.strip()]
+        card['data-categories'] = ' '.join(valid_categories)
         
         # Add disabled attribute if report is disabled
         if not report.get('enabled', True):
@@ -132,6 +140,108 @@ def save_showcase_file(categories, reports):
         
         report_cards_container.append(card)
     
+    # Update the JavaScript to dynamically update category counts
+    script_tag = soup.find('script', string=lambda s: s and 'category filtering' in s.lower())
+    if not script_tag:
+        script_tag = soup.new_tag('script')
+        if soup.body:
+            soup.body.append(script_tag)
+    
+    # Replace or add our enhanced script for dynamic category counts
+    script_tag.string = '''
+    // Function to update category counts
+    function updateCategoryCounts() {
+        const categories = {};
+        const allReportsCount = document.querySelectorAll('.report-card:not([data-disabled="true"])').length;
+        
+        // Reset counts
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            const category = pill.getAttribute('data-category');
+            if (category === 'all') {
+                pill.textContent = `All Reports (${allReportsCount})`;
+            } else {
+                categories[category] = 0;
+            }
+        });
+        
+        // Count reports for each category
+        document.querySelectorAll('.report-card:not([data-disabled="true"])').forEach(card => {
+            const cardCategories = (card.getAttribute('data-categories') || '').split(' ');
+            cardCategories.forEach(category => {
+                if (category && categories.hasOwnProperty(category)) {
+                    categories[category]++;
+                }
+            });
+        });
+        
+        // Update category pills with counts
+        for (const [category, count] of Object.entries(categories)) {
+            const pill = document.querySelector(`.category-pill[data-category="${category}"]`);
+            if (pill) {
+                const name = category.replace(/-/g, ' ').replace(/\\b\\w/g, c => c.toUpperCase());
+                pill.textContent = `${name} (${count})`;
+            }
+        }
+    }
+    
+    // Category filtering
+    document.querySelectorAll('.category-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+            // Update active state
+            document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            
+            const category = pill.getAttribute('data-category');
+            
+            // Filter cards
+            document.querySelectorAll('.report-card').forEach(card => {
+                if (category === 'all' || card.getAttribute('data-categories').includes(category)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Update category counts on page load
+    document.addEventListener('DOMContentLoaded', updateCategoryCounts);
+    
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+    
+    // Don't show disabled reports
+    document.querySelectorAll('.report-card[data-disabled="true"]').forEach(card => {
+        card.style.display = 'none';
+    });
+    '''
+    
     # Save the updated showcase file with HTML preserved
     html_output = str(soup)
     with open(SHOWCASE_FILE, 'w', encoding='utf-8') as file:
@@ -170,7 +280,19 @@ def update_report_title(report_filename, new_title):
 def index():
     """Main page for category management"""
     categories, reports = parse_showcase_file()
-    return render_template('category_manager.html', categories=categories, reports=reports)
+    
+    # Sort reports by position if available, otherwise by title
+    if any('position' in report for report in reports):
+        reports.sort(key=lambda r: r.get('position', float('inf')))
+    else:
+        reports.sort(key=lambda r: r['title'])
+    
+    # Calculate category counts for sidebar display
+    category_counts = {'all': len([r for r in reports if r.get('enabled', True)])}
+    for category in categories:
+        category_counts[category] = len([r for r in reports if category in r['categories'] and r.get('enabled', True)])
+    
+    return render_template('category_manager.html', categories=categories, reports=reports, category_counts=category_counts)
 
 @app.route('/categories', methods=['GET', 'POST'])
 def manage_categories():
@@ -229,6 +351,38 @@ def assign_categories():
         save_showcase_file(categories, reports)
     
     return redirect(url_for('index'))
+
+@app.route('/update_position', methods=['POST'])
+def update_position():
+    """Update the position of a report in the showcase"""
+    categories, reports = parse_showcase_file()
+    
+    report_index = int(request.form.get('report_index'))
+    new_position = int(request.form.get('new_position'))
+    
+    if 0 <= report_index < len(reports) and 1 <= new_position <= len(reports):
+        # Get the report to move
+        report_to_move = reports[report_index]
+        
+        # Remove the report from its current position
+        reports.pop(report_index)
+        
+        # Get the zero-based position (since new_position is 1-based)
+        zero_based_position = new_position - 1
+        
+        # Insert the report at the new position
+        reports.insert(zero_based_position, report_to_move)
+        
+        # Update all positions
+        for i, report in enumerate(reports):
+            report['position'] = i + 1
+        
+        # Save the updated showcase
+        save_showcase_file(categories, reports)
+        
+        return redirect(url_for('index'))
+    
+    return jsonify({"success": False, "error": "Invalid report index or position"}), 400
 
 @app.route('/api/reports', methods=['GET'])
 def get_reports():
@@ -296,13 +450,16 @@ def api_reorder_reports():
     
     # Create a new ordered list of reports
     new_reports = []
-    for filename in report_order:
+    for idx, filename in enumerate(report_order):
         if filename in report_lookup:
-            new_reports.append(report_lookup[filename])
+            report = report_lookup[filename]
+            report['position'] = idx + 1  # Update position
+            new_reports.append(report)
     
     # Add any reports that weren't in the order list at the end
     for report in reports:
         if report['filename'] not in report_order:
+            report['position'] = len(new_reports) + 1
             new_reports.append(report)
     
     # Save the reordered reports
