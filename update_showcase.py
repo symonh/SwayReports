@@ -495,8 +495,8 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
                 # Add link
                 link = soup.new_tag('a')
                 link['class'] = 'view-link'
-                link['href'] = f"instructor_reports/{filename}"
-                link['target'] = '_blank'
+                link['href'] = f"instructor_reports/{filename}?from_category_manager=1"
+                # No target attribute, so it opens in the same tab
                 
                 # Add icon to link
                 icon = soup.new_tag('i')

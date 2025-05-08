@@ -9,31 +9,34 @@
     <style>
         body {
             padding: 20px;
-            background-color: #f8f9fa;
+            background-color: #000000;
+            color: #f0f0f0;
         }
         .sidebar {
-            background-color: #fff;
+            background-color: #121212;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(255,255,255,0.1);
             padding: 15px;
             margin-bottom: 20px;
         }
         .report-card {
-            background-color: #fff;
+            background-color: #121212;
             border-radius: 5px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 5px rgba(255,255,255,0.1);
             padding: 15px;
             margin-bottom: 20px;
             position: relative;
+            color: #f0f0f0;
         }
         .report-title {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 10px;
+            color: #ffffff;
         }
         .report-description {
             font-size: 14px;
-            color: #666;
+            color: #cccccc;
             margin-bottom: 15px;
         }
         .badge {
@@ -53,7 +56,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: rgba(0,0,0,0.05);
+            background-color: rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -62,13 +65,14 @@
         .position-controls {
             margin-top: 10px;
             padding-top: 10px;
-            border-top: 1px solid #eee;
+            border-top: 1px solid #333;
         }
         .search-box {
             margin-bottom: 20px;
         }
         .highlight {
-            background-color: yellow;
+            background-color: #504000;
+            color: #ffffff;
         }
         .category-badge {
             display: inline-block;
@@ -77,12 +81,70 @@
             font-size: 12px;
             margin-right: 5px;
             margin-bottom: 5px;
-            background-color: #f0f0f0;
+            background-color: #333333;
+            color: #f0f0f0;
             cursor: pointer;
             transition: background-color 0.3s;
         }
         .category-badge:hover {
-            background-color: #e0e0e0;
+            background-color: #444444;
+        }
+        .list-group-item {
+            background-color: #1a1a1a;
+            color: #f0f0f0;
+            border-color: #333;
+        }
+        .list-group-item.active {
+            background-color: #333333;
+            border-color: #444;
+        }
+        .list-group-item:hover:not(.active) {
+            background-color: #252525;
+        }
+        .form-control, .input-group-text, .input-group-append .btn {
+            background-color: #222;
+            color: #f0f0f0;
+            border-color: #444;
+        }
+        .form-control:focus {
+            background-color: #333;
+            color: #ffffff;
+            border-color: #555;
+            box-shadow: 0 0 0 0.2rem rgba(100, 100, 100, 0.25);
+        }
+        .btn-outline-primary {
+            color: #6ca0f8;
+            border-color: #6ca0f8;
+        }
+        .btn-outline-primary:hover {
+            background-color: #2a4d84;
+            border-color: #6ca0f8;
+        }
+        .btn-outline-danger {
+            color: #ff6b6b;
+            border-color: #ff6b6b;
+        }
+        .btn-outline-danger:hover {
+            background-color: #852a2a;
+            border-color: #ff6b6b;
+        }
+        .btn-outline-secondary {
+            color: #b0b0b0;
+            border-color: #b0b0b0;
+        }
+        .btn-outline-secondary:hover {
+            background-color: #333333;
+            color: #ffffff;
+        }
+        .form-check-label {
+            color: #cccccc;
+        }
+        h1, h5 {
+            color: #ffffff;
+        }
+        select.form-control option {
+            background-color: #222;
+            color: #f0f0f0;
         }
     </style>
 </head>
@@ -208,7 +270,7 @@
                         </div>
                         
                         <div class="d-flex justify-content-between align-items-center">
-                            <a href="instructor_reports/{{ report.filename }}" target="_blank" class="btn btn-sm btn-outline-primary">
+                            <a href="instructor_reports/{{ report.filename }}" class="btn btn-sm btn-outline-primary view-report-link">
                                 <i class="fas fa-external-link-alt"></i> View Report
                             </a>
                             
@@ -386,6 +448,14 @@
             
             // Initialize counts
             updateCategoryCounts();
+
+            // Open report in same tab and inject back button
+            $(document).on('click', '.view-report-link', function(e) {
+                e.preventDefault();
+                var reportUrl = $(this).attr('href');
+                // Load the report in the same tab
+                window.location.href = reportUrl + '?from_category_manager=1';
+            });
         });
     </script>
 </body>
