@@ -198,6 +198,11 @@
                         </form>
                     </div>
                     
+                    <!-- Link to Hidden Reports -->
+                    <div class="mb-3">
+                        <a href="/hidden_reports" class="btn btn-outline-warning btn-block"><i class="fas fa-eye-slash"></i> View Hidden Reports</a>
+                    </div>
+                    
                     <div class="category-form">
                         <form action="{{ url_for('manage_categories') }}" method="post">
                             <input type="hidden" name="action" value="delete">
@@ -426,20 +431,16 @@
             $(".toggle-visibility").click(function() {
                 var button = $(this);
                 var filename = button.data("filename");
-                
                 // Remove any query parameters from the filename
                 if (filename.includes('?')) {
                     filename = filename.split('?')[0];
                 }
-                
-                var currentlyEnabled = button.data("enabled") === "true";
+                var currentlyEnabled = button.data("enabled") === true || button.data("enabled") === "true";
                 var newEnabledState = !currentlyEnabled;
                 var reportCard = button.closest(".report-card");
-                
                 // Show a loading state
                 button.prop('disabled', true);
                 button.html('<i class="fas fa-spinner fa-spin"></i>');
-                
                 $.ajax({
                     url: "/api/toggle_visibility",
                     type: "POST",
@@ -451,55 +452,36 @@
                     success: function(response) {
                         // Always re-enable button first
                         button.prop('disabled', false);
-                        
                         if (response.success) {
                             // Update UI based on the new state regardless of file_moved status
                             if (newEnabledState) {
-                                // Report is now visible
                                 button.html('<i class="fas fa-eye-slash"></i> Hide');
                                 button.removeClass("btn-success").addClass("btn-secondary");
                                 reportCard.removeClass("disabled-report");
                                 reportCard.find(".disabled-overlay").remove();
-                                reportCard.css("display", ""); // Restore visibility
-                                
-                                // Show notification
-                                showNotification(`Report "${reportCard.find('.report-title').text()}" is now visible`);
+                                reportCard.css("display", "");
+                                showNotification(`Report \"${reportCard.find('.report-title').text()}\" is now visible`);
                             } else {
-                                // Report is now hidden
                                 button.html('<i class="fas fa-eye"></i> Show');
                                 button.removeClass("btn-secondary").addClass("btn-success");
                                 reportCard.addClass("disabled-report");
-                                
                                 if (reportCard.find(".disabled-overlay").length === 0) {
                                     reportCard.prepend('<div class="disabled-overlay"><span class="badge badge-secondary">Hidden</span></div>');
                                 }
-                                
-                                // Hide the card with animation
                                 reportCard.fadeOut(400);
-                                
-                                // Show notification
-                                showNotification(`Report "${reportCard.find('.report-title').text()}" is now hidden`);
+                                showNotification(`Report \"${reportCard.find('.report-title').text()}\" is now hidden`);
                             }
-                            
-                            // Update data attribute on both jQuery object AND the DOM element
+                            // CRITICAL: Update both jQuery data and DOM attribute for data-enabled
                             button.data("enabled", newEnabledState);
                             button.attr("data-enabled", newEnabledState);
-                            
-                            // Update category counts
                             updateCategoryCounts();
                         } else {
-                            // Show error
                             showNotification("Error updating visibility: " + (response.error || "Unknown error"), "error");
-                            
-                            // Reset button to original state
                             button.html(currentlyEnabled ? '<i class="fas fa-eye-slash"></i> Hide' : '<i class="fas fa-eye"></i> Show');
                         }
                     },
                     error: function() {
-                        // Show error
                         showNotification("Network error while updating visibility", "error");
-                        
-                        // Reset button
                         button.prop('disabled', false);
                         button.html(currentlyEnabled ? '<i class="fas fa-eye-slash"></i> Hide' : '<i class="fas fa-eye"></i> Show');
                     }

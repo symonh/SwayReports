@@ -32,18 +32,19 @@ def parse_showcase_file():
     reports = []
     report_cards = soup.select('.report-card')
     for idx, card in enumerate(report_cards):
-        # Use get_text() to get the raw text and html.unescape to properly handle entities
         title = html.unescape(card.select_one('.report-title').get_text().strip())
         description = html.unescape(card.select_one('.report-description').get_text().strip())
         link = card.select_one('.view-link')['href']
         filename = os.path.basename(link)
+        # Strip query parameters from filename
+        if '?' in filename:
+            filename = filename.split('?')[0]
         
         # Get assigned categories
         assigned_categories = []
         if 'data-categories' in card.attrs:
             assigned_categories = card['data-categories'].split()
         
-        # Check if report is disabled (hidden)
         enabled = not ('data-disabled' in card.attrs and card['data-disabled'] == 'true')
         
         reports.append({
@@ -90,14 +91,15 @@ def save_showcase_file(categories, reports):
     # Update report cards
     report_cards_container = soup.select_one('.report-cards')
     report_cards_container.clear()
-    
-    # Make sure we completely clear any existing report cards
-    # by removing all children elements
     while report_cards_container.contents:
         report_cards_container.contents[0].decompose()
     
-    # Create cards in the specified order
     for report in reports:
+        # Always strip query parameters from filename before saving
+        filename = report['filename']
+        if '?' in filename:
+            filename = filename.split('?')[0]
+        report['filename'] = filename
         # Create a new report card
         card = soup.new_tag('div')
         card['class'] = 'report-card'
@@ -503,104 +505,88 @@ def api_reorder_reports():
 @app.route('/api/toggle_visibility', methods=['POST'])
 def api_toggle_visibility():
     """API endpoint to toggle report visibility"""
-    data = request.json
-    filename = data.get('filename')
-    enabled = data.get('enabled')
-    
-    # Ensure we have a clean filename without query parameters
-    if filename and '?' in filename:
-        filename = filename.split('?')[0]
-    
-    if filename is None or enabled is None:
-        return jsonify({'success': False, 'error': 'Missing filename or enabled state'}), 400
-    
-    categories, reports = parse_showcase_file()
-    updated = False
-    
-    # File paths
-    reports_dir = os.path.abspath(REPORTS_DIR)
-    hidden_dir = os.path.abspath("hidden_reports")
-    
-    # Ensure hidden directory exists
-    os.makedirs(hidden_dir, exist_ok=True)
-    
-    file_moved = False
-    src_path = None
-    dest_path = None
-    
-    # Move file between directories based on enabled state
-    if enabled:  # Show the report (move from hidden to reports)
-        src_path = os.path.join(hidden_dir, filename)
-        dest_path = os.path.join(reports_dir, filename)
-        if os.path.exists(src_path):
-            try:
-                import shutil
-                # Check if destination already exists - prevent overwriting
-                if os.path.exists(dest_path):
-                    print(f"Warning: Destination file already exists at {dest_path}, not moving")
-                    file_moved = True  # Consider it moved since it's at the right destination
+    import shutil
+    try:
+        data = request.json
+        if not data:
+            return jsonify({'success': False, 'error': 'Missing request data'}), 400
+        
+        filename = data.get('filename')
+        enabled = data.get('enabled')
+        print(f"Toggle visibility request: filename={filename}, enabled={enabled}")
+        
+        # Ensure we have a clean filename without query parameters
+        if filename and '?' in filename:
+            filename = filename.split('?')[0]
+            print(f"Cleaned filename to: {filename}")
+        
+        if filename is None or enabled is None:
+            return jsonify({'success': False, 'error': 'Missing filename or enabled state'}), 400
+        
+        # File paths
+        reports_dir = os.path.abspath(REPORTS_DIR)
+        hidden_dir = os.path.abspath("hidden_reports")
+        os.makedirs(hidden_dir, exist_ok=True)
+        visible_path = os.path.join(reports_dir, filename)
+        hidden_path = os.path.join(hidden_dir, filename)
+        file_moved = False
+        
+        # Move file as needed
+        if enabled:
+            # Show: move from hidden to visible
+            if os.path.exists(hidden_path):
+                if not os.path.exists(visible_path):
+                    shutil.move(hidden_path, visible_path)
+                    print(f"Moved file from {hidden_path} to {visible_path}")
                 else:
-                    shutil.move(src_path, dest_path)
-                    file_moved = True
-                    print(f"Moved file from {src_path} to {dest_path}")
-            except Exception as e:
-                print(f"Error moving file: {e}")
-                return jsonify({'success': False, 'error': f'Error moving file: {str(e)}'}), 500
-    else:  # Hide the report (move from reports to hidden)
-        src_path = os.path.join(reports_dir, filename)
-        dest_path = os.path.join(hidden_dir, filename)
-        if os.path.exists(src_path):
-            try:
-                import shutil
-                # Check if destination already exists - prevent overwriting
-                if os.path.exists(dest_path):
-                    print(f"Warning: Destination file already exists at {dest_path}, not moving")
-                    file_moved = True  # Consider it moved since it's at the right destination
+                    print(f"File already exists in visible path: {visible_path}")
+                file_moved = True
+            elif os.path.exists(visible_path):
+                print(f"File already exists in the correct location: {visible_path}")
+                file_moved = True
+            else:
+                print(f"Error: File not found in either location: {filename}")
+                return jsonify({'success': False, 'error': f"File not found: {filename}"}), 404
+        else:
+            # Hide: move from visible to hidden
+            if os.path.exists(visible_path):
+                if not os.path.exists(hidden_path):
+                    shutil.move(visible_path, hidden_path)
+                    print(f"Moved file from {visible_path} to {hidden_path}")
                 else:
-                    shutil.move(src_path, dest_path)
-                    file_moved = True
-                    print(f"Moved file from {src_path} to {dest_path}")
-            except Exception as e:
-                print(f"Error moving file: {e}")
-                return jsonify({'success': False, 'error': f'Error moving file: {str(e)}'}), 500
-    
-    # If file wasn't moved, check if it's already in the right place
-    if not file_moved:
-        expected_path = os.path.join(reports_dir if enabled else hidden_dir, filename)
-        if os.path.exists(expected_path):
-            print(f"File already exists at the correct location: {expected_path}")
-            file_moved = True  # Treat as success since file is where it should be
-    
-    # Also update the metadata in the showcase file
-    for report in reports:
-        if report['filename'] == filename:
-            report['enabled'] = enabled
-            updated = True
-            break
-    
-    if updated:
+                    print(f"File already exists in hidden path: {hidden_path}")
+                file_moved = True
+            elif os.path.exists(hidden_path):
+                print(f"File already exists in the correct location: {hidden_path}")
+                file_moved = True
+            else:
+                print(f"Error: File not found in either location: {filename}")
+                return jsonify({'success': False, 'error': f"File not found: {filename}"}), 404
+        
+        # Update the showcase metadata
+        categories, reports = parse_showcase_file()
+        print(f"Showcase reports filenames: {[r['filename'] for r in reports]}")
+        found = False
+        for report in reports:
+            if report['filename'].strip().lower() == filename.strip().lower():
+                report['enabled'] = enabled
+                found = True
+                print(f"Updated showcase metadata for {filename} to enabled={enabled}")
+                break
         save_showcase_file(categories, reports)
-        
-        # Update the showcase
-        showcase_path = os.path.abspath(SHOWCASE_FILE)
-        
-        try:
-            # Import the update_showcase module
-            import importlib
-            import sys
-            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-            import update_showcase
-            importlib.reload(update_showcase)
-            
-            # Call the function to update the showcase
-            update_showcase.update_showcase(showcase_path, reports_dir, refresh_existing=False)
-            print(f"Automatically updated showcase after visibility change for report {filename} to enabled={enabled}")
-        except Exception as e:
-            print(f"Error updating showcase after visibility change: {e}")
-        
-        return jsonify({'success': True, 'enabled': enabled, 'file_moved': file_moved})
-    else:
-        return jsonify({'success': False, 'error': 'Report not found'}), 404
+        if not found:
+            print(f"WARNING: Report {filename} not found in showcase metadata. File was still moved.")
+        return jsonify({
+            'success': True,
+            'enabled': enabled,
+            'file_moved': file_moved,
+            'metadata_updated': found
+        })
+    except Exception as e:
+        import traceback
+        error_msg = f"Error in toggle_visibility: {str(e)}\n{traceback.format_exc()}"
+        print(error_msg)
+        return jsonify({'success': False, 'error': error_msg}), 500
 
 @app.route('/api/run_update_showcase', methods=['POST'])
 def api_run_update_showcase():
@@ -631,6 +617,33 @@ def api_run_update_showcase():
         })
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)}), 500
+
+@app.route('/hidden_reports')
+def hidden_reports():
+    """Display all hidden reports and allow unhiding them"""
+    hidden_dir = os.path.abspath("hidden_reports")
+    reports = []
+    if os.path.exists(hidden_dir):
+        for fname in os.listdir(hidden_dir):
+            if fname.endswith('.html') and not fname.startswith('.'):
+                # Try to get metadata from showcase if possible
+                categories, showcase_reports = parse_showcase_file()
+                meta = next((r for r in showcase_reports if r['filename'] == fname), None)
+                if meta:
+                    title = meta['title']
+                    description = meta['description']
+                    categories = meta['categories']
+                else:
+                    title = fname.replace('.html', '').replace('-', ' ')
+                    description = ''
+                    categories = []
+                reports.append({
+                    'filename': fname,
+                    'title': title,
+                    'description': description,
+                    'categories': categories
+                })
+    return render_template('hidden_reports.html', reports=reports)
 
 # Create templates directory and template file if they don't exist
 os.makedirs('templates', exist_ok=True)
