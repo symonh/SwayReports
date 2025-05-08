@@ -91,6 +91,11 @@ def save_showcase_file(categories, reports):
     report_cards_container = soup.select_one('.report-cards')
     report_cards_container.clear()
     
+    # Make sure we completely clear any existing report cards
+    # by removing all children elements
+    while report_cards_container.contents:
+        report_cards_container.contents[0].decompose()
+    
     # Create cards in the specified order
     for report in reports:
         # Create a new report card
@@ -101,9 +106,10 @@ def save_showcase_file(categories, reports):
         valid_categories = [c.strip().lower() for c in report['categories'] if c.strip()]
         card['data-categories'] = ' '.join(valid_categories)
         
-        # Add disabled attribute if report is disabled
+        # Always set the disabled attribute explicitly to ensure frontend JS works correctly
+        card['data-disabled'] = str(not report.get('enabled', True)).lower()
         if not report.get('enabled', True):
-            card['data-disabled'] = 'true'
+            card['class'] = 'report-card disabled-report'
             card['style'] = 'display: none;'  # Initially hidden
         
         # Create title div - use a direct HTML approach to avoid escaping issues
@@ -334,6 +340,25 @@ def manage_categories():
         
         # Save changes
         save_showcase_file(categories, reports)
+        
+        # Force update the showcase file to reflect the category changes
+        showcase_path = os.path.abspath(SHOWCASE_FILE)
+        reports_dir = os.path.abspath(REPORTS_DIR)
+        
+        try:
+            # Import and reload update_showcase module
+            import sys
+            import importlib
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+            import update_showcase
+            importlib.reload(update_showcase)
+            
+            # Update the showcase with the new categories
+            update_showcase.update_showcase(showcase_path, reports_dir, refresh_existing=False)
+            print("Automatically updated showcase after category change")
+        except Exception as e:
+            print(f"Error updating showcase after category change: {e}")
+        
         return redirect(url_for('index'))
     
     return render_template('category_manager.html', categories=categories, reports=reports)
@@ -345,9 +370,17 @@ def assign_categories():
     
     report_index = int(request.form.get('report_index'))
     new_categories = request.form.getlist('categories')
+    new_title = request.form.get('report_title')
     
     if 0 <= report_index < len(reports):
         reports[report_index]['categories'] = new_categories
+        
+        # Update title if changed
+        if new_title and new_title != reports[report_index]['title']:
+            reports[report_index]['title'] = new_title
+            # Also update the actual report file
+            update_report_title(reports[report_index]['filename'], new_title)
+            
         save_showcase_file(categories, reports)
     
     return redirect(url_for('index'))
@@ -488,9 +521,65 @@ def api_toggle_visibility():
     
     if updated:
         save_showcase_file(categories, reports)
-        return jsonify({'success': True})
+        
+        # This is a critical update that should be immediately reflected in the showcase file
+        # Force regenerate the showcase file with the updated visibility settings
+        showcase_path = os.path.abspath(SHOWCASE_FILE)
+        reports_dir = os.path.abspath(REPORTS_DIR)
+        
+        # Get the script to reimport/update module
+        import importlib
+        import sys
+        
+        # Import the update_showcase module (assuming it's in the same directory)
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        
+        try:
+            # Try to import the module
+            import update_showcase
+            
+            # Reload if already imported
+            importlib.reload(update_showcase)
+            
+            # Call the function to update the showcase
+            update_showcase.update_showcase(showcase_path, reports_dir, refresh_existing=False)
+            print(f"Automatically updated showcase after visibility change for report {filename} to enabled={enabled}")
+        except Exception as e:
+            print(f"Error updating showcase after visibility change: {e}")
+        
+        return jsonify({'success': True, 'enabled': enabled})
     else:
         return jsonify({'success': False, 'error': 'Report not found'}), 404
+
+@app.route('/api/run_update_showcase', methods=['POST'])
+def api_run_update_showcase():
+    """API endpoint to run the update_showcase script"""
+    try:
+        # Get absolute paths
+        showcase_path = os.path.abspath(SHOWCASE_FILE)
+        reports_dir = os.path.abspath(REPORTS_DIR)
+        
+        # Get refresh_existing parameter from request data
+        data = request.json or {}
+        refresh_existing = data.get('refresh_existing', False)
+        
+        # Import the update_showcase module
+        import sys
+        import importlib
+        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+        import update_showcase
+        importlib.reload(update_showcase)
+        
+        # Run the update_showcase function
+        result = update_showcase.update_showcase(showcase_path, reports_dir, refresh_existing)
+        
+        # Return a message with the result
+        return jsonify({
+            'success': True,
+            'message': f"Update completed successfully. Added {len(result.get('new_reports', []))} new reports, updated {len(result.get('updated_reports', []))} existing reports."
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)}), 500
 
 # Create templates directory and template file if they don't exist
 os.makedirs('templates', exist_ok=True)

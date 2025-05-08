@@ -163,7 +163,12 @@ def extract_existing_reports_data(showcase_file):
                     all_categories.append(category)
         
         # Extract all report cards
-        for card in soup.select('.report-card'):
+        report_cards = soup.select('.report-card')
+        print(f"DEBUG: Found {len(report_cards)} report card elements in HTML")
+        
+        processed_filenames = set()  # Track filenames to avoid duplicates
+        
+        for card in report_cards:
             # Extract report data
             title_elem = card.select_one('.report-title')
             desc_elem = card.select_one('.report-description')
@@ -171,25 +176,43 @@ def extract_existing_reports_data(showcase_file):
             
             # Skip if any required element is missing
             if not title_elem or not desc_elem or not link_elem:
+                print(f"DEBUG: Skipping card missing required elements")
                 continue
                 
             # Get title, description, and filename
             title = html.unescape(title_elem.get_text().strip())
             description = html.unescape(desc_elem.get_text().strip())
             href = link_elem.get('href', '')
-            filename = os.path.basename(href) if href else None
             
-            # Skip if filename is missing
+            # Extract filename from href, handling different formats
+            if href:
+                if '?' in href:
+                    # Remove query parameters if present
+                    href = href.split('?')[0]
+                filename = os.path.basename(href)
+            else:
+                filename = None
+            
+            # Skip if filename is missing or already processed
             if not filename:
+                print(f"DEBUG: Skipping card with missing filename")
                 continue
                 
+            if filename in processed_filenames:
+                print(f"DEBUG: Skipping duplicate filename: {filename}")
+                continue
+            
+            processed_filenames.add(filename)
+            
             # Get categories
             categories = []
             if 'data-categories' in card.attrs:
                 categories = card['data-categories'].split()
             
-            # Check if the report is disabled
-            enabled = not ('data-disabled' in card.attrs and card['data-disabled'] == 'true')
+            # Properly detect if a report is disabled (using both attribute and class)
+            is_disabled_attr = 'data-disabled' in card.attrs and card['data-disabled'] == 'true'
+            is_disabled_class = 'disabled-report' in card.get('class', [])
+            enabled = not (is_disabled_attr or is_disabled_class)
             
             # Store report data
             existing_reports[filename] = {
@@ -201,6 +224,8 @@ def extract_existing_reports_data(showcase_file):
             
             # Track the order
             report_order.append(filename)
+        
+        print(f"DEBUG: Successfully processed {len(existing_reports)} unique reports")
         
         # Add order information to the return value
         return {
@@ -261,20 +286,25 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
         file_path = os.path.join(reports_dir, filename)
         
         # Check if this report already exists in the showcase
-        if filename in existing_reports and not refresh_existing:
-            # Report exists, reuse existing data
-            print(f"Preserving existing data for {filename}")
-            continue
-        elif filename in existing_reports and refresh_existing:
+        if filename in existing_reports:
+            # For existing reports, always update title and description data
+            # but preserve enabled state and categories
             # Report exists, but we're refreshing all data
-            print(f"Refreshing data for existing report: {filename}")
+            print(f"Updating title and description for existing report: {filename}")
             title, categories = extract_title_and_categories(file_path)
             description = extract_first_paragraph(file_path)
             
             # Preserve the enabled/disabled state
             enabled = existing_reports[filename].get('enabled', True)
+            print(f"Report {filename} enabled state: {enabled}")
             
-            # Update the report data
+            # Update the report data but preserve existing categories
+            existing_categories = existing_reports[filename].get('categories', [])
+            
+            # We're refreshing titles and descriptions, but keeping existing categories
+            if not refresh_existing:
+                categories = existing_categories
+            
             existing_reports[filename] = {
                 'title': title,
                 'description': description,
@@ -287,7 +317,11 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
                 if category not in all_categories:
                     all_categories.append(category)
             
-            updated_reports.append(filename)
+            if refresh_existing:
+                updated_reports.append(filename)
+            else:
+                # In normal mode, we only track full refreshes, not just title/description updates
+                pass
         else:
             # This is a new report, process it
             print(f"Processing new report: {filename}")
@@ -445,10 +479,12 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
             pill.string = category.replace('-', ' ').title()
             category_bar.append(pill)
     
-    # Update report cards container
+    # Update report cards
     report_cards_container = soup.select_one('.report-cards')
     if report_cards_container:
-        report_cards_container.clear()
+        # First completely clear the container by removing all children
+        while report_cards_container.contents:
+            report_cards_container.contents[0].decompose()
         
         # Add cards in the specified order
         for filename in updated_order:
@@ -471,6 +507,7 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
                 if not report_data.get('enabled', True):
                     card['data-disabled'] = 'true'
                     card['style'] = 'display: none;'  # Initially hidden
+                    card['class'] = 'report-card disabled-report'  # Add disabled-report class
                 
                 # Add title - use a direct HTML approach to avoid escaping issues
                 title_div = soup.new_tag('div')
@@ -511,7 +548,10 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
                 # Add the report card to the container
                 report_cards_container.append(card)
     
-    # Save the updated showcase file
+    # Remove the footer if it exists
+    footer = soup.find('footer')
+    if footer:
+        footer.decompose()
     html_output = str(soup)
     with open(showcase_file, 'w', encoding='utf-8') as file:
         file.write(html_output)
@@ -525,7 +565,9 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
             'categories': all_categories
         }, f, indent=2)
     
-    print(f"Updated showcase with {len(html_files)} reports ({len(new_reports)} new, {len(updated_reports)} refreshed)")
+    # Exclude files that aren't actually HTML reports (like .DS_Store, etc.)
+    valid_html_files = [f for f in html_files if f.endswith('.html') and not f.startswith('.')]
+    print(f"Updated showcase with {len(existing_reports)} reports ({len(new_reports)} new, {len(updated_reports)} refreshed)")
     print(f"JSON backup of all report data saved to: {json_backup}")
     
     return {
@@ -564,7 +606,33 @@ if __name__ == "__main__":
         for filename in result['new_reports']:
             print(f"- {filename}")
     
-    print(f"\nTotal reports: {len(result['reports'])}")
+    # Get an accurate count of actual HTML reports in the directory
+    html_report_files = [f for f in os.listdir(args.reports_dir) if f.endswith('.html') and not f.startswith('.')]
+    print(f"\nTotal reports in directory: {len(html_report_files)}")
+    print(f"Total reports in showcase: {len(result['reports'])}")
+    
+    # Check for any discrepancy
+    if len(html_report_files) != len(result['reports']):
+        print(f"\nWARNING: Number of reports in directory ({len(html_report_files)}) doesn't match showcase count ({len(result['reports'])})")
+        
+        # Show missing reports if any
+        missing_in_showcase = set(html_report_files) - set(result['reports'].keys())
+        if missing_in_showcase:
+            print(f"Reports in directory but missing from showcase: {len(missing_in_showcase)}")
+            for missing in list(missing_in_showcase)[:5]:  # Show first 5 only to avoid clutter
+                print(f"  - {missing}")
+            if len(missing_in_showcase) > 5:
+                print(f"  ... and {len(missing_in_showcase) - 5} more")
+                
+        # Show extra reports if any
+        extra_in_showcase = set(result['reports'].keys()) - set(html_report_files)
+        if extra_in_showcase:
+            print(f"Reports in showcase but missing from directory: {len(extra_in_showcase)}")
+            for extra in list(extra_in_showcase)[:5]:  # Show first 5 only to avoid clutter
+                print(f"  - {extra}")
+            if len(extra_in_showcase) > 5:
+                print(f"  ... and {len(extra_in_showcase) - 5} more")
+    
     print(f"Categories: {', '.join(result['categories'])}")
     print("\nYour showcase has been updated. All your manual work is preserved.")
     if not args.refresh_existing:

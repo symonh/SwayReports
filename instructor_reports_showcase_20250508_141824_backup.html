@@ -1,0 +1,491 @@
+<!-- This file is auto-generated for instructor report showcase. Edit with care. -->
+<!DOCTYPE html>
+
+<html class="dark-mode" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" name="viewport"/>
+<title>Sway Instructor Reports Showcase</title>
+<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" id="theme-css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<style>
+    :root {
+      /* Darkened dark mode theme - matching instructor reports */
+      --bg-color: #000000;          /* Near-black background */
+      --card-bg: #000000;           /* Deeper navy card */
+      --card-header-bg: #0f0f1d;   /* Darker header */
+      --text-color: #ffffff;
+      --muted-text-color: #0a0a0c;
+      --border-color: #1f1f2d;
+      --button-bg: #391960;
+      --button-hover-bg: #3a3a59; 
+      --primary-color: #8a8aff;
+      --link-color: #a3a3ff;
+      --input-bg: #252538;
+      --highlight-bg: rgba(138, 138, 255, 0.1);
+      --category-pill-bg: #141422;
+      --category-pill-active-bg: #8a8aff;
+      --category-pill-active-text: #ffffff;
+    }
+    
+    /* Light mode theme variables - matching instructor reports */
+    html.light-mode {
+      --bg-color: #f5f7fa;
+      --card-bg: #ffffff;
+      --card-header-bg: #f0f5fc;
+      --text-color: #2c3e50;
+      --muted-text-color: #5a6a7e;
+      --border-color: #d1d9e6;
+      --link-color: #23004D;
+      --button-bg: #eef2f7;
+      --button-hover-bg: #d9e2ec;
+      --primary-color: #23004D;
+      --input-bg: #ffffff;
+      --highlight-bg: rgba(35, 0, 77, 0.05);
+      --category-pill-bg: #eef2f7;
+      --category-pill-active-bg: #23004D;
+      --category-pill-active-text: #ffffff;
+    }
+    
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      line-height: 1.6;
+      padding: 0;
+      margin: 0;
+      min-height: 100vh;
+    }
+    
+    .header {
+      background-color: var(--card-header-bg);
+      padding: 2.5rem 0 1.8rem 0;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      position: relative;
+    }
+    
+    .header h1 {
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin-bottom: 0.7rem;
+      color: var(--primary-color);
+      /* Preserve the gradient effect from the original */
+      background: linear-gradient(90deg, #8a8aff, #ff8a8a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      letter-spacing: -0.01em;
+    }
+    
+    .header p {
+      font-size: 1.15rem;
+      color: var(--muted-text-color);
+      max-width: 800px;
+      margin: 0 auto;
+      line-height: 1.5;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      padding: 0 1rem;
+      margin: 0 auto;
+    }
+    
+    .category-bar {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.6rem;
+      margin-bottom: 2.5rem;
+      position: sticky;
+      top: 0;
+      padding: 1rem 0;
+      background-color: var(--bg-color);
+      z-index: 10;
+      width: 100%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .category-pill {
+      background-color: var(--category-pill-bg);
+      color: var(--text-color);
+      border: 1px solid var(--border-color);
+      border-radius: 50px;
+      padding: 0.6rem 1.3rem;
+      font-size: 0.92rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    
+    .category-pill:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+    
+    .category-pill.active {
+      background-color: var(--category-pill-active-bg);
+      color: var(--category-pill-active-text);
+      border-color: var(--category-pill-active-bg);
+      box-shadow: 0 3px 8px rgba(138, 138, 255, 0.3);
+    }
+    
+    .report-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.8rem;
+      margin-bottom: 3rem;
+      width: 100%;
+      box-sizing: border-box;
+    }
+    
+    .report-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 1.8rem 1.8rem 1.5rem 1.8rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+      overflow: hidden;
+      width: 100%;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      min-height: 280px;
+      border: 1px solid var(--border-color);
+    }
+    
+    .report-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+      border-color: var(--primary-color);
+    }
+    
+    .report-title {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--primary-color);
+      margin-bottom: 0.8rem;
+      line-height: 1.3;
+      letter-spacing: -0.01em;
+    }
+    
+    .report-description {
+      font-size: 1rem;
+      color: var(--text-color);
+      margin-bottom:.4rem;
+      flex-grow: 1;
+      line-height: 1.6;
+    }
+    
+    .report-meta {
+      font-size: 0.9rem;
+      color: var(--muted-text-color);
+      margin-bottom: 0.5rem;
+    }
+    
+    .view-link {
+      margin-top: auto;
+      align-self: flex-start;
+      background: var(--primary-color);
+      color: #fff !important;
+      border-radius: 30px;
+      padding: 0.5rem 1.2rem;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: all 0.2s ease;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+      border: none;
+      margin-top: 1rem;
+    }
+    
+    .view-link:hover {
+      background: var(--button-hover-bg);
+      color: #fff;
+      text-decoration: none;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+    
+    .theme-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      background-color: var(--card-bg);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      cursor: pointer;
+      z-index: 100;
+      transition: all 0.3s ease;
+      -webkit-tap-highlight-color: transparent;
+      border: 1px solid var(--border-color);
+    }
+    
+    .theme-toggle:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+    }
+    
+    .theme-toggle i {
+      font-size: 1.5rem;
+      color: var(--text-color);
+    }
+    
+    footer {
+      background-color: var(--card-header-bg);
+      padding: 2rem 0;
+      text-align: center;
+      margin-top: 3rem;
+      box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+    }
+    
+    footer p {
+      color: var(--muted-text-color);
+      margin-bottom: 0;
+    }
+    
+    /* Light mode specific styles */
+    html.light-mode .report-card {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    }
+    
+    html.light-mode .report-card:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    }
+
+    html.light-mode .report-title {
+      color: var(--primary-color);
+    }
+
+    html.light-mode .view-link {
+      background-color: var(--primary-color);
+    }
+
+    html.light-mode .view-link:hover {
+      background-color: #380080;
+    }
+    
+    /* Responsive styles */
+    @media (max-width: 992px) {
+      .container { padding: 0 1rem; }
+      .report-cards { grid-template-columns: 1fr; gap: 1.5rem; }
+      .header { padding: 1.8rem 0; margin-bottom: 1.5rem; }
+      .header h1 { font-size: 2.2rem; }
+      .header p { font-size: 1.1rem; }
+      .category-bar { padding: 0.8rem 0; }
+    }
+    
+    @media (max-width: 768px) {
+      .report-cards { grid-template-columns: 1fr; gap: 1.2rem; }
+      .report-card { padding: 1.5rem; }
+      .header { padding: 1.5rem 0; margin-bottom: 1.2rem; }
+      .header h1 { font-size: 1.8rem; }
+      .header p { font-size: 1rem; }
+      .category-bar { 
+        overflow-x: auto; 
+        justify-content: flex-start; 
+        padding: 0.8rem 1rem; 
+        margin-bottom: 1.5rem; 
+        scrollbar-width: none; 
+        -ms-overflow-style: none;
+      }
+      .category-bar::-webkit-scrollbar { display: none; }
+      .category-pill { padding: 0.5rem 1rem; font-size: 0.85rem; white-space: nowrap; }
+      .theme-toggle { bottom: 1.5rem; right: 1.5rem; width: 45px; height: 45px; }
+    }
+    
+    @media (max-width: 480px) {
+      .container { padding: 0 0.8rem; }
+      .report-card { padding: 1.2rem; margin-bottom: 0; }
+      .report-title { font-size: 1.15rem; }
+      .report-description { font-size: 0.95rem; }
+      .header h1 { font-size: 1.6rem; }
+      .header p { font-size: 0.9rem; padding: 0 0.8rem; }
+      .theme-toggle { bottom: 1rem; right: 1rem; width: 40px; height: 40px; }
+      .category-pill { 
+        padding: 0.4rem 0.8rem; 
+        min-height: 36px; 
+        display: flex; 
+        align-items: center; 
+        justify-content: center;
+        font-size: 0.8rem;
+      }
+      footer { padding: 1.5rem 0; margin-top: 2rem; }
+      .view-link { font-size: 0.9rem; padding: 0.4rem 1rem; }
+    }
+    
+    @media (hover: none) {
+      .report-card:hover { transform: none; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+      .category-pill:hover { transform: none; }
+      .view-link:hover { transform: none; }
+    }
+    
+    @supports (padding: max(0px)) {
+      .container, .header, .footer { 
+        padding-left: max(1rem, env(safe-area-inset-left)); 
+        padding-right: max(1rem, env(safe-area-inset-right)); 
+      }
+      .theme-toggle { 
+        right: max(1rem, env(safe-area-inset-right)); 
+        bottom: max(1rem, env(safe-area-inset-bottom)); 
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+<div class="category-bar"><button class="category-pill active" data-category="all">All Reports</button><button class="category-pill" data-category="healthcare-&amp;-science">Healthcare &amp; Science</button><button class="category-pill" data-category="philosophy-&amp;-ethics">Philosophy &amp; Ethics</button><button class="category-pill" data-category="environment">Environment</button><button class="category-pill" data-category="social-issues">Social Issues</button><button class="category-pill" data-category="education">Education</button><button class="category-pill" data-category="ethics">Ethics</button><button class="category-pill" data-category="healthcare">Healthcare</button><button class="category-pill" data-category="bioethics">Bioethics</button><button class="category-pill" data-category="philosophy">Philosophy</button><button class="category-pill" data-category="science">Science</button></div>
+<div class="report-cards"><div class="report-card" data-categories="healthcare-&amp;-science philosophy-&amp;-ethics"><div class="report-title">Euthanasia for Mental Illness</div><div class="report-description">Students engaged with ethical questions surrounding euthanasia and the moral equivalence of killing versus letting die. They analyzed topics including active euthanasia's permissibility, the treatment of psychiatric versus physical suffering in end-of-life decisions, and the moral weight of action versus inaction in life-or-death scenarios.</div><a class="view-link" href="instructor_reports/Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="philosophy-&amp;-ethics education"><div class="report-title">Frankenpets, Super-Athletes &amp; Designer Babies</div><div class="report-description">Students analyzed and debated ethical questions around bodily modifications and enhancements in three contexts: cosmetic surgeries for pets, performance supplements in sports, and growth hormone therapy for children with idiopathic short stature. They weighed harms versus benefits, consent and autonomy, fairness and naturalness, and the influence of societal biases....</div><a class="view-link" href="instructor_reports/Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="healthcare-&amp;-science philosophy-&amp;-ethics social-issues"><div class="report-title">Should Alcoholics Get Liver Transplants?</div><div class="report-description">Students debated the ethical challenges of allocating scarce medical resources in healthcare settings. They discussed difficult prioritization decisions, exploring whether certain patients deserve priority access to limited treatments or transplants based on criteria like disability status, personal responsibility in illness (particularly alcoholism and liver transplants), and ability to pay....</div><a class="view-link" href="instructor_reports/Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="philosophy-&amp;-ethics environment social-issues"><div class="report-title">Animal Suffering &amp; Factory Farming</div><div class="report-description">Students debated the moral significance of animal and human pain. They explored whether physiological similarities in pain perception should translate to equal moral consideration or if human cognitive capacities justify differential treatment. The discussions examined practical implications including emergency resource allocation, medical testing ethics, and animal welfare regulations...</div><a class="view-link" href="instructor_reports/Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="healthcare-&amp;-science environment"><div class="report-title">What Is A Species &amp; The Ethics of Conservation Biology</div><div class="report-description">Students debated competing frameworks for defining species, the ethics and practicality of interventionist conservation approaches, and the tension between traditional conservation methods and emerging technologies. Throughout their exchanges, students were encouraged to critically evaluate scientific evidence, consider real-world applications, and refine their positions based on each other's insights...</div><a class="view-link" href="instructor_reports/Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="environment social-issues"><div class="report-title">Involuntary Commitment &amp; Housing First</div><div class="report-description">Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care...</div><a class="view-link" href="instructor_reports/Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="social-issues education"><div class="report-title">Affirmative Action for Boys and Men</div><div class="report-description">Students debated three topics: whether Kamala Harris's 2024 loss proves the US isn't ready for a woman president, if women should receive more paid parental leave due to traditional childcare roles, and whether special scholarships for boys and men are justified. Students engaged with opposing viewpoints, leading to nuanced explorations of gender, policy design, and societal expectations....</div><a class="view-link" href="instructor_reports/Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="healthcare-&amp;-science social-issues"><div class="report-title">Debating Abortion: Philosophical Arguments</div><div class="report-description">Students debated philosophical arguments about abortion ethics, focusing particularly on personhood, bodily autonomy, and the moral status of fetuses. They discussed perspectives from Marquis's "future like ours" argument, Thomson's bodily autonomy framework, and other philosophical positions while exploring the tensions between maternal rights and fetal moral status...</div><a class="view-link" href="instructor_reports/Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="education"><div class="report-title">Navigating The Hazards of Group Work</div><div class="report-description">Students debated how to handle challenging group work scenarios, particularly around issues of uneven contribution, poor communication, and fairness in credit allocation. They were presented with scenarios in which team members either overworked, undercontributed, or "ghosted" their groups, and were asked to debate appropriate responses to these situations...</div><a class="view-link" href="instructor_reports/Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="healthcare-&amp;-science social-issues"><div class="report-title">Universal Healthcare, Job Guarantees &amp; Reindustrialization</div><div class="report-description">Students debated two major policy topics: universal healthcare and reindustrialization as a remedy for "deaths of despair." In both cases, they were often assigned devil's advocate roles to ensure robust argumentation from multiple perspectives. For healthcare debates, students examined whether the U.S. should guarantee insurance coverage for all legal residents, weighing moral imperatives against economic feasibility....</div><a class="view-link" href="instructor_reports/Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="healthcare-&amp;-science philosophy-&amp;-ethics"><div class="report-title">Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?</div><div class="report-description">Students debated the balance between patient autonomy and medical paternalism, the ethics of amputation for Body Integrity Identity Disorder (BIID), and the appropriateness of "nudging" in medical decision-making. Students engaged in pairs (occasionally trios) to debate these complex ethical dilemmas, with Guide prompting them to deepen their analysis, consider different perspectives, and develop nuanced positions on controversial medical ethics topics....</div><a class="view-link" href="instructor_reports/Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="philosophy-&amp;-ethics social-issues education"><div class="report-title">Circumcision, Parental Leave &amp; Other Topics</div><div class="report-description">Students debated ethical questions surrounding beauty standards, media representation, income inequality, and aging. They engaged in substantive discussions about societal pressures, personal autonomy, and systemic change. Many discussions demonstrated students' ability to move beyond initial polarized positions toward more nuanced understanding while considering practical solutions.</div><a class="view-link" href="instructor_reports/Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="philosophy-&amp;-ethics education"><div class="report-title">Moral Agency, Heroism &amp; Purpose in Classical Texts</div><div class="report-description">Students explored and debated philosophical, literary, and ethical questions. They engaged in guided conversations about topics ranging from Shakespearean tragedy to ancient Greek philosophy. Sway's Guide challenged them to refine their thinking and develop more nuanced arguments.</div><a class="view-link" href="instructor_reports/Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="healthcare-&amp;-science philosophy-&amp;-ethics"><div class="report-title">Should You Be Allowed To Donate Your Heart?</div><div class="report-description">Students debated the ethical and practical viability of organ markets, primarily focusing on kidney markets with some exploration of heart/vital organ markets. They analyzed the complex balance between addressing organ shortages and preventing exploitation, considering various regulatory frameworks, alternatives to market solutions, and the broader ethical implications of commercializing human body parts....</div><a class="view-link" href="instructor_reports/Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="social-issues education"><div class="report-title">Policies for Combatting "Deaths of Despair"</div><div class="report-description">Students debated the economic, practical, and ethical dimensions of government-guaranteed universal healthcare coverage. They explored tensions between increased access and potential quality concerns, the balance between taxes and overall cost savings, and how different implementation models might address various challenges...</div><a class="view-link" href="instructor_reports/Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="healthcare-&amp;-science philosophy-&amp;-ethics social-issues"><div class="report-title">Testing The Limits of Tolerance: Hijab Laws and FGM</div><div class="report-description">Students debated three main topics: (1) whether courts should default to maternal custody in opposite-sex divorces, (2) whether we should respect female genital mutilation (FGM) as a cultural practice, and (3) whether a gender-neutral approach to genital cutting requires treating male circumcision and FGM equally...</div><a class="view-link" href="instructor_reports/Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics healthcare bioethics"><div class="report-title">Euthanasia for Mental Illness</div><div class="report-description">Students engaged with ethical questions surrounding euthanasia and the moral equivalence of killing versus letting die. They analyzed topics including active euthanasia's permissibility, the treatment of psychiatric versus physical suffering in end-of-life decisions, and the moral weight of action versus inaction in life-or-death scenarios.</div><a class="view-link" href="instructor_reports/Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Frankenpets, Super-Athletes &amp; Designer Babies</div><div class="report-description">Students analyzed and debated ethical questions around bodily modifications and enhancements in three contexts: cosmetic surgeries for pets, performance supplements in sports, and growth hormone therapy for children with idiopathic short stature. They weighed harms versus benefits, consent and autonomy, fairness and naturalness, and the influence of societal biases....</div><a class="view-link" href="instructor_reports/Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Should Alcoholics Get Liver Transplants?</div><div class="report-description">Students debated the ethical challenges of allocating scarce medical resources in healthcare settings. They discussed difficult prioritization decisions, exploring whether certain patients deserve priority access to limited treatments or transplants based on criteria like disability status, personal responsibility in illness (particularly alcoholism and liver transplants), and ability to pay....</div><a class="view-link" href="instructor_reports/Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics environment"><div class="report-title">Animal Suffering &amp; Factory Farming</div><div class="report-description">Students debated the moral significance of animal and human pain. They explored whether physiological similarities in pain perception should translate to equal moral consideration or if human cognitive capacities justify differential treatment. The discussions examined practical implications including emergency resource allocation, medical testing ethics, and animal welfare regulations...</div><a class="view-link" href="instructor_reports/Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Involuntary Commitment &amp; Housing First</div><div class="report-description">Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care...</div><a class="view-link" href="instructor_reports/Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Affirmative Action for Boys and Men</div><div class="report-description">Students debated three topics: whether Kamala Harris's 2024 loss proves the US isn't ready for a woman president, if women should receive more paid parental leave due to traditional childcare roles, and whether special scholarships for boys and men are justified. Students engaged with opposing viewpoints, leading to nuanced explorations of gender, policy design, and societal expectations....</div><a class="view-link" href="instructor_reports/Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics philosophy bioethics"><div class="report-title">Debating Abortion: Philosophical Arguments</div><div class="report-description">Students debated philosophical arguments about abortion ethics, focusing particularly on personhood, bodily autonomy, and the moral status of fetuses. They discussed perspectives from Marquis's "future like ours" argument, Thomson's bodily autonomy framework, and other philosophical positions while exploring the tensions between maternal rights and fetal moral status...</div><a class="view-link" href="instructor_reports/Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Navigating The Hazards of Group Work</div><div class="report-description">Students debated how to handle challenging group work scenarios, particularly around issues of uneven contribution, poor communication, and fairness in credit allocation. They were presented with scenarios in which team members either overworked, undercontributed, or "ghosted" their groups, and were asked to debate appropriate responses to these situations...</div><a class="view-link" href="instructor_reports/Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics healthcare"><div class="report-title">Universal Healthcare, Job Guarantees &amp; Reindustrialization</div><div class="report-description">Students debated two major policy topics: universal healthcare and reindustrialization as a remedy for "deaths of despair." In both cases, they were often assigned devil's advocate roles to ensure robust argumentation from multiple perspectives. For healthcare debates, students examined whether the U.S. should guarantee insurance coverage for all legal residents, weighing moral imperatives against economic feasibility....</div><a class="view-link" href="instructor_reports/Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics healthcare"><div class="report-title">Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?</div><div class="report-description">Students debated the balance between patient autonomy and medical paternalism, the ethics of amputation for Body Integrity Identity Disorder (BIID), and the appropriateness of "nudging" in medical decision-making. Students engaged in pairs (occasionally trios) to debate these complex ethical dilemmas, with Guide prompting them to deepen their analysis, consider different perspectives, and develop nuanced positions on controversial medical ethics topics....</div><a class="view-link" href="instructor_reports/Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics science philosophy environment"><div class="report-title">What Is A Species &amp; The Ethics of Conservation Biology</div><div class="report-description">Students debated competing frameworks for defining species, the ethics and practicality of interventionist conservation approaches, and the tension between traditional conservation methods and emerging technologies. Throughout their exchanges, students were encouraged to critically evaluate scientific evidence, consider real-world applications, and refine their positions based on each other's insights...</div><a class="view-link" href="instructor_reports/Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Circumcision, Parental Leave &amp; Other Topics</div><div class="report-description">Students debated ethical questions surrounding beauty standards, media representation, income inequality, and aging. They engaged in substantive discussions about societal pressures, personal autonomy, and systemic change. Many discussions demonstrated students' ability to move beyond initial polarized positions toward more nuanced understanding while considering practical solutions.</div><a class="view-link" href="instructor_reports/Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics philosophy"><div class="report-title">Moral Agency, Heroism &amp; Purpose in Classical Texts</div><div class="report-description">Students explored and debated philosophical, literary, and ethical questions. They engaged in guided conversations about topics ranging from Shakespearean tragedy to ancient Greek philosophy. Sway's Guide challenged them to refine their thinking and develop more nuanced arguments.</div><a class="view-link" href="instructor_reports/Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Should You Be Allowed To Donate Your Heart?</div><div class="report-description">Students debated the ethical and practical viability of organ markets, primarily focusing on kidney markets with some exploration of heart/vital organ markets. They analyzed the complex balance between addressing organ shortages and preventing exploitation, considering various regulatory frameworks, alternatives to market solutions, and the broader ethical implications of commercializing human body parts....</div><a class="view-link" href="instructor_reports/Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Policies for Combatting "Deaths of Despair"</div><div class="report-description">Students debated the economic, practical, and ethical dimensions of government-guaranteed universal healthcare coverage. They explored tensions between increased access and potential quality concerns, the balance between taxes and overall cost savings, and how different implementation models might address various challenges...</div><a class="view-link" href="instructor_reports/Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div><div class="report-card" data-categories="ethics"><div class="report-title">Testing The Limits of Tolerance: Hijab Laws and FGM</div><div class="report-description">Students debated three main topics: (1) whether courts should default to maternal custody in opposite-sex divorces, (2) whether we should respect female genital mutilation (FGM) as a cultural practice, and (3) whether a gender-neutral approach to genital cutting requires treating male circumcision and FGM equally...</div><a class="view-link" href="instructor_reports/Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1" target="_blank"><i class="fas fa-external-link-alt mr-1"></i> View Full Report</a></div></div>
+</div>
+<div class="theme-toggle" id="theme-toggle">
+<i class="fas fa-moon"></i>
+</div>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Theme toggle
+      const themeToggle = document.getElementById('theme-toggle');
+      const themeIcon = themeToggle.querySelector('i');
+      const htmlElement = document.documentElement;
+      themeToggle.addEventListener('click', function() {
+        if (htmlElement.classList.contains('light-mode')) {
+          htmlElement.classList.remove('light-mode');
+          themeIcon.classList.remove('fa-sun');
+          themeIcon.classList.add('fa-moon');
+        } else {
+          htmlElement.classList.add('light-mode');
+          themeIcon.classList.remove('fa-moon');
+          themeIcon.classList.add('fa-sun');
+        }
+      });
+      // Category filter
+      const categoryPills = document.querySelectorAll('.category-pill');
+      const reportCards = document.querySelectorAll('.report-card');
+      categoryPills.forEach(pill => {
+        pill.addEventListener('click', function() {
+          categoryPills.forEach(p => p.classList.remove('active'));
+          this.classList.add('active');
+          const selectedCategory = this.getAttribute('data-category');
+          reportCards.forEach(card => {
+            if (selectedCategory === 'all') {
+              card.style.display = 'flex';
+            } else {
+              const cardCategories = card.getAttribute('data-categories');
+              if (cardCategories && cardCategories.includes(selectedCategory)) {
+                card.style.display = 'flex';
+              } else {
+                card.style.display = 'none';
+              }
+            }
+          });
+          document.querySelector('.report-cards').style.opacity = '0';
+          setTimeout(() => {
+            document.querySelector('.report-cards').style.opacity = '1';
+          }, 50);
+        });
+      });
+    });
+  </script>
+<script>
+    // Function to update category counts
+    function updateCategoryCounts() {
+        const categories = {};
+        const allReportsCount = document.querySelectorAll('.report-card:not([data-disabled="true"])').length;
+        
+        // Reset counts
+        document.querySelectorAll('.category-pill').forEach(pill => {
+            const category = pill.getAttribute('data-category');
+            if (category === 'all') {
+                pill.textContent = `All Reports (${allReportsCount})`;
+            } else {
+                categories[category] = 0;
+            }
+        });
+        
+        // Count reports for each category
+        document.querySelectorAll('.report-card:not([data-disabled="true"])').forEach(card => {
+            const cardCategories = (card.getAttribute('data-categories') || '').split(' ');
+            cardCategories.forEach(category => {
+                if (category && categories.hasOwnProperty(category)) {
+                    categories[category]++;
+                }
+            });
+        });
+        
+        // Update category pills with counts
+        for (const [category, count] of Object.entries(categories)) {
+            const pill = document.querySelector(`.category-pill[data-category="${category}"]`);
+            if (pill) {
+                const name = category.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+                pill.textContent = `${name} (${count})`;
+            }
+        }
+    }
+    
+    // Category filtering
+    document.querySelectorAll('.category-pill').forEach(pill => {
+        pill.addEventListener('click', () => {
+            // Update active state
+            document.querySelectorAll('.category-pill').forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            
+            const category = pill.getAttribute('data-category');
+            
+            // Filter cards
+            document.querySelectorAll('.report-card').forEach(card => {
+                if (category === 'all' || card.getAttribute('data-categories').includes(category)) {
+                    card.style.display = '';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    });
+    
+    // Update category counts on page load
+    document.addEventListener('DOMContentLoaded', updateCategoryCounts);
+    
+    // Theme toggle
+    const themeToggle = document.getElementById('theme-toggle');
+    if (themeToggle) {
+        const body = document.body;
+        const icon = themeToggle.querySelector('i');
+        
+        // Check for saved theme preference
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            icon.classList.remove('fa-moon');
+            icon.classList.add('fa-sun');
+        }
+        
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            
+            if (body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    }
+    
+    // Don't show disabled reports
+    document.querySelectorAll('.report-card[data-disabled="true"]').forEach(card => {
+        card.style.display = 'none';
+    });
+    </script></body>
+</html> 

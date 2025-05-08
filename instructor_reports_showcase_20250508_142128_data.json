@@ -1,0 +1,646 @@
+{
+  "reports": {
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Euthanasia for Mental Illness",
+      "description": "Students engaged with ethical questions surrounding euthanasia and the moral equivalence of killing versus letting die. They analyzed topics including active euthanasia's permissibility, the treatment of psychiatric versus physical suffering in end-of-life decisions, and the moral weight of action versus inaction in life-or-death scenarios.",
+      "categories": [
+        "healthcare-&-science",
+        "philosophy-&-ethics"
+      ],
+      "enabled": true
+    },
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Frankenpets, Super-Athletes & Designer Babies",
+      "description": "Students analyzed and debated ethical questions around bodily modifications and enhancements in three contexts: cosmetic surgeries for pets, performance supplements in sports, and growth hormone therapy for children with idiopathic short stature. They weighed harms versus benefits, consent and autonomy, fairness and naturalness, and the influence of societal biases....",
+      "categories": [
+        "philosophy-&-ethics",
+        "education"
+      ],
+      "enabled": true
+    },
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Should Alcoholics Get Liver Transplants?",
+      "description": "Students debated the ethical challenges of allocating scarce medical resources in healthcare settings. They discussed difficult prioritization decisions, exploring whether certain patients deserve priority access to limited treatments or transplants based on criteria like disability status, personal responsibility in illness (particularly alcoholism and liver transplants), and ability to pay....",
+      "categories": [
+        "healthcare-&-science",
+        "philosophy-&-ethics",
+        "social-issues"
+      ],
+      "enabled": true
+    },
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Animal Suffering & Factory Farming",
+      "description": "Students debated the moral significance of animal and human pain. They explored whether physiological similarities in pain perception should translate to equal moral consideration or if human cognitive capacities justify differential treatment. The discussions examined practical implications including emergency resource allocation, medical testing ethics, and animal welfare regulations...",
+      "categories": [
+        "philosophy-&-ethics",
+        "environment",
+        "social-issues"
+      ],
+      "enabled": true
+    },
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "What Is A Species & The Ethics of Conservation Biology",
+      "description": "Students debated competing frameworks for defining species, the ethics and practicality of interventionist conservation approaches, and the tension between traditional conservation methods and emerging technologies. Throughout their exchanges, students were encouraged to critically evaluate scientific evidence, consider real-world applications, and refine their positions based on each other's insights...",
+      "categories": [
+        "healthcare-&-science",
+        "environment"
+      ],
+      "enabled": true
+    },
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Involuntary Commitment & Housing First",
+      "description": "Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care...",
+      "categories": [
+        "environment",
+        "social-issues"
+      ],
+      "enabled": true
+    },
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Affirmative Action for Boys and Men",
+      "description": "Students debated three topics: whether Kamala Harris's 2024 loss proves the US isn't ready for a woman president, if women should receive more paid parental leave due to traditional childcare roles, and whether special scholarships for boys and men are justified. Students engaged with opposing viewpoints, leading to nuanced explorations of gender, policy design, and societal expectations....",
+      "categories": [
+        "social-issues",
+        "education"
+      ],
+      "enabled": true
+    },
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Debating Abortion: Philosophical Arguments",
+      "description": "Students debated philosophical arguments about abortion ethics, focusing particularly on personhood, bodily autonomy, and the moral status of fetuses. They discussed perspectives from Marquis's \"future like ours\" argument, Thomson's bodily autonomy framework, and other philosophical positions while exploring the tensions between maternal rights and fetal moral status...",
+      "categories": [
+        "healthcare-&-science",
+        "social-issues"
+      ],
+      "enabled": true
+    },
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Navigating The Hazards of Group Work",
+      "description": "Students debated how to handle challenging group work scenarios, particularly around issues of uneven contribution, poor communication, and fairness in credit allocation. They were presented with scenarios in which team members either overworked, undercontributed, or \"ghosted\" their groups, and were asked to debate appropriate responses to these situations...",
+      "categories": [
+        "education"
+      ],
+      "enabled": true
+    },
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Universal Healthcare, Job Guarantees & Reindustrialization",
+      "description": "Students debated two major policy topics: universal healthcare and reindustrialization as a remedy for \"deaths of despair.\" In both cases, they were often assigned devil's advocate roles to ensure robust argumentation from multiple perspectives. For healthcare debates, students examined whether the U.S. should guarantee insurance coverage for all legal residents, weighing moral imperatives against economic feasibility....",
+      "categories": [
+        "healthcare-&-science",
+        "social-issues"
+      ],
+      "enabled": true
+    },
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?",
+      "description": "Students debated the balance between patient autonomy and medical paternalism, the ethics of amputation for Body Integrity Identity Disorder (BIID), and the appropriateness of \"nudging\" in medical decision-making. Students engaged in pairs (occasionally trios) to debate these complex ethical dilemmas, with Guide prompting them to deepen their analysis, consider different perspectives, and develop nuanced positions on controversial medical ethics topics....",
+      "categories": [
+        "healthcare-&-science",
+        "philosophy-&-ethics"
+      ],
+      "enabled": true
+    },
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Circumcision, Parental Leave & Other Topics",
+      "description": "Students debated ethical questions surrounding beauty standards, media representation, income inequality, and aging. They engaged in substantive discussions about societal pressures, personal autonomy, and systemic change. Many discussions demonstrated students' ability to move beyond initial polarized positions toward more nuanced understanding while considering practical solutions.",
+      "categories": [
+        "philosophy-&-ethics",
+        "social-issues",
+        "education"
+      ],
+      "enabled": true
+    },
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Moral Agency, Heroism & Purpose in Classical Texts",
+      "description": "Students explored and debated philosophical, literary, and ethical questions. They engaged in guided conversations about topics ranging from Shakespearean tragedy to ancient Greek philosophy. Sway's Guide challenged them to refine their thinking and develop more nuanced arguments.",
+      "categories": [
+        "philosophy-&-ethics",
+        "education"
+      ],
+      "enabled": true
+    },
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Should You Be Allowed To Donate Your Heart?",
+      "description": "Students debated the ethical and practical viability of organ markets, primarily focusing on kidney markets with some exploration of heart/vital organ markets. They analyzed the complex balance between addressing organ shortages and preventing exploitation, considering various regulatory frameworks, alternatives to market solutions, and the broader ethical implications of commercializing human body parts....",
+      "categories": [
+        "healthcare-&-science",
+        "philosophy-&-ethics"
+      ],
+      "enabled": true
+    },
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Policies for Combatting \"Deaths of Despair\"",
+      "description": "Students debated the economic, practical, and ethical dimensions of government-guaranteed universal healthcare coverage. They explored tensions between increased access and potential quality concerns, the balance between taxes and overall cost savings, and how different implementation models might address various challenges...",
+      "categories": [
+        "social-issues",
+        "education"
+      ],
+      "enabled": true
+    },
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1?from_category_manager=1?from_category_manager=1": {
+      "title": "Testing The Limits of Tolerance: Hijab Laws and FGM",
+      "description": "Students debated three main topics: (1) whether courts should default to maternal custody in opposite-sex divorces, (2) whether we should respect female genital mutilation (FGM) as a cultural practice, and (3) whether a gender-neutral approach to genital cutting requires treating male circumcision and FGM equally...",
+      "categories": [
+        "healthcare-&-science",
+        "philosophy-&-ethics",
+        "social-issues"
+      ],
+      "enabled": true
+    },
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Euthanasia for Mental Illness",
+      "description": "Students engaged with ethical questions surrounding euthanasia and the moral equivalence of killing versus letting die. They analyzed topics including active euthanasia's permissibility, the treatment of psychiatric versus physical suffering in end-of-life decisions, and the moral weight of action versus inaction in life-or-death scenarios.",
+      "categories": [
+        "ethics",
+        "healthcare",
+        "bioethics"
+      ],
+      "enabled": true
+    },
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Frankenpets, Super-Athletes & Designer Babies",
+      "description": "Students analyzed and debated ethical questions around bodily modifications and enhancements in three contexts: cosmetic surgeries for pets, performance supplements in sports, and growth hormone therapy for children with idiopathic short stature. They weighed harms versus benefits, consent and autonomy, fairness and naturalness, and the influence of societal biases....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Should Alcoholics Get Liver Transplants?",
+      "description": "Students debated the ethical challenges of allocating scarce medical resources in healthcare settings. They discussed difficult prioritization decisions, exploring whether certain patients deserve priority access to limited treatments or transplants based on criteria like disability status, personal responsibility in illness (particularly alcoholism and liver transplants), and ability to pay....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Animal Suffering & Factory Farming",
+      "description": "Students debated the moral significance of animal and human pain. They explored whether physiological similarities in pain perception should translate to equal moral consideration or if human cognitive capacities justify differential treatment. The discussions examined practical implications including emergency resource allocation, medical testing ethics, and animal welfare regulations...",
+      "categories": [
+        "ethics",
+        "environment"
+      ],
+      "enabled": true
+    },
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Involuntary Commitment & Housing First",
+      "description": "Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Affirmative Action for Boys and Men",
+      "description": "Students debated three topics: whether Kamala Harris's 2024 loss proves the US isn't ready for a woman president, if women should receive more paid parental leave due to traditional childcare roles, and whether special scholarships for boys and men are justified. Students engaged with opposing viewpoints, leading to nuanced explorations of gender, policy design, and societal expectations....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Debating Abortion: Philosophical Arguments",
+      "description": "Students debated philosophical arguments about abortion ethics, focusing particularly on personhood, bodily autonomy, and the moral status of fetuses. They discussed perspectives from Marquis's \"future like ours\" argument, Thomson's bodily autonomy framework, and other philosophical positions while exploring the tensions between maternal rights and fetal moral status...",
+      "categories": [
+        "ethics",
+        "philosophy",
+        "bioethics"
+      ],
+      "enabled": true
+    },
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Navigating The Hazards of Group Work",
+      "description": "Students debated how to handle challenging group work scenarios, particularly around issues of uneven contribution, poor communication, and fairness in credit allocation. They were presented with scenarios in which team members either overworked, undercontributed, or \"ghosted\" their groups, and were asked to debate appropriate responses to these situations...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Universal Healthcare, Job Guarantees & Reindustrialization",
+      "description": "Students debated two major policy topics: universal healthcare and reindustrialization as a remedy for \"deaths of despair.\" In both cases, they were often assigned devil's advocate roles to ensure robust argumentation from multiple perspectives. For healthcare debates, students examined whether the U.S. should guarantee insurance coverage for all legal residents, weighing moral imperatives against economic feasibility....",
+      "categories": [
+        "ethics",
+        "healthcare"
+      ],
+      "enabled": true
+    },
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?",
+      "description": "Students debated the balance between patient autonomy and medical paternalism, the ethics of amputation for Body Integrity Identity Disorder (BIID), and the appropriateness of \"nudging\" in medical decision-making. Students engaged in pairs (occasionally trios) to debate these complex ethical dilemmas, with Guide prompting them to deepen their analysis, consider different perspectives, and develop nuanced positions on controversial medical ethics topics....",
+      "categories": [
+        "ethics",
+        "healthcare"
+      ],
+      "enabled": true
+    },
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1?from_category_manager=1": {
+      "title": "What Is A Species & The Ethics of Conservation Biology",
+      "description": "Students debated competing frameworks for defining species, the ethics and practicality of interventionist conservation approaches, and the tension between traditional conservation methods and emerging technologies. Throughout their exchanges, students were encouraged to critically evaluate scientific evidence, consider real-world applications, and refine their positions based on each other's insights...",
+      "categories": [
+        "ethics",
+        "science",
+        "philosophy",
+        "environment"
+      ],
+      "enabled": true
+    },
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Circumcision, Parental Leave & Other Topics",
+      "description": "Students debated ethical questions surrounding beauty standards, media representation, income inequality, and aging. They engaged in substantive discussions about societal pressures, personal autonomy, and systemic change. Many discussions demonstrated students' ability to move beyond initial polarized positions toward more nuanced understanding while considering practical solutions.",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Moral Agency, Heroism & Purpose in Classical Texts",
+      "description": "Students explored and debated philosophical, literary, and ethical questions. They engaged in guided conversations about topics ranging from Shakespearean tragedy to ancient Greek philosophy. Sway's Guide challenged them to refine their thinking and develop more nuanced arguments.",
+      "categories": [
+        "ethics",
+        "philosophy"
+      ],
+      "enabled": true
+    },
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Should You Be Allowed To Donate Your Heart?",
+      "description": "Students debated the ethical and practical viability of organ markets, primarily focusing on kidney markets with some exploration of heart/vital organ markets. They analyzed the complex balance between addressing organ shortages and preventing exploitation, considering various regulatory frameworks, alternatives to market solutions, and the broader ethical implications of commercializing human body parts....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Policies for Combatting \"Deaths of Despair\"",
+      "description": "Students debated the economic, practical, and ethical dimensions of government-guaranteed universal healthcare coverage. They explored tensions between increased access and potential quality concerns, the balance between taxes and overall cost savings, and how different implementation models might address various challenges...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1?from_category_manager=1": {
+      "title": "Testing The Limits of Tolerance: Hijab Laws and FGM",
+      "description": "Students debated three main topics: (1) whether courts should default to maternal custody in opposite-sex divorces, (2) whether we should respect female genital mutilation (FGM) as a cultural practice, and (3) whether a gender-neutral approach to genital cutting requires treating male circumcision and FGM equally...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1": {
+      "title": "Euthanasia for Mental Illness",
+      "description": "Students engaged with ethical questions surrounding euthanasia and the moral equivalence of killing versus letting die. They analyzed topics including active euthanasia's permissibility, the treatment of psychiatric versus physical suffering in end-of-life decisions, and the moral weight of action versus inaction in life-or-death scenarios.",
+      "categories": [
+        "ethics",
+        "healthcare",
+        "bioethics"
+      ],
+      "enabled": true
+    },
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1": {
+      "title": "Frankenpets, Super-Athletes & Designer Babies",
+      "description": "Students analyzed and debated ethical questions around bodily modifications and enhancements in three contexts: cosmetic surgeries for pets, performance supplements in sports, and growth hormone therapy for children with idiopathic short stature. They weighed harms versus benefits, consent and autonomy, fairness and naturalness, and the influence of societal biases....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1": {
+      "title": "Should Alcoholics Get Liver Transplants?",
+      "description": "Students debated the ethical challenges of allocating scarce medical resources in healthcare settings. They discussed difficult prioritization decisions, exploring whether certain patients deserve priority access to limited treatments or transplants based on criteria like disability status, personal responsibility in illness (particularly alcoholism and liver transplants), and ability to pay....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1": {
+      "title": "Animal Suffering & Factory Farming",
+      "description": "Students debated the moral significance of animal and human pain. They explored whether physiological similarities in pain perception should translate to equal moral consideration or if human cognitive capacities justify differential treatment. The discussions examined practical implications including emergency resource allocation, medical testing ethics, and animal welfare regulations...",
+      "categories": [
+        "ethics",
+        "environment"
+      ],
+      "enabled": true
+    },
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1": {
+      "title": "Involuntary Commitment & Housing First",
+      "description": "Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1": {
+      "title": "Affirmative Action for Boys and Men",
+      "description": "Students debated three topics: whether Kamala Harris's 2024 loss proves the US isn't ready for a woman president, if women should receive more paid parental leave due to traditional childcare roles, and whether special scholarships for boys and men are justified. Students engaged with opposing viewpoints, leading to nuanced explorations of gender, policy design, and societal expectations....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1": {
+      "title": "Debating Abortion: Philosophical Arguments",
+      "description": "Students debated philosophical arguments about abortion ethics, focusing particularly on personhood, bodily autonomy, and the moral status of fetuses. They discussed perspectives from Marquis's \"future like ours\" argument, Thomson's bodily autonomy framework, and other philosophical positions while exploring the tensions between maternal rights and fetal moral status...",
+      "categories": [
+        "ethics",
+        "philosophy",
+        "bioethics"
+      ],
+      "enabled": true
+    },
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1": {
+      "title": "Navigating The Hazards of Group Work",
+      "description": "Students debated how to handle challenging group work scenarios, particularly around issues of uneven contribution, poor communication, and fairness in credit allocation. They were presented with scenarios in which team members either overworked, undercontributed, or \"ghosted\" their groups, and were asked to debate appropriate responses to these situations...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1": {
+      "title": "Universal Healthcare, Job Guarantees & Reindustrialization",
+      "description": "Students debated two major policy topics: universal healthcare and reindustrialization as a remedy for \"deaths of despair.\" In both cases, they were often assigned devil's advocate roles to ensure robust argumentation from multiple perspectives. For healthcare debates, students examined whether the U.S. should guarantee insurance coverage for all legal residents, weighing moral imperatives against economic feasibility....",
+      "categories": [
+        "ethics",
+        "healthcare"
+      ],
+      "enabled": true
+    },
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1": {
+      "title": "Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?",
+      "description": "Students debated the balance between patient autonomy and medical paternalism, the ethics of amputation for Body Integrity Identity Disorder (BIID), and the appropriateness of \"nudging\" in medical decision-making. Students engaged in pairs (occasionally trios) to debate these complex ethical dilemmas, with Guide prompting them to deepen their analysis, consider different perspectives, and develop nuanced positions on controversial medical ethics topics....",
+      "categories": [
+        "ethics",
+        "healthcare"
+      ],
+      "enabled": true
+    },
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1": {
+      "title": "What Is A Species & The Ethics of Conservation Biology",
+      "description": "Students debated competing frameworks for defining species, the ethics and practicality of interventionist conservation approaches, and the tension between traditional conservation methods and emerging technologies. Throughout their exchanges, students were encouraged to critically evaluate scientific evidence, consider real-world applications, and refine their positions based on each other's insights...",
+      "categories": [
+        "ethics",
+        "science",
+        "philosophy",
+        "environment"
+      ],
+      "enabled": true
+    },
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1": {
+      "title": "Circumcision, Parental Leave & Other Topics",
+      "description": "Students debated ethical questions surrounding beauty standards, media representation, income inequality, and aging. They engaged in substantive discussions about societal pressures, personal autonomy, and systemic change. Many discussions demonstrated students' ability to move beyond initial polarized positions toward more nuanced understanding while considering practical solutions.",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1": {
+      "title": "Moral Agency, Heroism & Purpose in Classical Texts",
+      "description": "Students explored and debated philosophical, literary, and ethical questions. They engaged in guided conversations about topics ranging from Shakespearean tragedy to ancient Greek philosophy. Sway's Guide challenged them to refine their thinking and develop more nuanced arguments.",
+      "categories": [
+        "ethics",
+        "philosophy"
+      ],
+      "enabled": true
+    },
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1": {
+      "title": "Should You Be Allowed To Donate Your Heart?",
+      "description": "Students debated the ethical and practical viability of organ markets, primarily focusing on kidney markets with some exploration of heart/vital organ markets. They analyzed the complex balance between addressing organ shortages and preventing exploitation, considering various regulatory frameworks, alternatives to market solutions, and the broader ethical implications of commercializing human body parts....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1": {
+      "title": "Policies for Combatting \"Deaths of Despair\"",
+      "description": "Students debated the economic, practical, and ethical dimensions of government-guaranteed universal healthcare coverage. They explored tensions between increased access and potential quality concerns, the balance between taxes and overall cost savings, and how different implementation models might address various challenges...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1": {
+      "title": "Testing The Limits of Tolerance: Hijab Laws and FGM",
+      "description": "Students debated three main topics: (1) whether courts should default to maternal custody in opposite-sex divorces, (2) whether we should respect female genital mutilation (FGM) as a cultural practice, and (3) whether a gender-neutral approach to genital cutting requires treating male circumcision and FGM equally...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html": {
+      "title": "Euthanasia for Mental Illness",
+      "description": "Students engaged with ethical questions surrounding euthanasia and the moral equivalence of killing versus letting die. They analyzed topics including active euthanasia's permissibility, the treatment of psychiatric versus physical suffering in end-of-life decisions, and the moral weight of action versus inaction in life-or-death scenarios.",
+      "categories": [
+        "ethics",
+        "healthcare",
+        "bioethics"
+      ],
+      "enabled": true
+    },
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html": {
+      "title": "Frankenpets, Super-Athletes &amp; Designer Babies",
+      "description": "Students analyzed and debated ethical questions around bodily modifications and enhancements in three contexts: cosmetic surgeries for pets, performance supplements in sports, and growth hormone therapy for children with idiopathic short stature. They weighed harms versus benefits, consent and autonomy, fairness and naturalness, and the influence of societal biases....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html": {
+      "title": "Should Alcoholics Get Liver Transplants?",
+      "description": "Students debated the ethical challenges of allocating scarce medical resources in healthcare settings. They discussed difficult prioritization decisions, exploring whether certain patients deserve priority access to limited treatments or transplants based on criteria like disability status, personal responsibility in illness (particularly alcoholism and liver transplants), and ability to pay....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html": {
+      "title": "Animal Suffering &amp; Factory Farming",
+      "description": "Students debated the moral significance of animal and human pain. They explored whether physiological similarities in pain perception should translate to equal moral consideration or if human cognitive capacities justify differential treatment. The discussions examined practical implications including emergency resource allocation, medical testing ethics, and animal welfare regulations...",
+      "categories": [
+        "ethics",
+        "environment"
+      ],
+      "enabled": true
+    },
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html": {
+      "title": "Involuntary Commitment &amp; Housing First",
+      "description": "Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html": {
+      "title": "Affirmative Action for Boys and Men",
+      "description": "Students debated three topics: whether Kamala Harris's 2024 loss proves the US isn't ready for a woman president, if women should receive more paid parental leave due to traditional childcare roles, and whether special scholarships for boys and men are justified. Students engaged with opposing viewpoints, leading to nuanced explorations of gender, policy design, and societal expectations....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html": {
+      "title": "Debating Abortion: Philosophical Arguments",
+      "description": "Students debated philosophical arguments about abortion ethics, focusing particularly on personhood, bodily autonomy, and the moral status of fetuses. They discussed perspectives from Marquis's \"future like ours\" argument, Thomson's bodily autonomy framework, and other philosophical positions while exploring the tensions between maternal rights and fetal moral status...",
+      "categories": [
+        "ethics",
+        "philosophy",
+        "bioethics"
+      ],
+      "enabled": true
+    },
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html": {
+      "title": "Navigating The Hazards of Group Work",
+      "description": "Students debated how to handle challenging group work scenarios, particularly around issues of uneven contribution, poor communication, and fairness in credit allocation. They were presented with scenarios in which team members either overworked, undercontributed, or \"ghosted\" their groups, and were asked to debate appropriate responses to these situations...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html": {
+      "title": "Universal Healthcare, Job Guarantees &amp; Reindustrialization",
+      "description": "Students debated two major policy topics: universal healthcare and reindustrialization as a remedy for \"deaths of despair.\" In both cases, they were often assigned devil's advocate roles to ensure robust argumentation from multiple perspectives. For healthcare debates, students examined whether the U.S. should guarantee insurance coverage for all legal residents, weighing moral imperatives against economic feasibility....",
+      "categories": [
+        "ethics",
+        "healthcare"
+      ],
+      "enabled": true
+    },
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html": {
+      "title": "Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?",
+      "description": "Students debated the balance between patient autonomy and medical paternalism, the ethics of amputation for Body Integrity Identity Disorder (BIID), and the appropriateness of \"nudging\" in medical decision-making. Students engaged in pairs (occasionally trios) to debate these complex ethical dilemmas, with Guide prompting them to deepen their analysis, consider different perspectives, and develop nuanced positions on controversial medical ethics topics....",
+      "categories": [
+        "ethics",
+        "healthcare"
+      ],
+      "enabled": true
+    },
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html": {
+      "title": "What Is A Species &amp; The Ethics of Conservation Biology",
+      "description": "Students debated competing frameworks for defining species, the ethics and practicality of interventionist conservation approaches, and the tension between traditional conservation methods and emerging technologies. Throughout their exchanges, students were encouraged to critically evaluate scientific evidence, consider real-world applications, and refine their positions based on each other's insights...",
+      "categories": [
+        "ethics",
+        "science",
+        "philosophy",
+        "environment"
+      ],
+      "enabled": true
+    },
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html": {
+      "title": "Circumcision, Parental Leave &amp; Other Topics",
+      "description": "Students debated ethical questions surrounding beauty standards, media representation, income inequality, and aging. They engaged in substantive discussions about societal pressures, personal autonomy, and systemic change. Many discussions demonstrated students' ability to move beyond initial polarized positions toward more nuanced understanding while considering practical solutions.",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html": {
+      "title": "Moral Agency, Heroism &amp; Purpose in Classical Texts",
+      "description": "Students explored and debated philosophical, literary, and ethical questions. They engaged in guided conversations about topics ranging from Shakespearean tragedy to ancient Greek philosophy. Sway's Guide challenged them to refine their thinking and develop more nuanced arguments.",
+      "categories": [
+        "ethics",
+        "philosophy"
+      ],
+      "enabled": true
+    },
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html": {
+      "title": "Should You Be Allowed To Donate Your Heart?",
+      "description": "Students debated the ethical and practical viability of organ markets, primarily focusing on kidney markets with some exploration of heart/vital organ markets. They analyzed the complex balance between addressing organ shortages and preventing exploitation, considering various regulatory frameworks, alternatives to market solutions, and the broader ethical implications of commercializing human body parts....",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html": {
+      "title": "Policies for Combatting \"Deaths of Despair\"",
+      "description": "Students debated the economic, practical, and ethical dimensions of government-guaranteed universal healthcare coverage. They explored tensions between increased access and potential quality concerns, the balance between taxes and overall cost savings, and how different implementation models might address various challenges...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    },
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html": {
+      "title": "Testing The Limits of Tolerance: Hijab Laws and FGM",
+      "description": "Students debated three main topics: (1) whether courts should default to maternal custody in opposite-sex divorces, (2) whether we should respect female genital mutilation (FGM) as a cultural practice, and (3) whether a gender-neutral approach to genital cutting requires treating male circumcision and FGM equally...",
+      "categories": [
+        "ethics"
+      ],
+      "enabled": true
+    }
+  },
+  "order": [
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1?from_category_manager=1?from_category_manager=1",
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1?from_category_manager=1",
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1?from_category_manager=1",
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1?from_category_manager=1",
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1?from_category_manager=1",
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1?from_category_manager=1",
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1?from_category_manager=1",
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1?from_category_manager=1",
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1?from_category_manager=1",
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1?from_category_manager=1",
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1?from_category_manager=1",
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1?from_category_manager=1",
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1?from_category_manager=1",
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1?from_category_manager=1",
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1?from_category_manager=1",
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1?from_category_manager=1",
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1?from_category_manager=1",
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html?from_category_manager=1",
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html?from_category_manager=1",
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html?from_category_manager=1",
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html?from_category_manager=1",
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html?from_category_manager=1",
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html?from_category_manager=1",
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html?from_category_manager=1",
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html?from_category_manager=1",
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html?from_category_manager=1",
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html?from_category_manager=1",
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html?from_category_manager=1",
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html?from_category_manager=1",
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html?from_category_manager=1",
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html?from_category_manager=1",
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html?from_category_manager=1",
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html?from_category_manager=1",
+    "Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html",
+    "Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html",
+    "Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html",
+    "Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html",
+    "Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html",
+    "Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html",
+    "Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html",
+    "Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html",
+    "Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html",
+    "Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html",
+    "Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html",
+    "Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html",
+    "Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html",
+    "Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html",
+    "Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html",
+    "Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html"
+  ],
+  "categories": [
+    "healthcare-&-science",
+    "philosophy-&-ethics",
+    "environment",
+    "social-issues",
+    "education",
+    "ethics",
+    "healthcare",
+    "bioethics",
+    "philosophy",
+    "science"
+  ]
+}

@@ -49,6 +49,7 @@
         .disabled-report {
             opacity: 0.6;
             position: relative;
+            /* Remove display: none to let JavaScript control visibility */
         }
         .disabled-overlay {
             position: absolute;
@@ -146,11 +147,26 @@
             background-color: #222;
             color: #f0f0f0;
         }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px;
+            background-color: #333;
+            color: white;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            display: none;
+            z-index: 9999;
+        }
     </style>
 </head>
 <body>
     <div class="container-fluid">
         <h1 class="mb-4">Category Manager</h1>
+        
+        <!-- Notification -->
+        <div id="notification" class="notification"></div>
         
         <div class="row">
             <!-- Sidebar -->
@@ -215,6 +231,18 @@
                                 </div>
                             </div>
                         </form>
+                    </div>
+                    
+                    <!-- Update Showcase Button -->
+                    <h5 class="mt-4">Update Showcase</h5>
+                    <div class="mb-3">
+                        <button id="updateShowcaseBtn" class="btn btn-primary btn-block">
+                            <i class="fas fa-sync-alt"></i> Update Showcase
+                        </button>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input type="checkbox" class="form-check-input" id="refreshExistingCheck">
+                        <label class="form-check-label" for="refreshExistingCheck">Refresh existing reports</label>
                     </div>
                 </div>
             </div>
@@ -302,6 +330,11 @@
                             <form action="{{ url_for('assign_categories') }}" method="post">
                                 <input type="hidden" name="report_index" value="{{ loop.index0 }}">
                                 <div class="form-group">
+                                    <label>Report Title</label>
+                                    <input type="text" class="form-control mb-3" name="report_title" 
+                                           value="{{ report.title }}" placeholder="Report Title">
+                                </div>
+                                <div class="form-group">
                                     <label>Assign Categories</label>
                                     <div class="categories-container">
                                         {% for category in categories %}
@@ -332,8 +365,18 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script>
-        // Search functionality
+        // Initialize - hide disabled reports on page load
         $(document).ready(function() {
+            $("#reportsList .report-card").each(function() {
+                var reportCard = $(this);
+                var isEnabled = reportCard.find('.toggle-visibility').attr('data-enabled') === "true";
+                
+                if (!isEnabled) {
+                    reportCard.css("display", "none");
+                }
+            });
+            
+            // Search functionality
             $("#searchInput").on("keyup", function() {
                 var value = $(this).val().toLowerCase();
                 $("#reportsList .report-card").each(function() {
@@ -385,6 +428,11 @@
                 var filename = button.data("filename");
                 var currentlyEnabled = button.data("enabled") === "true";
                 var newEnabledState = !currentlyEnabled;
+                var reportCard = button.closest(".report-card");
+                
+                // Show a loading state
+                button.prop('disabled', true);
+                button.html('<i class="fas fa-spinner fa-spin"></i>');
                 
                 $.ajax({
                     url: "/api/toggle_visibility",
@@ -396,26 +444,80 @@
                     }),
                     success: function(response) {
                         if (response.success) {
+                            // Re-enable button
+                            button.prop('disabled', false);
+                            
                             // Update the button and card appearance
                             if (newEnabledState) {
+                                // Report is now visible
                                 button.html('<i class="fas fa-eye-slash"></i> Hide');
                                 button.removeClass("btn-success").addClass("btn-secondary");
-                                button.closest(".report-card").removeClass("disabled-report");
-                                button.closest(".report-card").find(".disabled-overlay").remove();
+                                reportCard.removeClass("disabled-report");
+                                reportCard.find(".disabled-overlay").remove();
+                                reportCard.css("display", ""); // Restore visibility
+                                
+                                // Show notification
+                                showNotification(`Report "${reportCard.find('.report-title').text()}" is now visible`);
                             } else {
+                                // Report is now hidden
                                 button.html('<i class="fas fa-eye"></i> Show');
                                 button.removeClass("btn-secondary").addClass("btn-success");
-                                button.closest(".report-card").addClass("disabled-report");
-                                button.closest(".report-card").prepend('<div class="disabled-overlay"><span class="badge badge-secondary">Hidden</span></div>');
+                                reportCard.addClass("disabled-report");
+                                
+                                if (reportCard.find(".disabled-overlay").length === 0) {
+                                    reportCard.prepend('<div class="disabled-overlay"><span class="badge badge-secondary">Hidden</span></div>');
+                                }
+                                
+                                // Hide the card with animation
+                                reportCard.fadeOut(400);
+                                
+                                // Show notification
+                                showNotification(`Report "${reportCard.find('.report-title').text()}" is now hidden`);
                             }
+                            
+                            // Update data attribute on both jQuery object AND the DOM element
                             button.data("enabled", newEnabledState);
+                            button.attr("data-enabled", newEnabledState);
                             
                             // Update category counts
                             updateCategoryCounts();
+                        } else {
+                            // Show error
+                            showNotification("Error updating visibility: " + (response.error || "Unknown error"), "error");
+                            
+                            // Reset button
+                            button.html(currentlyEnabled ? '<i class="fas fa-eye-slash"></i> Hide' : '<i class="fas fa-eye"></i> Show');
                         }
+                    },
+                    error: function() {
+                        // Show error
+                        showNotification("Network error while updating visibility", "error");
+                        
+                        // Reset button
+                        button.prop('disabled', false);
+                        button.html(currentlyEnabled ? '<i class="fas fa-eye-slash"></i> Hide' : '<i class="fas fa-eye"></i> Show');
                     }
                 });
             });
+            
+            // Show a notification message
+            function showNotification(message, type) {
+                var notification = $("#notification");
+                notification.text(message);
+                
+                if (type === "error") {
+                    notification.css("background-color", "#d9534f");
+                } else {
+                    notification.css("background-color", "#333");
+                }
+                
+                notification.fadeIn(300);
+                
+                // Auto-hide after 3 seconds
+                setTimeout(function() {
+                    notification.fadeOut(300);
+                }, 3000);
+            }
             
             // Update dynamic category counts when checkboxes change
             function updateDynamicCounts() {
@@ -427,7 +529,11 @@
             // Function to update category counts in sidebar
             function updateCategoryCounts() {
                 // Count visible reports
-                var totalVisible = $("#reportsList .report-card:not(.disabled-report)").length;
+                var totalVisible = $("#reportsList .report-card").filter(function() {
+                    // Check the data-enabled attribute of the toggle button
+                    return $(this).find('.toggle-visibility').attr('data-enabled') === "true";
+                }).length;
+                
                 $(".filter-category[data-category='all'] .badge").text(totalVisible);
                 
                 // Count reports for each category
@@ -435,10 +541,13 @@
                     var category = $(this).data("category");
                     var count = 0;
                     
-                    $("#reportsList .report-card:not(.disabled-report)").each(function() {
-                        var categories = $(this).data("categories").split(" ");
-                        if (categories.includes(category)) {
-                            count++;
+                    $("#reportsList .report-card").each(function() {
+                        // Only count enabled reports
+                        if ($(this).find('.toggle-visibility').attr('data-enabled') === "true") {
+                            var categories = $(this).data("categories").split(" ");
+                            if (categories.includes(category)) {
+                                count++;
+                            }
                         }
                     });
                     
@@ -448,6 +557,53 @@
             
             // Initialize counts
             updateCategoryCounts();
+            
+            // Update showcase button click handler
+            $("#updateShowcaseBtn").click(function() {
+                var button = $(this);
+                var originalText = button.html();
+                var refreshExisting = $("#refreshExistingCheck").prop("checked");
+                
+                // Show loading state
+                button.prop("disabled", true);
+                button.html('<i class="fas fa-spinner fa-spin"></i> Updating...');
+                
+                // Call the API endpoint
+                $.ajax({
+                    url: "/api/run_update_showcase",
+                    type: "POST",
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        refresh_existing: refreshExisting
+                    }),
+                    success: function(response) {
+                        // Reset button
+                        button.prop("disabled", false);
+                        button.html(originalText);
+                        
+                        if (response.success) {
+                            // Show success notification
+                            showNotification(response.message);
+                            
+                            // Reload the page after a short delay to show updated data
+                            setTimeout(function() {
+                                location.reload();
+                            }, 2000);
+                        } else {
+                            // Show error
+                            showNotification("Error updating showcase: " + response.error, "error");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Reset button
+                        button.prop("disabled", false);
+                        button.html(originalText);
+                        
+                        // Show error notification
+                        showNotification("Network error while updating showcase: " + error, "error");
+                    }
+                });
+            });
 
             // Open report in same tab and inject back button
             $(document).on('click', '.view-report-link', function(e) {
