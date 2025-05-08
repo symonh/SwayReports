@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sway Reports Category Manager</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #000000;
+            --card-bg: #000000;
+            --card-header-bg: #0f0f19;
+            --text-color: #ffffff;
+            --muted-text-color: #a9adc1;
+            --border-color: #252538;
+            --button-bg: #252538;
+            --button-hover-bg: #3a3a59;
+            --primary-color: #8a8aff;
+            --link-color: #a3a3ff;
+        }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .header {
+            background-color: var(--card-header-bg);
+            padding: 1.5rem 0;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .header h1 {
+            font-weight: 700;
+            color: var(--primary-color);
+            background: linear-gradient(90deg, #8a8aff, #ff8a8a);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            letter-spacing: -0.01em;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            background-color: var(--card-header-bg);
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 600;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #7575e6;
+            border-color: #7575e6;
+        }
+        
+        .report-item {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .report-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+        
+        .report-categories {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        
+        .category-badge {
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            padding: 0.3rem 0.7rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+        }
+        
+        .report-description {
+            font-size: 0.9rem;
+            color: var(--muted-text-color);
+            margin-bottom: 0.8rem;
+        }
+        
+        .form-control {
+            background-color: var(--button-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .form-control:focus {
+            background-color: var(--button-bg);
+            color: var(--text-color);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(138, 138, 255, 0.25);
+        }
+        
+        .custom-select {
+            background-color: var(--button-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .category-list-group .list-group-item {
+            background-color: var(--card-bg);
+            border-color: var(--border-color);
+            color: var(--text-color);
+        }
+        
+        .sticky-top {
+            top: 20px;
+        }
+        
+        /* Drag and drop styles */
+        .drag-handle {
+            cursor: grab;
+            color: var(--muted-text-color);
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            transition: color 0.2s;
+        }
+        
+        .drag-handle:hover {
+            color: var(--primary-color);
+        }
+        
+        .report-item.dragging {
+            opacity: 0.5;
+            border: 2px dashed var(--primary-color);
+        }
+        
+        .report-item.drag-over {
+            border: 2px dashed var(--primary-color);
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+        }
+        
+        .reports-container {
+            min-height: 200px;
+        }
+        
+        .save-order-feedback {
+            display: none;
+            color: #28a745;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="container">
+            <h1 class="text-center">Sway Reports Category Manager</h1>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="sticky-top">
+                    <!-- Category Management -->
+                    <div class="card">
+                        <div class="card-header">
+                            Manage Categories
+                        </div>
+                        <div class="card-body">
+                            <!-- Add Category Form -->
+                            <form action="/categories" method="post">
+                                <input type="hidden" name="action" value="add">
+                                <div class="form-group">
+                                    <label for="new-category">Add New Category</label>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" id="new-category" name="new_category" placeholder="New category name">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-primary">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <!-- Rename Category Form -->
+                            <form action="/categories" method="post" class="mt-4">
+                                <input type="hidden" name="action" value="rename">
+                                <div class="form-group">
+                                    <label for="old-category">Rename Category</label>
+                                    <select name="old_category" id="old-category" class="custom-select mb-2">
+                                        
+                                        <option value="healthcare-&amp;-science">Healthcare &amp; Science</option>
+                                        
+                                        <option value="philosophy-&amp;-ethics">Philosophy &amp; Ethics</option>
+                                        
+                                        <option value="environment">Environment</option>
+                                        
+                                        <option value="social-issues">Social Issues</option>
+                                        
+                                        <option value="education">Education</option>
+                                        
+                                    </select>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" name="new_category" placeholder="New name">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-warning">Rename</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                            
+                            <!-- Delete Category Form -->
+                            <form action="/categories" method="post" class="mt-4">
+                                <input type="hidden" name="action" value="delete">
+                                <div class="form-group">
+                                    <label for="delete-category">Delete Category</label>
+                                    <div class="input-group">
+                                        <select name="category" id="delete-category" class="custom-select">
+                                            
+                                            <option value="healthcare-&amp;-science">Healthcare &amp; Science</option>
+                                            
+                                            <option value="philosophy-&amp;-ethics">Philosophy &amp; Ethics</option>
+                                            
+                                            <option value="environment">Environment</option>
+                                            
+                                            <option value="social-issues">Social Issues</option>
+                                            
+                                            <option value="education">Education</option>
+                                            
+                                        </select>
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this category? It will be removed from all reports.')">Delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Existing Categories -->
+                    <div class="card mt-4">
+                        <div class="card-header">
+                            Existing Categories
+                        </div>
+                        <div class="card-body p-0">
+                            <ul class="list-group category-list-group">
+                                
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Healthcare &amp; Science
+                                    <span class="badge badge-primary badge-pill">
+                                        0
+                                    </span>
+                                </li>
+                                
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Philosophy &amp; Ethics
+                                    <span class="badge badge-primary badge-pill">
+                                        0
+                                    </span>
+                                </li>
+                                
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                    
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Environment
+                                    <span class="badge badge-primary badge-pill">
+                                        2
+                                    </span>
+                                </li>
+                                
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Social Issues
+                                    <span class="badge badge-primary badge-pill">
+                                        0
+                                    </span>
+                                </li>
+                                
+                                
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                  
+                                
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    Education
+                                    <span class="badge badge-primary badge-pill">
+                                        0
+                                    </span>
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <!-- View Showcase Link -->
+                    <div class="text-center mt-4 mb-4">
+                        <a href="./instructor_reports_showcase.html" target="_blank" class="btn btn-outline-primary">
+                            <i class="fas fa-external-link-alt mr-1"></i> View Showcase
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-8">
+                <!-- Reports List -->
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Assign Categories to Reports (16 Reports)</span>
+                        <span class="save-order-feedback"><i class="fas fa-check"></i> Order saved!</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle mr-2"></i> <strong>New Feature:</strong> You can now drag and drop reports to change their order in the showcase. 
+                            <span class="ml-2">Just grab the <i class="fas fa-grip-lines"></i> handle and drag to reposition.</span>
+                        </div>
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                            </div>
+                            <input type="text" id="search-reports" class="form-control" placeholder="Search reports by title or description...">
+                        </div>
+                        
+                        <div class="reports-container" id="reports-container">
+                            
+                            
+                            <div class="report-item" id="report-0" data-filename="Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-0">Euthanasia for Mental Illness</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-0" value="Euthanasia for Mental Illness" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-0" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students engaged with ethical questions surrounding euthanasia and the moral equivalence of...</div>
+                                <form class="category-assign-form" data-filename="Euthanasia-Ethics-From-Aurelia-Brouwers-To-Global-Legalization-and-the-Killing-Vs-Letting-Die-Debate_e0148b21ce.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-0-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-0-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-0-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-0-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-0-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-0-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-0-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-0-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-0-education" value="education" >
+                                                <label class="form-check-label" for="cat-0-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-1" data-filename="Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-1">Frankenpets, Super-Athletes &amp; Designer Babies</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-1" value="Frankenpets, Super-Athletes &amp; Designer Babies" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-1" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students analyzed and debated ethical questions around bodily modifications and enhancements in...</div>
+                                <form class="category-assign-form" data-filename="Enhancing-Boundaries-Athletic-Doping-Idiopathic-Short-Stature-Hormones-and-Pet-Cosmetic-Surgery_d313ce12b7.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-1-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-1-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-1-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-1-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-1-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-1-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-1-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-1-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-1-education" value="education" >
+                                                <label class="form-check-label" for="cat-1-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-2" data-filename="Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-2">Should Alcoholics Get Liver Transplants?</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-2" value="Should Alcoholics Get Liver Transplants?" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-2" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated the ethical challenges of allocating scarce medical resources in healthcare...</div>
+                                <form class="category-assign-form" data-filename="Ethical-Triage-Alcoholics-Wealth-and-Disability-in-Healthcare-Resource-Allocation_de0511837f.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-2-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-2-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-2-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-2-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-2-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-2-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-2-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-2-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-2-education" value="education" >
+                                                <label class="form-check-label" for="cat-2-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-3" data-filename="Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-3">Animal Suffering &amp; Factory Farming</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-3" value="Animal Suffering &amp; Factory Farming" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-3" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated the moral significance of animal and human pain. They explored whether...</div>
+                                <form class="category-assign-form" data-filename="Species-Boundaries-in-Ethics-Pain-Factory-Farming-and-Marginal-Cases_fa1b83e687.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-3-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-3-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-3-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-3-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-3-environment" value="environment" checked>
+                                                <label class="form-check-label" for="cat-3-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-3-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-3-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-3-education" value="education" >
+                                                <label class="form-check-label" for="cat-3-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-4" data-filename="Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-4">Involuntary Commitment &amp; Housing First</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-4" value="Involuntary Commitment &amp; Housing First" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-4" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated mental health and substance use treatment approaches, touching on three main...</div>
+                                <form class="category-assign-form" data-filename="Balancing-Involuntary-Commitment-Outpatient-Care-Housing-First-and-Accessible-Mental-Health-Services_cbe30f2939.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-4-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-4-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-4-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-4-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-4-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-4-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-4-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-4-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-4-education" value="education" >
+                                                <label class="form-check-label" for="cat-4-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-5" data-filename="Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-5">Affirmative Action for Boys and Men</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-5" value="Affirmative Action for Boys and Men" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-5" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated three topics: whether Kamala Harris&#39;s 2024 loss proves the US isn&#39;t ready for a...</div>
+                                <form class="category-assign-form" data-filename="Balancing-Parental-Leave-Coed-Youth-Sports-Gender-Dysphoria-Debates-and-Boys-Educational-Gaps_edefe7b363.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-5-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-5-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-5-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-5-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-5-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-5-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-5-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-5-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-5-education" value="education" >
+                                                <label class="form-check-label" for="cat-5-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-6" data-filename="Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-6">Debating Abortion: Philosophical Arguments</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-6" value="Debating Abortion: Philosophical Arguments" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-6" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated philosophical arguments about abortion ethics, focusing particularly on...</div>
+                                <form class="category-assign-form" data-filename="Debating-Abortion-Future-Like-Ours-Bodily-Autonomy-and-Fetal-Moral-Status_0b925f96ec.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-6-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-6-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-6-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-6-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-6-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-6-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-6-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-6-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-6-education" value="education" >
+                                                <label class="form-check-label" for="cat-6-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-7" data-filename="Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-7">Navigating The Hazards of Group Work</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-7" value="Navigating The Hazards of Group Work" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-7" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated how to handle challenging group work scenarios, particularly around issues of...</div>
+                                <form class="category-assign-form" data-filename="Group-Project-Dilemmas-Ghosting-Lone-Wolves-and-Overeager-Contributors_06c2e91573.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-7-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-7-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-7-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-7-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-7-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-7-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-7-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-7-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-7-education" value="education" >
+                                                <label class="form-check-label" for="cat-7-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-8" data-filename="Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-8">Universal Healthcare, Job Guarantees &amp; Reindustrialization</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-8" value="Universal Healthcare, Job Guarantees &amp; Reindustrialization" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-8" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated two major policy topics: universal healthcare and reindustrialization as a...</div>
+                                <form class="category-assign-form" data-filename="Combating-Despair-Universal-Healthcare-Job-Guarantees-and-Reindustrialization-Strategies_84d336a807.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-8-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-8-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-8-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-8-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-8-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-8-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-8-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-8-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-8-education" value="education" >
+                                                <label class="form-check-label" for="cat-8-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-9" data-filename="Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-9">Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-9" value="Medical Paternalism: Should Doctors Ever Amputate Healthy Limbs?" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-9" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated the balance between patient autonomy and medical paternalism, the ethics of...</div>
+                                <form class="category-assign-form" data-filename="Amputation-For-Apotemnophilia-Paternalism-Versus-Autonomy-In-Medical-Ethics_b774c6f556.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-9-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-9-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-9-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-9-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-9-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-9-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-9-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-9-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-9-education" value="education" >
+                                                <label class="form-check-label" for="cat-9-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-10" data-filename="Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-10">What Is A Species &amp; The Ethics of Conservation Biology</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-10" value="What Is A Species &amp; The Ethics of Conservation Biology" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-10" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated competing frameworks for defining species, the ethics and practicality of...</div>
+                                <form class="category-assign-form" data-filename="Debating-Species-Concepts-Genetic-De-Extinction-Habitat-Loss-and-Rewilding-Strategies_9e861bd30d.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-10-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-10-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-10-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-10-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-10-environment" value="environment" checked>
+                                                <label class="form-check-label" for="cat-10-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-10-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-10-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-10-education" value="education" >
+                                                <label class="form-check-label" for="cat-10-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-11" data-filename="Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-11">Circumcision, Parental Leave &amp; Other Topics</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-11" value="Circumcision, Parental Leave &amp; Other Topics" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-11" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated ethical questions surrounding beauty standards, media representation, income...</div>
+                                <form class="category-assign-form" data-filename="Reframing-Gender-Genital-Practices-and-Parenthood-Debating-Medicalization-Circumcision-and-Parental-Leave_4665ceba57.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-11-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-11-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-11-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-11-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-11-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-11-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-11-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-11-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-11-education" value="education" >
+                                                <label class="form-check-label" for="cat-11-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-12" data-filename="Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-12">Moral Agency, Heroism &amp; Purpose in Classical Texts</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-12" value="Moral Agency, Heroism &amp; Purpose in Classical Texts" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-12" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students explored and debated philosophical, literary, and ethical questions. They engaged in...</div>
+                                <form class="category-assign-form" data-filename="Truth-In-Morality-Heroic-Rivalry-Tragic-Hesitation-and-The-Good-Life_c6993b2240.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-12-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-12-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-12-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-12-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-12-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-12-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-12-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-12-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-12-education" value="education" >
+                                                <label class="form-check-label" for="cat-12-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-13" data-filename="Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-13">Should You Be Allowed To Donate Your Heart?</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-13" value="Should You Be Allowed To Donate Your Heart?" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-13" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated the ethical and practical viability of organ markets, primarily focusing on...</div>
+                                <form class="category-assign-form" data-filename="Legalizing-Kidney-Markets-Versus-Prohibiting-Heart-Sales-and-Protecting-Weak-Agents_55405271b4.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-13-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-13-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-13-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-13-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-13-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-13-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-13-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-13-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-13-education" value="education" >
+                                                <label class="form-check-label" for="cat-13-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-14" data-filename="Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-14">Policies for Combatting &#34;Deaths of Despair&#34;</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-14" value="Policies for Combatting &#34;Deaths of Despair&#34;" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-14" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated the economic, practical, and ethical dimensions of government-guaranteed...</div>
+                                <form class="category-assign-form" data-filename="Securing-Health-Work-and-Manufacturing-Revival-to-Reverse-Deaths-of-Despair_8467401209.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-14-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-14-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-14-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-14-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-14-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-14-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-14-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-14-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-14-education" value="education" >
+                                                <label class="form-check-label" for="cat-14-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                            
+                            <div class="report-item" id="report-15" data-filename="Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html">
+                                <i class="fas fa-grip-lines drag-handle" title="Drag to reorder"></i>
+                                
+                                <div class="d-flex align-items-center mb-1">
+                                    <div class="report-title mb-0" id="title-display-15">Testing The Limits of Tolerance: Hijab Laws and FGM</div>
+                                    <input type="text" class="form-control form-control-sm ml-2 title-edit-input" id="title-input-15" value="Testing The Limits of Tolerance: Hijab Laws and FGM" style="display:none; max-width: 350px;" autocomplete="off">
+                                    <button type="button" class="btn btn-sm btn-outline-info ml-2" id="edit-title-btn-15" title="Edit Title"><i class="fas fa-edit"></i></button>
+                                    <span class="title-save-feedback text-success ml-2" style="display:none;"><i class="fas fa-check"></i> Saved!</span>
+                                </div>
+                                
+                                <div class="report-description">Students debated three main topics: (1) whether courts should default to maternal custody in...</div>
+                                <form class="category-assign-form" data-filename="Gender-at-Stake-Debating-Parental-Leave-Genital-Autonomy-and-Childhood-Identity_f90aaef224.html" autocomplete="off" onsubmit="return false;">
+                                    <div class="form-group">
+                                        <label>Assign Categories:</label>
+                                        <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 0.5rem;">
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-15-healthcare-&amp;-science" value="healthcare-&amp;-science" >
+                                                <label class="form-check-label" for="cat-15-healthcare-&amp;-science">
+                                                    Healthcare &amp; Science
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-15-philosophy-&amp;-ethics" value="philosophy-&amp;-ethics" >
+                                                <label class="form-check-label" for="cat-15-philosophy-&amp;-ethics">
+                                                    Philosophy &amp; Ethics
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-15-environment" value="environment" >
+                                                <label class="form-check-label" for="cat-15-environment">
+                                                    Environment
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-15-social-issues" value="social-issues" >
+                                                <label class="form-check-label" for="cat-15-social-issues">
+                                                    Social Issues
+                                                </label>
+                                            </div>
+                                            
+                                            <div class="form-check" style="min-width: 150px;">
+                                                <input class="form-check-input category-checkbox" type="checkbox" name="categories" id="cat-15-education" value="education" >
+                                                <label class="form-check-label" for="cat-15-education">
+                                                    Education
+                                                </label>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div class="category-save-feedback text-success" style="display:none; font-size: 0.9rem;">
+                                        <i class="fas fa-check"></i> Categories saved!
+                                    </div>
+                                </form>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Drag and drop functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const reportsContainer = document.getElementById('reports-container');
+            const reportItems = document.querySelectorAll('.report-item');
+            let draggedItem = null;
+            
+            // Add drag events to each report item
+            reportItems.forEach(item => {
+                const dragHandle = item.querySelector('.drag-handle');
+                
+                dragHandle.addEventListener('mousedown', function(e) {
+                    // Prevent text selection during drag
+                    e.preventDefault();
+                    
+                    draggedItem = item;
+                    item.classList.add('dragging');
+                    
+                    // Track mouse position and handle drag
+                    document.addEventListener('mousemove', handleDrag);
+                    document.addEventListener('mouseup', stopDrag);
+                });
+                
+                // Handle drag enter/over/leave events for drop target highlighting
+                item.addEventListener('dragenter', function(e) {
+                    e.preventDefault();
+                    if (item !== draggedItem) {
+                        item.classList.add('drag-over');
+                    }
+                });
+                
+                item.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                });
+                
+                item.addEventListener('dragleave', function(e) {
+                    e.preventDefault();
+                    item.classList.remove('drag-over');
+                });
+            });
+            
+            function handleDrag(e) {
+                if (!draggedItem) return;
+                
+                // Get mouse position
+                const mouseY = e.clientY;
+                
+                // Get all items except the dragged one
+                const items = [...document.querySelectorAll('.report-item:not(.dragging)')];
+                
+                // Find the item we're hovering over
+                let closestItem = null;
+                let closestOffset = Number.NEGATIVE_INFINITY;
+                
+                items.forEach(item => {
+                    const box = item.getBoundingClientRect();
+                    const offset = mouseY - box.top - box.height / 2;
+                    
+                    if (offset < 0 && offset > closestOffset) {
+                        closestOffset = offset;
+                        closestItem = item;
+                    }
+                });
+                
+                // Adjust drag styles
+                items.forEach(item => item.classList.remove('drag-over'));
+                if (closestItem) {
+                    closestItem.classList.add('drag-over');
+                }
+                
+                // Move the dragged item
+                if (closestItem) {
+                    reportsContainer.insertBefore(draggedItem, closestItem);
+                } else {
+                    reportsContainer.appendChild(draggedItem);
+                }
+            }
+            
+            function stopDrag() {
+                if (!draggedItem) return;
+                
+                draggedItem.classList.remove('dragging');
+                document.querySelectorAll('.report-item').forEach(item => {
+                    item.classList.remove('drag-over');
+                });
+                
+                // Remove mouse event listeners
+                document.removeEventListener('mousemove', handleDrag);
+                document.removeEventListener('mouseup', stopDrag);
+                
+                // Save the new order
+                saveReportOrder();
+                
+                draggedItem = null;
+            }
+            
+            function saveReportOrder() {
+                const reportItems = document.querySelectorAll('.report-item');
+                const reportOrder = Array.from(reportItems).map(item => item.dataset.filename);
+                
+                fetch('/api/reorder', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        report_order: reportOrder
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const feedback = document.querySelector('.save-order-feedback');
+                        feedback.style.display = 'inline';
+                        
+                        setTimeout(() => {
+                            feedback.style.display = 'none';
+                        }, 2000);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving report order:', error);
+                });
+            }
+            
+            // Search functionality
+            const searchInput = document.getElementById('search-reports');
+            searchInput.addEventListener('input', function() {
+                const searchTerm = this.value.toLowerCase();
+                
+                reportItems.forEach(item => {
+                    const title = item.querySelector('.report-title').textContent.toLowerCase();
+                    const description = item.querySelector('.report-description').textContent.toLowerCase();
+                    
+                    if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Category checkbox handling
+        document.addEventListener('DOMContentLoaded', function() {
+            // Handle checkbox changes for category assignment
+            const categoryCheckboxes = document.querySelectorAll('.category-checkbox');
+            
+            categoryCheckboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const form = this.closest('.category-assign-form');
+                    const reportFilename = form.dataset.filename;
+                    const checkboxes = form.querySelectorAll('input[name="categories"]:checked');
+                    const categories = Array.from(checkboxes).map(cb => cb.value);
+                    const feedback = form.querySelector('.category-save-feedback');
+                    
+                    // Save the category assignment
+                    fetch('/api/assign', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            filename: reportFilename,
+                            categories: categories
+                        }),
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            feedback.style.display = 'block';
+                            
+                            setTimeout(() => {
+                                feedback.style.display = 'none';
+                            }, 2000);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error saving categories:', error);
+                    });
+                });
+            });
+        });
+        
+        // Title editing functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const editButtons = document.querySelectorAll('[id^="edit-title-btn-"]');
+            
+            editButtons.forEach(button => {
+                const reportIndex = button.id.split('-').pop();
+                const displayElement = document.getElementById(`title-display-${reportIndex}`);
+                const inputElement = document.getElementById(`title-input-${reportIndex}`);
+                const feedback = button.nextElementSibling;
+                const form = button.closest('.report-item');
+                const reportFilename = form.dataset.filename;
+                
+                // Handle edit button click
+                button.addEventListener('click', function() {
+                    displayElement.style.display = 'none';
+                    inputElement.style.display = 'inline-block';
+                    inputElement.focus();
+                    inputElement.select();
+                });
+                
+                // Handle input blur and Enter key
+                inputElement.addEventListener('blur', saveTitle);
+                inputElement.addEventListener('keydown', function(e) {
+                    console.log('Keydown event:', e.key);
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        this.blur();
+                    }
+                });
+                
+                function saveTitle() {
+                    const newTitle = inputElement.value.trim();
+                    
+                    if (newTitle !== displayElement.textContent.trim()) {
+                        // Save the title
+                        fetch('/api/update_title', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({
+                                filename: reportFilename,
+                                title: newTitle
+                            }),
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                displayElement.textContent = newTitle;
+                                feedback.style.display = 'inline';
+                                
+                                setTimeout(() => {
+                                    feedback.style.display = 'none';
+                                }, 2000);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error saving title:', error);
+                        });
+                    }
+                    
+                    displayElement.style.display = 'block';
+                    inputElement.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html> 

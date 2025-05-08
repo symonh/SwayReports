@@ -156,4 +156,75 @@ This tool uses Playwright to render HTML pages exactly as they would appear in a
 ## Requirements
 
 - Node.js 14+
-- Playwright (automatically installed) 
+- Playwright (automatically installed)
+
+## Category Manager
+
+The Category Manager is a simple Flask web application for managing categories in the Instructor Reports Showcase. It provides a user-friendly interface to:
+
+- Add, rename, and delete categories
+- Assign categories to instructor reports
+- Search through reports for easier management
+
+### Usage
+
+1. Install the required dependencies:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+2. Run the Category Manager:
+   ```bash
+   python category_manager.py
+   ```
+
+3. Open your browser and navigate to:
+   ```
+   http://localhost:5000
+   ```
+
+4. Use the interface to manage categories and assign them to reports.
+
+For more details, see [Category Manager Documentation](docs/category_manager.md).
+
+## HTML Entity Handling
+
+### Issue: Double-escaped ampersands
+
+We identified an issue where ampersands (`&`) in report titles and descriptions were being displayed as `&amp;` in the browser. This happened because the HTML entities were being double-escaped during the process of updating the showcase file.
+
+For example, a title like "Circumcision, Parental Leave & Other Topics" was displayed as "Circumcision, Parental Leave &amp; Other Topics" in the browser.
+
+### Solution
+
+We implemented the following changes to fix this issue:
+
+1. Modified both `category_manager.py` and `update_showcase.py` to handle HTML entities properly using a specialized approach with BeautifulSoup.
+
+2. Created a cleanup script `fix_showcase_ampersands.py` to fix any existing double-escaped ampersands in the showcase file.
+
+3. Added a test file `test_html_escaping.py` to verify our solution works.
+
+### Technical Details
+
+The main fix involves changing how we add text content to BeautifulSoup elements:
+
+```python
+# Instead of this (causes escaping issues):
+title_div.string = report_title
+
+# We now do this:
+title_div.clear()
+title_html = BeautifulSoup(f"<span>{report_title}</span>", 'html.parser')
+title_div.append(title_html.span.contents[0])
+```
+
+This approach correctly maintains HTML entity representation without double-escaping.
+
+## Scripts
+
+- `category_manager.py`: Web interface for managing report categories
+- `update_showcase.py`: Updates the showcase HTML with reports from the instructor_reports directory
+- `fix_showcase_ampersands.py`: Fixes any double-escaped HTML entities in the showcase file
+- `test_html_escaping.py`: Tests different approaches for handling HTML entities in BeautifulSoup
+- `browser_test.html`: Visual verification of ampersand rendering in browser 

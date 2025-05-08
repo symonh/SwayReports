@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ampersand Rendering Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 30px;
+            line-height: 1.6;
+        }
+        .test-case {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        h2 {
+            margin-top: 0;
+            color: #333;
+        }
+        .source {
+            font-family: monospace;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 3px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Ampersand Rendering Test</h1>
+    <p>This page tests how ampersands are rendered in different contexts.</p>
+
+    <div class="test-case">
+        <h2>1. Plain Text Ampersand</h2>
+        <div>Text with a normal ampersand: Test & Example</div>
+        <div class="source">Source: Text with a normal ampersand: Test &amp; Example</div>
+    </div>
+
+    <div class="test-case">
+        <h2>2. HTML Escaped Ampersand</h2>
+        <div>Text with escaped ampersand: Test &amp; Example</div>
+        <div class="source">Source: Text with escaped ampersand: Test &amp;amp; Example</div>
+    </div>
+
+    <div class="test-case">
+        <h2>3. Double Escaped Ampersand</h2>
+        <div>Text with double-escaped ampersand: Test &amp;amp; Example</div>
+        <div class="source">Source: Text with double-escaped ampersand: Test &amp;amp;amp; Example</div>
+    </div>
+
+    <div class="test-case">
+        <h2>4. BeautifulSoup Generated (Our Solution)</h2>
+        <div class="report-title">Circumcision, Parental Leave & Other Topics</div>
+        <div class="report-description">This is a paragraph with an ampersand & in it.</div>
+        <div class="source">Source: &lt;div class="report-title"&gt;Circumcision, Parental Leave &amp;amp; Other Topics&lt;/div&gt;</div>
+    </div>
+
+    <script>
+        // This will show how our solution will appear in the browser
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create element using BeautifulSoup-like process
+            const container = document.createElement('div');
+            container.className = 'test-case';
+            
+            const heading = document.createElement('h2');
+            heading.textContent = '5. Dynamically Created Element';
+            container.appendChild(heading);
+            
+            const testDiv = document.createElement('div');
+            testDiv.innerHTML = 'Dynamically inserted: Test & Example';
+            container.appendChild(testDiv);
+            
+            const sourceDiv = document.createElement('div');
+            sourceDiv.className = 'source';
+            sourceDiv.textContent = 'Source: testDiv.innerHTML = \'Dynamically inserted: Test & Example\'';
+            container.appendChild(sourceDiv);
+            
+            document.body.appendChild(container);
+        });
+    </script>
+</body>
+</html> 
