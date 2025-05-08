@@ -593,12 +593,14 @@
                 });
             });
 
-            // Open report in same tab and inject back button
+            // Open report directly in the current context (works for iframe embedding)
             $(document).on('click', '.view-report-link', function(e) {
                 e.preventDefault();
                 var reportUrl = $(this).attr('href');
-                // Load the report in the same tab
-                window.location.href = reportUrl + '?from_category_manager=1';
+                
+                // Add the parameter for back navigation functionality
+                // This works for both direct browsing and iframe embedding
+                window.location.href = reportUrl + (reportUrl.includes('?') ? '&' : '?') + 'from_category_manager=1';
             });
         });
     </script>
