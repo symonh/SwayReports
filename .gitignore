@@ -26,3 +26,5 @@ Ghosting_Report.pdf
 htmlToPdf-direct.js
 htmlToPdf.js
 .DS_Store
+tests/__pycache__/test_preprocess_instructor_reports.cpython-311-pytest-7.4.0.pyc
+pdfs/abigail-sample-report.pdf
