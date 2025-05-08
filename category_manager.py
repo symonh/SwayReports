@@ -507,12 +507,71 @@ def api_toggle_visibility():
     filename = data.get('filename')
     enabled = data.get('enabled')
     
+    # Ensure we have a clean filename without query parameters
+    if filename and '?' in filename:
+        filename = filename.split('?')[0]
+    
     if filename is None or enabled is None:
         return jsonify({'success': False, 'error': 'Missing filename or enabled state'}), 400
     
     categories, reports = parse_showcase_file()
     updated = False
     
+    # File paths
+    reports_dir = os.path.abspath(REPORTS_DIR)
+    hidden_dir = os.path.abspath("hidden_reports")
+    
+    # Ensure hidden directory exists
+    os.makedirs(hidden_dir, exist_ok=True)
+    
+    file_moved = False
+    src_path = None
+    dest_path = None
+    
+    # Move file between directories based on enabled state
+    if enabled:  # Show the report (move from hidden to reports)
+        src_path = os.path.join(hidden_dir, filename)
+        dest_path = os.path.join(reports_dir, filename)
+        if os.path.exists(src_path):
+            try:
+                import shutil
+                # Check if destination already exists - prevent overwriting
+                if os.path.exists(dest_path):
+                    print(f"Warning: Destination file already exists at {dest_path}, not moving")
+                    file_moved = True  # Consider it moved since it's at the right destination
+                else:
+                    shutil.move(src_path, dest_path)
+                    file_moved = True
+                    print(f"Moved file from {src_path} to {dest_path}")
+            except Exception as e:
+                print(f"Error moving file: {e}")
+                return jsonify({'success': False, 'error': f'Error moving file: {str(e)}'}), 500
+    else:  # Hide the report (move from reports to hidden)
+        src_path = os.path.join(reports_dir, filename)
+        dest_path = os.path.join(hidden_dir, filename)
+        if os.path.exists(src_path):
+            try:
+                import shutil
+                # Check if destination already exists - prevent overwriting
+                if os.path.exists(dest_path):
+                    print(f"Warning: Destination file already exists at {dest_path}, not moving")
+                    file_moved = True  # Consider it moved since it's at the right destination
+                else:
+                    shutil.move(src_path, dest_path)
+                    file_moved = True
+                    print(f"Moved file from {src_path} to {dest_path}")
+            except Exception as e:
+                print(f"Error moving file: {e}")
+                return jsonify({'success': False, 'error': f'Error moving file: {str(e)}'}), 500
+    
+    # If file wasn't moved, check if it's already in the right place
+    if not file_moved:
+        expected_path = os.path.join(reports_dir if enabled else hidden_dir, filename)
+        if os.path.exists(expected_path):
+            print(f"File already exists at the correct location: {expected_path}")
+            file_moved = True  # Treat as success since file is where it should be
+    
+    # Also update the metadata in the showcase file
     for report in reports:
         if report['filename'] == filename:
             report['enabled'] = enabled
@@ -522,23 +581,15 @@ def api_toggle_visibility():
     if updated:
         save_showcase_file(categories, reports)
         
-        # This is a critical update that should be immediately reflected in the showcase file
-        # Force regenerate the showcase file with the updated visibility settings
+        # Update the showcase
         showcase_path = os.path.abspath(SHOWCASE_FILE)
-        reports_dir = os.path.abspath(REPORTS_DIR)
-        
-        # Get the script to reimport/update module
-        import importlib
-        import sys
-        
-        # Import the update_showcase module (assuming it's in the same directory)
-        sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
         
         try:
-            # Try to import the module
+            # Import the update_showcase module
+            import importlib
+            import sys
+            sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
             import update_showcase
-            
-            # Reload if already imported
             importlib.reload(update_showcase)
             
             # Call the function to update the showcase
@@ -547,7 +598,7 @@ def api_toggle_visibility():
         except Exception as e:
             print(f"Error updating showcase after visibility change: {e}")
         
-        return jsonify({'success': True, 'enabled': enabled})
+        return jsonify({'success': True, 'enabled': enabled, 'file_moved': file_moved})
     else:
         return jsonify({'success': False, 'error': 'Report not found'}), 404
 
@@ -585,4 +636,4 @@ def api_run_update_showcase():
 os.makedirs('templates', exist_ok=True)
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5001) 
+    app.run(debug=True, port=5002) 

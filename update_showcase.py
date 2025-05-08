@@ -256,6 +256,10 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
         print(f"Reports directory {reports_dir} not found.")
         return
     
+    # Also look in hidden_reports directory
+    hidden_dir = os.path.join(os.path.dirname(reports_dir), "hidden_reports")
+    os.makedirs(hidden_dir, exist_ok=True)
+    
     # Create a real timestamped backup of the showcase file
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     backup_path = f"{showcase_file.replace('.html', '')}_{timestamp}_backup.html"
@@ -274,29 +278,43 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
     
     print(f"Found {len(existing_reports)} existing reports with {len(all_categories)} categories")
     
-    # Get all HTML files in the reports directory
-    html_files = [f for f in os.listdir(reports_dir) if f.endswith('.html') and not f.startswith('.')]
+    # Get all HTML files in both the reports directory and hidden directory
+    html_files = []
+    
+    # Reports from the main directory (visible reports)
+    visible_files = [f for f in os.listdir(reports_dir) if f.endswith('.html') and not f.startswith('.')]
+    for f in visible_files:
+        html_files.append((f, os.path.join(reports_dir, f), True))  # filename, path, is_visible
+    
+    # Reports from hidden directory (hidden reports)
+    if os.path.exists(hidden_dir):
+        hidden_files = [f for f in os.listdir(hidden_dir) if f.endswith('.html') and not f.startswith('.')]
+        for f in hidden_files:
+            html_files.append((f, os.path.join(hidden_dir, f), False))  # filename, path, is_visible
     
     # Track new reports and updated reports
     new_reports = []
     updated_reports = []
     
     # Process each HTML file
-    for filename in html_files:
-        file_path = os.path.join(reports_dir, filename)
-        
+    for filename, file_path, is_visible in html_files:
         # Check if this report already exists in the showcase
         if filename in existing_reports:
-            # For existing reports, always update title and description data
-            # but preserve enabled state and categories
-            # Report exists, but we're refreshing all data
+            # For existing reports, update title and description data
+            # but preserve enabled state unless changed by the file location
             print(f"Updating title and description for existing report: {filename}")
             title, categories = extract_title_and_categories(file_path)
             description = extract_first_paragraph(file_path)
             
-            # Preserve the enabled/disabled state
-            enabled = existing_reports[filename].get('enabled', True)
-            print(f"Report {filename} enabled state: {enabled}")
+            # Update the enabled state based on file location
+            # Preserve the existing state if it matches the file location
+            # Otherwise, the file location takes precedence
+            existing_enabled = existing_reports[filename].get('enabled', True)
+            
+            # Determine the new enabled state - file location takes precedence
+            enabled = is_visible
+            
+            print(f"Report {filename} enabled state: {enabled} (was {existing_enabled})")
             
             # Update the report data but preserve existing categories
             existing_categories = existing_reports[filename].get('categories', [])
@@ -309,7 +327,7 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
                 'title': title,
                 'description': description,
                 'categories': categories,
-                'enabled': enabled  # Preserve enabled state
+                'enabled': enabled  # Update enabled state based on file location
             }
             
             # Add any new categories to the list
@@ -328,12 +346,12 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
             title, categories = extract_title_and_categories(file_path)
             description = extract_first_paragraph(file_path)
             
-            # Store new report data
+            # Store new report data - enabled state based on file location
             existing_reports[filename] = {
                 'title': title,
                 'description': description,
                 'categories': categories,
-                'enabled': True  # Enable by default
+                'enabled': is_visible  # Set enabled based on where the file was found
             }
             
             # Add any new categories to the list
@@ -565,9 +583,16 @@ def update_showcase(showcase_file, reports_dir, refresh_existing=False):
             'categories': all_categories
         }, f, indent=2)
     
-    # Exclude files that aren't actually HTML reports (like .DS_Store, etc.)
-    valid_html_files = [f for f in html_files if f.endswith('.html') and not f.startswith('.')]
+    # Count reports in both directories
+    visible_html_files = [f for f in os.listdir(reports_dir) if f.endswith('.html') and not f.startswith('.')]
+    hidden_html_files = []
+    if os.path.exists(hidden_dir):
+        hidden_html_files = [f for f in os.listdir(hidden_dir) if f.endswith('.html') and not f.startswith('.')]
+    
+    total_html_files = len(visible_html_files) + len(hidden_html_files)
+    
     print(f"Updated showcase with {len(existing_reports)} reports ({len(new_reports)} new, {len(updated_reports)} refreshed)")
+    print(f"Visible reports: {len(visible_html_files)}, Hidden reports: {len(hidden_html_files)}")
     print(f"JSON backup of all report data saved to: {json_backup}")
     
     return {
