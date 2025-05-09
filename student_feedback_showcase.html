@@ -40,7 +40,11 @@
         // Create a style element immediately
         var style = document.createElement('style');
         style.textContent = '.header { display: none !important; } ' + 
-                           '.feedback-categories { padding-top: 0.5rem !important; }';
+                           '.feedback-categories { padding-top: 0.5rem !important; padding-left: 0 !important; padding-right: 0 !important; }' +
+                           '.container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }' +
+                           '.feedback-cards { width: 100% !important; margin: 0 !important; padding: 0 !important; }' +
+                           'body { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; width: 100% !important; }' +
+                           'html { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; width: 100% !important; }';
         document.head.appendChild(style);
       }
     })();
@@ -93,6 +97,13 @@
       --category-pill-active-text: #ffffff;
     }
     
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      overflow-x: hidden;
+    }
+
     body { 
       background-color: var(--bg-color);
       color: var(--text-color);
@@ -100,6 +111,13 @@
       line-height: 1.6;
       padding: 0;
       margin: 0;
+    }
+
+    /* Force full width in iframe */
+    body.embedded, 
+    html.embedded {
+      width: 100% !important;
+      overflow-x: hidden;
     }
 
     .header {
@@ -138,6 +156,13 @@
       padding: 0 1rem;
     }
 
+    /* For embedded mode */
+    body.embedded .container {
+      max-width: 100%;
+      padding: 0;
+      margin: 0;
+    }
+
     .feedback-categories {
       display: flex;
       flex-wrap: nowrap;
@@ -150,11 +175,21 @@
       background-color: var(--bg-color);
       z-index: 10;
       width: 100%;
+      overflow-x: auto;
+      scrollbar-width: none; /* Firefox */
+      -ms-overflow-style: none; /* IE and Edge */
     }
 
-    /* Adjust top padding when embedded without header */
+    .feedback-categories::-webkit-scrollbar {
+      display: none; /* Chrome, Safari, Opera */
+    }
+
+    /* Adjust for embedded mode */
     body.embedded .feedback-categories {
       padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+      justify-content: flex-start;
     }
 
     .category-pill {
@@ -182,7 +217,10 @@
     .feedback-cards {
       width: 100%;
       margin-bottom: 3rem;
-      /* Remove grid display for Masonry to work */
+    }
+    
+    body.embedded .feedback-cards {
+      margin-bottom: 1rem;
     }
 
     /* Create grid-sizer element for Masonry */
@@ -192,9 +230,43 @@
       margin-bottom: 1.5rem;
     }
     
+    /* In embedded mode, use less margin and fill more width */
+    body.embedded .grid-sizer,
+    body.embedded .feedback-card {
+      width: 32.66%;
+      margin-bottom: 1rem;
+    }
+    
     /* Add gutter width between columns */
     .gutter-sizer {
       width: 2%;
+    }
+    
+    body.embedded .gutter-sizer {
+      width: 1%;
+    }
+    
+    /* Mobile Responsive Adjustments */
+    @media (max-width: 768px) {
+      body.embedded .grid-sizer,
+      body.embedded .feedback-card {
+        width: 49%;
+      }
+      
+      body.embedded .gutter-sizer {
+        width: 2%;
+      }
+    }
+    
+    @media (max-width: 480px) {
+      body.embedded .grid-sizer,
+      body.embedded .feedback-card {
+        width: 100%;
+      }
+      
+      body.embedded .gutter-sizer {
+        width: 0;
+      }
     }
 
     .feedback-card {
@@ -206,7 +278,12 @@
       position: relative;
       overflow: hidden;
       box-sizing: border-box;
-      /* Remove width: 100% to allow Masonry to control width */
+      /* More compact for embedded view */
+    }
+    
+    body.embedded .feedback-card,
+    html.embedded .feedback-card {
+      padding: 1rem;
     }
 
     .feedback-card:hover {
@@ -331,7 +408,12 @@
     /* Tablet */
     @media (max-width: 992px) {
       .container {
-        padding: 0 1.5rem;
+        padding: 0 1rem;
+      }
+      
+      body.embedded .container,
+      html.embedded .container {
+        padding: 0 0.5rem;
       }
       
       .grid-sizer,
@@ -360,7 +442,7 @@
     /* Mobile */
     @media (max-width: 768px) {
       .container {
-        padding: 0 1rem;
+        padding: 0 0.75rem;
         max-width: 100%;
       }
       
@@ -417,52 +499,13 @@
       }
     }
     
-    /* Small Mobile */
-    @media (max-width: 480px) {
-      .container {
-        padding: 0 0.8rem;
-      }
-      
-      .feedback-card {
-        padding: 1rem;
-        margin-bottom: 0.5rem;
-      }
-      
-      .feedback-card p {
-        font-size: 0.9rem;
-      }
-      
-      .feedback-card .category-tag {
-        font-size: 0.7rem;
-        padding: 0.2rem 0.5rem;
-      }
-      
-      .header h1 {
-        font-size: 1.5rem;
-      }
-      
-      .header p {
-        font-size: 0.85rem;
-      }
-      
-      .theme-toggle {
-        bottom: 1rem;
-        right: 1rem;
-        width: 44px;
-        height: 44px;
-      }
-      
-      .category-pill {
-        padding: 0.5rem 0.8rem;
-        min-height: 36px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      
-      footer {
-        padding: 1.5rem 0;
-        margin-top: 2rem;
+    /* Special case for embedded narrow view */
+    @media (max-width: 580px) {
+      body.embedded .grid-sizer,
+      body.embedded .feedback-card,
+      html.embedded .grid-sizer,
+      html.embedded .feedback-card {
+        width: 100%; /* Single column for very narrow embedded view */
       }
     }
 
@@ -982,20 +1025,33 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Better iframe detection
+      function detectIframe() {
+        var isEmbedded = false;
+        try {
+          isEmbedded = window.self !== window.top;
+        } catch (e) {
+          isEmbedded = true;
+        }
+        return isEmbedded;
+      }
+      
       // Apply embedded class to body if needed
-      if (window.isEmbedded) {
+      if (window.isEmbedded || detectIframe()) {
         document.body.classList.add('embedded');
         document.documentElement.classList.add('embedded');
       }
       
       // Initialize Masonry layout
-      const msnry = new Masonry('.feedback-cards', {
+      const masonryOptions = {
         itemSelector: '.feedback-card',
         columnWidth: '.grid-sizer',
         gutter: '.gutter-sizer',
         percentPosition: true,
         transitionDuration: '0s'
-      });
+      };
+      
+      const msnry = new Masonry('.feedback-cards', masonryOptions);
       
       // Initialize after images are loaded (if there are any)
       imagesLoaded('.feedback-cards').on('progress', function() {
@@ -1055,9 +1111,17 @@
       });
       
       // Re-layout Masonry on window resize
+      let resizeTimer;
       window.addEventListener('resize', function() {
-        msnry.layout();
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+          msnry.layout();
+        }, 100);
       });
+      
+      // Force layout after initial load and after a slight delay
+      msnry.layout();
+      setTimeout(() => msnry.layout(), 500);
     });
   </script>
 </body>
