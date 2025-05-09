@@ -522,28 +522,8 @@
 </div>
 
 </div>
-<div class="theme-toggle" id="theme-toggle">
-<i class="fas fa-moon"></i>
-</div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Theme toggle
-      const themeToggle = document.getElementById('theme-toggle');
-      const themeIcon = themeToggle.querySelector('i');
-      const htmlElement = document.documentElement;
-      
-      themeToggle.addEventListener('click', function() {
-        if (htmlElement.classList.contains('light-mode')) {
-          htmlElement.classList.remove('light-mode');
-          themeIcon.classList.remove('fa-sun');
-          themeIcon.classList.add('fa-moon');
-        } else {
-          htmlElement.classList.add('light-mode');
-          themeIcon.classList.remove('fa-moon');
-          themeIcon.classList.add('fa-sun');
-        }
-      });
-      
       // Category filter
       const categoryPills = document.querySelectorAll('.category-pill');
       const reportCards = document.querySelectorAll('.report-card');
