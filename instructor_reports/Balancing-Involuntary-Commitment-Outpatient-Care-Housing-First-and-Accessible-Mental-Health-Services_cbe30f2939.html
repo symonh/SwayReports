@@ -16,11 +16,16 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   
 <style>
+    /* Global font size increase by 20% */
+    html {
+      font-size: 110%;
+    }
+
     :root {
       /* Darkened dark mode theme */
-      --bg-color: #050505;          /* Near-black background */
+      --bg-color: #000000;          /* Near-black background */
       --card-bg: #0e0e1a;           /* Deeper navy card */
-      --card-header-bg: #141422;     /* Darker header */
+      --card-header-bg: #000000;     /* Darker header */
       --text-color: #e4e6eb;
       --muted-text-color: #a9adc1;
       --border-color: #1f1f2d;
@@ -38,8 +43,8 @@
       --bg-color: #f5f7fa;
       --card-bg: #ffffff;
       --card-header-bg: #f0f5fc;
-      --text-color: #2c3e50;
-      --muted-text-color: #5a6a7e;
+      --text-color: #000000;
+      --muted-text-color: #000000;
       --border-color: #d1d9e6;
       
       /* UI elements - using purple Sway theme colors */
@@ -1172,42 +1177,6 @@
     }
 </style>
   <style>
-    /* Global color fixes */
-    body, html {
-      min-height: 100vh;
-      width: 100%;
-      margin: 0;
-      padding: 0;
-      overflow-x: hidden;
-      background-color: #000000; /* Default to black for dark mode */
-    }
-    
-    /* Override for light mode */
-    html.light-mode, 
-    body.light-mode {
-      background-color: white;
-    }
-    
-    /* Ensure all content containers have proper width */
-    .container, 
-    .container-fluid, 
-    .row {
-      max-width: 100%;
-    }
-    
-    /* Eliminate any unwanted margins on containers */
-    .row {
-      margin-left: 0;
-      margin-right: 0;
-    }
-    
-    .full-width-page {
-      width: 100%;
-      max-width: 100vw;
-      overflow-x: hidden;
-      box-sizing: border-box;
-    }
-    
     /* Apple-inspired font styling */
     body, button, input, select, textarea {
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -1232,7 +1201,7 @@
       position: relative;
       display: block;
       clear: both;
-      margin-bottom: 10px;
+      margin-bottom: 30px;
     }
     
     /* Masonry layout using columns */
@@ -1240,7 +1209,6 @@
       column-count: 2;
       column-gap: 1.5rem;
       width: 100%;
-      margin-bottom: 8px;
     }
     
     @media (max-width: 767px) {
@@ -1286,20 +1254,6 @@
       box-shadow: 0 6px 20px rgba(0,0,0,0.25);
     }
     
-    .masonry-item.hidden-thread {
-      visibility: hidden !important;
-      opacity: 0 !important;
-      height: 0 !important;
-      padding-top: 0 !important;
-      padding-bottom: 0 !important;
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
-      border-top-width: 0 !important;
-      border-bottom-width: 0 !important;
-      overflow: hidden !important;
-      pointer-events: none !important;
-    }
-    
     .show-toggle-btn {
       display: block;
       margin: 30px auto 10px auto;
@@ -1331,20 +1285,32 @@
     body .generated-title.text-info,
     .full-width-page .generated-title,
     .generated-title {
-      font-size: 2.5rem !important;
+      font-size: 2.0rem !important;
       line-height: 1.2 !important;
-      margin-top: 2.5rem !important;
+      margin-top: 2rem !important;
       margin-bottom: 1rem !important;
       font-weight: 600;
-      color: white !important;
       text-shadow: 0 1px 3px rgba(0,0,0,0.15);
-      letter-spacing: -0.0025em;
+      letter-spacing: 0.0025em;
       display: block;
       position: relative;
       max-width: 94%;
       padding-bottom: 0.5rem;
       font-style: normal !important; /* Force normal style, no italics */
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    }
+    
+    /* Light mode title styling */
+    html.light-mode .generated-title,
+    body.light-mode .generated-title {
+      color: #23004D !important;
+      text-shadow: none;
+    }
+    
+    /* Dark mode specifics */
+    html.dark-mode .generated-title,
+    body.dark-mode .generated-title {
+      color: white !important;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
     
     .generated-title::after {
@@ -1359,51 +1325,11 @@
       border-radius: 2px;
     }
     
-    /* Enhanced styling for better title visibility */
-    .dark-mode .generated-title {
-      text-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 0 10px rgba(0,0,0,0.1);
-    }
-    
-    /* Light mode title styling */
-    .light-mode .generated-title {
-      color: #4750c5 !important;
-      text-shadow: none;
-    }
-    
     /* Adjust underline color in light mode */
-    .light-mode .generated-title::after {
-      background: #4750c5;
+    body.light-mode .generated-title::after,
+    html.light-mode .generated-title::after {
+      background: #23004D;
       opacity: 0.5;
-    }
-    
-    /* Fix for pure black background in dark mode - only targeting page containers */
-    body.dark-mode,
-    html.dark-mode,
-    .dark-mode .full-width-page {
-      background-color: #000000 !important;
-    }
-    
-    /* Explicitly exempt chart elements from background override */
-    .dark-mode .progress,
-    .dark-mode .progress-bar,
-    .dark-mode .bg-success,
-    .dark-mode .bg-info,
-    .dark-mode .bg-warning,
-    .dark-mode .bg-danger,
-    .dark-mode .bg-secondary,
-    .dark-mode .chart-container,
-    .dark-mode [class*="histogram-"] {
-      background-color: initial !important; /* Preserve original background colors */
-    }
-    
-    /* Ensure the page fills the viewport */
-    html, body {
-      min-height: 100% !important;
-      height: 100% !important;
-    }
-    
-    .dark-mode.shared-page {
-      background-color: #000000 !important;
     }
     
     /* For longer titles, ensure they wrap properly */
@@ -1422,10 +1348,10 @@
       }
     }
     .section-title {
-      font-size: 1.7rem !important;
-      font-weight: 600;
+      font-size: 1.35rem !important; 
+      font-weight: 700;
       margin-bottom: 1.2rem;
-      letter-spacing: -0.01em;
+      letter-spacing: 0.01em;
     }
     /* Remove background from thread card headers */
     .card.thread-card .card-header {
@@ -1433,7 +1359,7 @@
       border-bottom: none !important;
     }
     .small {
-      font-size: 1em !important;
+      font-size: 0.875em !important;
     }
     /* Show More/Fewer Threads button custom color */
     .btn-thread-toggle {
@@ -1446,29 +1372,14 @@
       color: #217dbb !important;
       border-color: #217dbb !important;
     }
-    /* Prevent button flash in dark mode */
-    .dark-mode .btn-thread-toggle,
-    .dark-mode .btn-thread-toggle:active,
-    .dark-mode .btn-thread-toggle:focus,
-    .dark-mode .btn-thread-toggle:hover {
-      background: transparent !important;
-      border-color: #99aaff !important;
-      color: #99aaff !important;
-      box-shadow: none !important;
-    }
     /* Ensure info text under section headings aligns with the heading text */
     .section-info-align {
       margin-left: 2.2rem; /* matches the icon+text indent of .section-title .title-text */
     }
+    
+    /* Hide histograms that exceed the maximum visible count */
     .hidden-histogram {
       display: none !important;
-    }
-    /* Add extra margin above Continue Reading button in Instructor Report */
-    #report-content + .show-toggle-btn {
-      margin-top: 2.5rem !important;
-    }
-    .collapsible-section + .show-toggle-btn {
-      margin-top: 2.5rem !important;
     }
 
     /* ===== Stylish Share Banner ===== */
@@ -1622,33 +1533,37 @@
       padding-left: 1.6em;
       margin-bottom: 1.2em;
     }
-
-    /* Final fixes to ensure proper layout */
-    @media (max-width: 767px) {
-      body.dark-mode .px-md-3 {
-        padding-left: 0.5rem !important;
-        padding-right: 0.5rem !important;
-      }
+    
+    /* Hidden thread CSS class - uses visibility/height approach instead of DOM removal */
+    .masonry-item.hidden-thread {
+      visibility: hidden !important;
+      opacity: 0 !important;
+      height: 0 !important;
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      margin-top: 0 !important;
+      margin-bottom: 0 !important;
+      border-top-width: 0 !important;
+      border-bottom-width: 0 !important;
+      overflow: hidden !important;
+      pointer-events: none !important;
     }
   </style>
 </head>
-<body class="dark-mode" style="background-color: #000000 !important; margin: 0; padding: 0; max-width: 100vw; overflow-x: hidden;">
-  <div class="full-width-page shared-page px-md-4 py-4 px-2" style="max-width: 100vw; overflow-x: hidden; background-color: #000000;">
-    <div class="content-wrapper" style="max-width: 1400px; margin: 0 auto;">
-      
+<body>
+  <div class="full-width-page px-3 py-4">
 
-      
-      <div class="row mb-5">
-        <div class="col-12 px-2 px-md-4">
-          <h1 class="generated-title">
-            Balancing Involuntary Commitment, Outpatient Care, Housing First, and Accessible Mental Health Services
-          </h1>
-        </div>
+    <div class="row mb-4">
+      <div class="col-12">
+        <h1 class="generated-title">
+          Balancing Involuntary Commitment, Outpatient Care, Housing First, and Accessible Mental Health Services
+        </h1>
       </div>
-      <div class="row mb-4">
-        <div class="col-md-6 mb-4 mb-md-0">
-          <div class="py-4 h-100">
-            
+    </div>
+    <div class="row mb-4">
+      <div class="col-md-6 mb-4 mb-md-0">
+        <div class="py-4 h-100">
+          
 <h5 class="section-title">
   <div class="title-text"><i class="fas fa-calendar-alt"></i> Timelines</div>
 </h5>
@@ -1704,11 +1619,11 @@
     <div class="col-7 col-value">11</div>
   </div>
 </div> 
-          </div>
         </div>
-        <div class="col-md-6">
-          <div class="py-4 h-100">
-            <!-- Topics Section Partial -->
+      </div>
+      <div class="col-md-6">
+        <div class="py-4 h-100">
+          <!-- Topics Section Partial -->
 
 
 <h5 class="section-title">
@@ -1755,36 +1670,35 @@
     
   </div>
  
-          </div>
         </div>
       </div>
-      <div class="row mb-2">
-        <div class="col-12">
-          <h5 class="section-title">
-            <div class="title-text"><i class="fas fa-chart-bar mr-1"></i> Opinion Distribution</div>
-            
-          </h5>
-        </div>
-        <div class="pt-0 pb-2">
-          <div class="text-muted small mb-0 section-info-align">
-            <i class="fas fa-info-circle mr-1"></i>Opinion scale: 1 = Strongly Disagree, 7 = Strongly Agree. Mean and 95% CI shown below each chart.
-          </div>
-          <!-- DEBUG: Show if histogram_html or topic_labels are missing -->
+    </div>
+    <div class="row mb-2">
+      <div class="col-12">
+        <h5 class="section-title">
+          <div class="title-text"><i class="fas fa-chart-bar mr-1"></i> Opinion Distribution</div>
           
-          
-        </div>
+        </h5>
       </div>
+      <div class="pt-0 pb-2">
+        <div class="text-muted small mb-0 section-info-align">
+          <i class="fas fa-info-circle mr-1"></i>Opinion scale: 1 = Strongly Disagree, 7 = Strongly Agree. Mean and 95% CI shown below each chart.
+        </div>
+        <!-- DEBUG: Show if histogram_html or topic_labels are missing -->
+        
+        
+      </div>
+    </div>
 
-      <!-- Separate row for histogram charts floating on background -->
-      <div class="row mb-4">
-        <div class="col-12">
-          
-            <div class="row" id="opinion-histogram-row">
+    <!-- Separate row for histogram charts floating on background -->
+    <div class="row mb-4">
+      <div class="col-12">
+        
+          <div class="row">
+            
               
-              
-                
-                  <div class="col-md-6 col-lg-4 mb-4 opinion-histogram-card" data-index="0">
-                    <!-- Individual Opinion Histogram Card -->
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <!-- Individual Opinion Histogram Card -->
 <div class="card histogram-card">
   <div class="card-body p-0 px-1 position-relative">
     <div class="histogram-content">
@@ -1888,13 +1802,12 @@
     </div>
   </div>
 </div> 
-                  </div>
-                  
-                
+                </div>
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4 opinion-histogram-card" data-index="0">
-                    <!-- Individual Opinion Histogram Card -->
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <!-- Individual Opinion Histogram Card -->
 <div class="card histogram-card">
   <div class="card-body p-0 px-1 position-relative">
     <div class="histogram-content">
@@ -1990,13 +1903,12 @@
     </div>
   </div>
 </div> 
-                  </div>
-                  
-                
+                </div>
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4 opinion-histogram-card" data-index="0">
-                    <!-- Individual Opinion Histogram Card -->
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <!-- Individual Opinion Histogram Card -->
 <div class="card histogram-card">
   <div class="card-body p-0 px-1 position-relative">
     <div class="histogram-content">
@@ -2096,13 +2008,12 @@
     </div>
   </div>
 </div> 
-                  </div>
-                  
-                
+                </div>
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4 opinion-histogram-card" data-index="0">
-                    <!-- Individual Opinion Histogram Card -->
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <!-- Individual Opinion Histogram Card -->
 <div class="card histogram-card">
   <div class="card-body p-0 px-1 position-relative">
     <div class="histogram-content">
@@ -2202,13 +2113,12 @@
     </div>
   </div>
 </div> 
-                  </div>
-                  
-                
+                </div>
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4 opinion-histogram-card" data-index="0">
-                    <!-- Individual Opinion Histogram Card -->
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <!-- Individual Opinion Histogram Card -->
 <div class="card histogram-card">
   <div class="card-body p-0 px-1 position-relative">
     <div class="histogram-content">
@@ -2308,13 +2218,12 @@
     </div>
   </div>
 </div> 
-                  </div>
-                  
-                
+                </div>
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4 opinion-histogram-card" data-index="0">
-                    <!-- Individual Opinion Histogram Card -->
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <!-- Individual Opinion Histogram Card -->
 <div class="card histogram-card">
   <div class="card-body p-0 px-1 position-relative">
     <div class="histogram-content">
@@ -2414,22 +2323,21 @@
     </div>
   </div>
 </div> 
-                  </div>
-                  
-                
+                </div>
               
-            </div>
-            <div class="text-center">
-              <button id="show-more-histograms-btn" class="btn btn-thread-toggle show-toggle-btn" style="display:none;">Show More Histograms</button>
-              <button id="show-fewer-histograms-btn" class="btn btn-thread-toggle show-toggle-btn" style="display:none;">Show Fewer Histograms</button>
-            </div>
-          
-        </div>
+            
+          </div>
+          <div class="text-center">
+            <button id="show-more-histograms-btn" class="btn btn-thread-toggle show-toggle-btn" style="display:none;">Show More Histograms <i class="fas fa-chevron-down"></i></button>
+            <button id="show-fewer-histograms-btn" class="btn btn-thread-toggle show-toggle-btn" style="display:none;">Show Fewer Histograms <i class="fas fa-chevron-up"></i></button>
+          </div>
+        
       </div>
-      <div class="row mb-4">
-        <div class="col-12">
-          <div class="py-4">
-            <!-- Report Section Partial -->
+    </div>
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="py-4">
+          <!-- Report Section Partial -->
 
 <h5 class="section-title">
   <div class="title-text">
@@ -2446,7 +2354,7 @@
   
     
     <div id="report-content" class="markdown-content">
-      <p>This assignment engaged students in paired discussions about mental health and substance use treatment approaches. Students debated three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care. Each discussion explored tensions between client autonomy and structured intervention, requiring students to balance ethical principles with practical implementation considerations.</p>
+      <p>Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care. Each discussion explored tensions between client autonomy and structured intervention, requiring students to balance ethical principles with practical implementation considerations.</p>
 <h3>Themes</h3>
 <ul>
 <li><strong>Students across discussions grappled with the fundamental tension between respecting individual autonomy and providing necessary structure in treatment settings.</strong> This philosophical dilemma emerged consistently whether students were discussing motivational interviewing, Housing First implementation, or criteria for involuntary commitment.</li>
@@ -2483,7 +2391,7 @@
 </ul>
     </div>
     <!-- Hidden raw markdown for test compatibility -->
-    <div style="display:none;" id="report-raw-markdown">This assignment engaged students in paired discussions about mental health and substance use treatment approaches. Students debated three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care. Each discussion explored tensions between client autonomy and structured intervention, requiring students to balance ethical principles with practical implementation considerations.
+    <div style="display:none;" id="report-raw-markdown">Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care. Each discussion explored tensions between client autonomy and structured intervention, requiring students to balance ethical principles with practical implementation considerations.
 
 ### Themes
 - **Students across discussions grappled with the fundamental tension between respecting individual autonomy and providing necessary structure in treatment settings.** This philosophical dilemma emerged consistently whether students were discussing motivational interviewing, Housing First implementation, or criteria for involuntary commitment.
@@ -2512,8 +2420,8 @@
 ### Possible Misconceptions
 - **Some discussions revealed potential confusion about the distinction between legal standards and clinical best practices in involuntary treatment.** Several exchanges suggested students might benefit from clearer understanding of how legal criteria for commitment vary across jurisdictions and how these frameworks interact with clinical decision-making.
 - **The evidence base for specialized housing models appears to be incompletely understood by some students.** While many correctly cited Housing First outcomes for chronically homeless adults, the research on specialized transitional housing for specific populations like youth or domestic violence survivors could be more thoroughly explored.</div>
-    <!-- RAW REPORT CONTENT FOR TESTING: This assignment enga -->
-    <span style="display:none;" id="report-prefix">This assignment enga</span>
+    <!-- RAW REPORT CONTENT FOR TESTING: Students debated men -->
+    <span style="display:none;" id="report-prefix">Students debated men</span>
     <div class="text-muted mt-2 d-flex justify-content-end align-items-center">
       <span class="text-right" style="flex:1; text-align:right;">Generated on: 
         <script>
@@ -2534,7 +2442,7 @@
       <div class="alert alert-info">
         <i class="fas fa-info-circle mr-2"></i> Edit the report in markdown format.
       </div>
-      <textarea id="report-markdown-editor" class="form-control">This assignment engaged students in paired discussions about mental health and substance use treatment approaches. Students debated three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care. Each discussion explored tensions between client autonomy and structured intervention, requiring students to balance ethical principles with practical implementation considerations.
+      <textarea id="report-markdown-editor" class="form-control">Students debated mental health and substance use treatment approaches, touching on three main topics: the merits of stage-wise versus abstinence-based treatments for substance use disorders, the efficacy of Housing First compared to transitional housing models, and the ethics of involuntary commitment in mental health care. Each discussion explored tensions between client autonomy and structured intervention, requiring students to balance ethical principles with practical implementation considerations.
 
 ### Themes
 - **Students across discussions grappled with the fundamental tension between respecting individual autonomy and providing necessary structure in treatment settings.** This philosophical dilemma emerged consistently whether students were discussing motivational interviewing, Housing First implementation, or criteria for involuntary commitment.
@@ -2576,48 +2484,48 @@
     </div>
   
 </div> 
-          </div>
         </div>
       </div>
+    </div>
 
-      <div class="row mb-2">
-        <div class="col-12">
-          <h5 class="section-title">
-            <div class="title-text"><i class="fas fa-comments mr-1"></i> Chat Threads</div>
-            
-          </h5>
-        </div>
-        <div class="pt-0 pb-2">
-          <!-- DEBUG: Show if threads is missing or empty -->
+    <div class="row mb-2">
+      <div class="col-12">
+        <h5 class="section-title">
+          <div class="title-text"><i class="fas fa-comments mr-1"></i> Chat Threads</div>
           
-          <div class="text-muted small mb-0 section-info-align">
-            <i class="fas fa-info-circle mr-1"></i> Only threads with 10 or more messages are shown and processed for summaries. Student names are redacted for privacy.
-          </div>
+        </h5>
+      </div>
+      <div class="pt-0 pb-2">
+        <!-- DEBUG: Show if threads is missing or empty -->
+        
+        <div class="text-muted small mb-0 section-info-align">
+          <i class="fas fa-info-circle mr-1"></i> Only threads with 10 or more messages are shown and processed for summaries. Student names are redacted for privacy.
         </div>
       </div>
+    </div>
 
-      <!-- Separate row for thread items floating on background -->
-      <div class="row mb-5">
-        <div class="col-12">
-          <div class="thread-list" id="thread-list">
-            
-              <div class="masonry-grid">
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Involuntary Commitment
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
-                                  <ul>
+    <!-- Separate row for thread items floating on background -->
+    <div class="row mb-5">
+      <div class="col-12">
+        <div class="thread-list" id="thread-list">
+          
+            <div class="masonry-grid">
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Involuntary Commitment
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
+                                <ul>
 <li><strong>Students debated the ethics of involuntary commitment by weighing the protection of civil liberties against the need for intervention when individuals lack insight.</strong> Student 1 emphasized the dangers of eroding trust in mental health systems through coercion, while Student 2 argued that measures like outpatient commitment can be a compassionate, albeit last-resort, safety net when voluntary care fails.</li>
 <li><strong>The conversation evolved to scrutinize the balance between personal autonomy and necessary medical intervention.</strong> Using examples from high-profile conservatorship cases and discussing essential legal safeguards like judicial oversight and legal advocacy, students refined their views on when involuntary treatment might be justified.</li>
 <li><strong>Guide played a pivotal role by challenging critical assumptions and prompting a deeper exploration of policy implications and ethical boundaries.</strong> Its interventions directed students to carefully consider the trade-offs in expanding involuntary interventions while emphasizing the need for robust, equitable safeguards.</li>
@@ -2625,57 +2533,57 @@
 <blockquote>
 <p><strong>Student 1, you've raised the concept of anosognosia as a key factor in treatment decisions. How do you balance respecting personal autonomy with the reality that impaired insight might necessitate intervention? This tension challenges you to consider whether refusal always reflects a rational choice or if compromised decision-making can warrant protective measures.</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated the ethics of involuntary commitment by weighing the protection of civil liberties against the need for intervention when individuals lack insight.** Student 1 emphasized the dangers of eroding trust in mental health systems through coercion, while Student 2 argued that measures like outpatient commitment can be a compassionate, albeit last-resort, safety net when voluntary care fails.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated the ethics of involuntary commitment by weighing the protection of civil liberties against the need for intervention when individuals lack insight.** Student 1 emphasized the dangers of eroding trust in mental health systems through coercion, while Student 2 argued that measures like outpatient commitment can be a compassionate, albeit last-resort, safety net when voluntary care fails.
 - **The conversation evolved to scrutinize the balance between personal autonomy and necessary medical intervention.** Using examples from high-profile conservatorship cases and discussing essential legal safeguards like judicial oversight and legal advocacy, students refined their views on when involuntary treatment might be justified.
 - **Guide played a pivotal role by challenging critical assumptions and prompting a deeper exploration of policy implications and ethical boundaries.** Its interventions directed students to carefully consider the trade-offs in expanding involuntary interventions while emphasizing the need for robust, equitable safeguards.
 
   
 &gt; **Student 1, you&#39;ve raised the concept of anosognosia as a key factor in treatment decisions. How do you balance respecting personal autonomy with the reality that impaired insight might necessitate intervention? This tension challenges you to consider whether refusal always reflects a rational choice or if compromised decision-making can warrant protective measures.**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1b46437e60f::student-c2nhcmxldg1hawwucnv0z2vycy5lzhu=6fffd2ba0f::37f5e689ef::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Co-Occurring
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Co-Occurring
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
+                                <ul>
 <li><strong>Students debated the merits of stage-wise treatments versus abstinence-based programs for substance use disorders.</strong> They discussed how harm reduction and motivational interviewing (MI) can empower clients by meeting them where they are, while acknowledging that detoxification and 12-step programs offer structure that some individuals may need.</li>
 <li><strong>The conversation evolved into a detailed contrast between treatments for substance and process addictions.</strong> Student 1 and Student 2 weighed the benefits of flexible, client-driven approaches like MI against the more rigid frameworks of abstinence, sharing experiences and concerns about both methods.</li>
 <li><strong>Guide played an active role in refocusing and deepening the discussion on treatment efficacy and client needs.</strong> It repeatedly challenged the students to reconcile their views on treatment structure and outcomes, prompting them to consider whether different addictions might require distinct approaches.</li>
@@ -2683,58 +2591,58 @@
 <blockquote>
 <p><strong>Student 2, you've made an excellent point about MI's value in process addictions. How do you reconcile this with your earlier stance favoring abstinence-based approaches? Is there something fundamentally different about substance vs. process addictions that might warrant different treatment approaches?</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated the merits of stage-wise treatments versus abstinence-based programs for substance use disorders.** They discussed how harm reduction and motivational interviewing (MI) can empower clients by meeting them where they are, while acknowledging that detoxification and 12-step programs offer structure that some individuals may need.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated the merits of stage-wise treatments versus abstinence-based programs for substance use disorders.** They discussed how harm reduction and motivational interviewing (MI) can empower clients by meeting them where they are, while acknowledging that detoxification and 12-step programs offer structure that some individuals may need.
 - **The conversation evolved into a detailed contrast between treatments for substance and process addictions.** Student 1 and Student 2 weighed the benefits of flexible, client-driven approaches like MI against the more rigid frameworks of abstinence, sharing experiences and concerns about both methods.
 - **Guide played an active role in refocusing and deepening the discussion on treatment efficacy and client needs.** It repeatedly challenged the students to reconcile their views on treatment structure and outcomes, prompting them to consider whether different addictions might require distinct approaches.
 
   
 
 &gt; **Student 2, you&#39;ve made an excellent point about MI&#39;s value in process addictions. How do you reconcile this with your earlier stance favoring abstinence-based approaches? Is there something fundamentally different about substance vs. process addictions that might warrant different treatment approaches?**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr10cd743940f::student-c2hwlnj1dgdlcnmuzwr1106e96600f::598b6d5888::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Co-Occurring
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Co-Occurring
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
+                                <ul>
 <li><strong>Students debated the relative merits of stage-wise treatment versus detoxification and 12-step programs.</strong> They highlighted that while structured programs offer immediate safety, clear community support, and stability, stage-wise approaches with motivational interviewing can meet clients where they are, especially when acknowledgment of a problem is gradual.</li>
 <li><strong>The discussion evolved toward integrating both methods to balance flexibility with structure.</strong> Both students considered that combining MI-trained counseling with traditional 12-step frameworks might better address individual readiness and overcome potential barriers like the stigma of total abstinence.</li>
 <li><strong>Guide played a decisive role in steering the discussion toward a nuanced evaluation of each approach.</strong> Its interventions consistently prompted clarification on how each model addresses client needs and challenged the students to think critically about practical limitations such as the shortage of specialized counselors.</li>
@@ -2742,58 +2650,58 @@
 <blockquote>
 <p><strong>Student 2, you've raised concerns about how the 12-step requirement of admitting powerlessness might clash with the stages of change. How do you reconcile this tension, and could a more flexible peer support model better serve individuals in precontemplation or early contemplation?</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated the relative merits of stage-wise treatment versus detoxification and 12-step programs.** They highlighted that while structured programs offer immediate safety, clear community support, and stability, stage-wise approaches with motivational interviewing can meet clients where they are, especially when acknowledgment of a problem is gradual.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated the relative merits of stage-wise treatment versus detoxification and 12-step programs.** They highlighted that while structured programs offer immediate safety, clear community support, and stability, stage-wise approaches with motivational interviewing can meet clients where they are, especially when acknowledgment of a problem is gradual.
 - **The discussion evolved toward integrating both methods to balance flexibility with structure.** Both students considered that combining MI-trained counseling with traditional 12-step frameworks might better address individual readiness and overcome potential barriers like the stigma of total abstinence.
 - **Guide played a decisive role in steering the discussion toward a nuanced evaluation of each approach.** Its interventions consistently prompted clarification on how each model addresses client needs and challenged the students to think critically about practical limitations such as the shortage of specialized counselors.
 
 
   
 &gt; **Student 2, you&#39;ve raised concerns about how the 12-step requirement of admitting powerlessness might clash with the stages of change. How do you reconcile this tension, and could a more flexible peer support model better serve individuals in precontemplation or early contemplation?**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr175ee1b2810::student-cnv0z2vycy5lzhu=febbc2920f::598b6d5888::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Co-Occurring
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Co-Occurring
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
+                                <ul>
 <li>
 <p><strong>Students engaged in a detailed debate over the merits of stage-wise, harm reduction approaches versus traditional 12-step programs.</strong> Student 1 emphasized the community support, spiritual foundation, and structured accountability provided by 12-step models, while Student 2 highlighted the flexibility, reduced stigma, and personalized care inherent in harm reduction and motivational interviewing.</p>
 </li>
@@ -2807,20 +2715,20 @@
 <blockquote>
 <p><strong>Student 2, what evidence supports that motivational interviewing is particularly effective for specific mental disorders when co-occurring with substance use? How do the findings from Lundal et al. (2010) impact your view of treatment matching? Can a strong empirical basis shift the balance away from traditional 12-step models for some individuals?</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" class="form-control summary-markdown-editor">- **Students engaged in a detailed debate over the merits of stage-wise, harm reduction approaches versus traditional 12-step programs.** Student 1 emphasized the community support, spiritual foundation, and structured accountability provided by 12-step models, while Student 2 highlighted the flexibility, reduced stigma, and personalized care inherent in harm reduction and motivational interviewing.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" class="form-control summary-markdown-editor">- **Students engaged in a detailed debate over the merits of stage-wise, harm reduction approaches versus traditional 12-step programs.** Student 1 emphasized the community support, spiritual foundation, and structured accountability provided by 12-step models, while Student 2 highlighted the flexibility, reduced stigma, and personalized care inherent in harm reduction and motivational interviewing.
 
 - **Both students acknowledged that treatment efficacy depends heavily on individual circumstances and recovery phases.** Student 1 raised concerns about potential behavior enabling through continuous meeting attendance despite relapses, and Student 2 argued that such flexibility could alleviate shame and promote long-term success.
 
@@ -2828,38 +2736,38 @@
 
   
 &gt; **Student 2, what evidence supports that motivational interviewing is particularly effective for specific mental disorders when co-occurring with substance use? How do the findings from Lundal et al. (2010) impact your view of treatment matching? Can a strong empirical basis shift the balance away from traditional 12-step models for some individuals?**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1110fe7fc0f::student-c2hwlnj1dgdlcnmuzwr1192e0f6c0f::598b6d5888::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Involuntary Commitment
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Involuntary Commitment
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
+                                <ul>
 <li>
 <p><strong>Students debated whether making involuntary commitment more readily available is justified for improving treatment of serious mental illness.</strong> Student 1, arguing from a utilitarian perspective, emphasized the potential benefits of early intervention and reduced long-term costs, while Student 2 stressed concerns about violating autonomy and the risk of overuse without adequate safeguards.</p>
 </li>
@@ -2873,20 +2781,20 @@
 <blockquote>
 <p><strong>Student 1, Student 2 raises an important question about prevention versus reaction. Could investing in diversion programs and preventative services reduce the need for involuntary commitment in the first place? This shifts the discussion from simply expanding involuntary commitment to prioritizing early interventions that might better maintain community connections and patient autonomy.</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated whether making involuntary commitment more readily available is justified for improving treatment of serious mental illness.** Student 1, arguing from a utilitarian perspective, emphasized the potential benefits of early intervention and reduced long-term costs, while Student 2 stressed concerns about violating autonomy and the risk of overuse without adequate safeguards.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" class="form-control summary-markdown-editor">- **Students debated whether making involuntary commitment more readily available is justified for improving treatment of serious mental illness.** Student 1, arguing from a utilitarian perspective, emphasized the potential benefits of early intervention and reduced long-term costs, while Student 2 stressed concerns about violating autonomy and the risk of overuse without adequate safeguards.
 
 - **The discussion evolved to consider the nuances of implementing involuntary commitment within a broader system of care.** They examined how regulatory systems, efficient post-hospitalization processes, and alternative preventative services—like diversion programs—might balance immediate safety with respect for patient rights.
 
@@ -2895,38 +2803,38 @@
 
   
 &gt; **Student 1, Student 2 raises an important question about prevention versus reaction. Could investing in diversion programs and preventative services reduce the need for involuntary commitment in the first place? This shifts the discussion from simply expanding involuntary commitment to prioritizing early interventions that might better maintain community connections and patient autonomy.**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1fc11e3e210::student-cnv0z2vycy5lzhu=c33e84da0b::37f5e689ef::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Housing First
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Housing First
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
+                                <ul>
 <li>
 <p><strong>Student 1 made a detailed case for Housing First by emphasizing tenant autonomy and the value of independent living, which he connected to broader social support ethics.</strong> Throughout the exchange, he underlined the importance of flexible support systems and critiqued models that force individuals into unnecessarily restrictive environments.</p>
 </li>
@@ -2940,20 +2848,20 @@
 <blockquote>
 <p><strong>Student 1, I notice you both agree on Housing First's value but differ on whether it's the only model that makes sense. What do you think about Student 2's point that the high cost of providing 24/7 intensive support might make specialized residential programs more practical for some individuals with multiple disabilities? This seems to highlight a tension between ideal implementation and real-world constraints.</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" class="form-control summary-markdown-editor">- **Student 1 made a detailed case for Housing First by emphasizing tenant autonomy and the value of independent living, which he connected to broader social support ethics.** Throughout the exchange, he underlined the importance of flexible support systems and critiqued models that force individuals into unnecessarily restrictive environments.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" class="form-control summary-markdown-editor">- **Student 1 made a detailed case for Housing First by emphasizing tenant autonomy and the value of independent living, which he connected to broader social support ethics.** Throughout the exchange, he underlined the importance of flexible support systems and critiqued models that force individuals into unnecessarily restrictive environments.
 
 - **Student 2 acknowledged the benefits of Housing First but pushed back on the absolutist language of the statement, arguing that multiple housing models might better suit diverse needs.** He drew from professional experience and textbook evidence to highlight that while Housing First is effective for many, its universal application can be challenged by practical constraints like 24/7 support costs.
 
@@ -2962,38 +2870,38 @@
 
   
 &gt; **Student 1, I notice you both agree on Housing First&#39;s value but differ on whether it&#39;s the only model that makes sense. What do you think about Student 2&#39;s point that the high cost of providing 24/7 intensive support might make specialized residential programs more practical for some individuals with multiple disabilities? This seems to highlight a tension between ideal implementation and real-world constraints.**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr11b53f9e40f::student-cnv0z2vycy5lzhu=ca95a42a0f::03dae91d50::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Outpatient
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Outpatient
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
+                                <ul>
 <li>
 <p><strong>Students presented contrasting viewpoints about outpatient commitment by weighing ethical concerns such as autonomy, beneficence, and nonmaleficence.</strong> Student 1 oscillated between disagreement and agreement by emphasizing the risks of forced care, while Student 2 consistently noted the necessity of such measures when safety was at stake.</p>
 </li>
@@ -3004,108 +2912,108 @@
 <p><strong>Guide played a key role in steering the discussion and probing underlying assumptions.</strong> It repeatedly challenged the students to explain how they balanced public safety with individual autonomy, asked them to justify key criteria like capacity assessment and informed consent, and helped them clarify when overriding autonomy might be ethically justified.</p>
 </li>
 </ul>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" class="form-control summary-markdown-editor">- **Students presented contrasting viewpoints about outpatient commitment by weighing ethical concerns such as autonomy, beneficence, and nonmaleficence.** Student 1 oscillated between disagreement and agreement by emphasizing the risks of forced care, while Student 2 consistently noted the necessity of such measures when safety was at stake.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" class="form-control summary-markdown-editor">- **Students presented contrasting viewpoints about outpatient commitment by weighing ethical concerns such as autonomy, beneficence, and nonmaleficence.** Student 1 oscillated between disagreement and agreement by emphasizing the risks of forced care, while Student 2 consistently noted the necessity of such measures when safety was at stake.
 
 - **Both students referenced empirical evidence and ethical frameworks to support their claims.** They discussed studies like Kendra’s Law, a North Carolina study, and the Cochrane review to expose the tension between improving safety and maintaining individual rights, highlighting the complexity of applying outpatient commitment in practice.
 
 - **Guide played a key role in steering the discussion and probing underlying assumptions.** It repeatedly challenged the students to explain how they balanced public safety with individual autonomy, asked them to justify key criteria like capacity assessment and informed consent, and helped them clarify when overriding autonomy might be ethically justified.</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr1450a64480f::student-c2hwlnj1dgdlcnmuzwr1f3a40c460f::aa6019dc81::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Housing First
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Housing First
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
+                                <ul>
 <li><strong>Students vigorously debated whether Housing First is the only sensible model, with Student 2 championing its high retention rates, cost-effectiveness, and autonomy support, while Student 1 highlighted the structured skill-building of transitional housing.</strong> As the discussion progressed, both acknowledged that the optimal approach varies by population—chronically homeless individuals may benefit most from Housing First, whereas youth or domestic violence survivors often need the scaffolding of transitional programs.  </li>
 <li><strong>Guide played a central role in sourcing and summarizing research, swiftly providing references, comparative statistics, and theoretical frameworks to underpin both Housing First and transitional housing discussions.</strong> Its on-demand compilation of evidence—from eviction rates and cost savings to harm reduction practices and preference assessments—helped students deepen their arguments and reconcile differing viewpoints.  </li>
 <li><strong>The conversation matured into a nuanced consensus on integrating both models, using standardized assessments like VI-SPDAT and motivational interviewing to match individuals’ preferences and needs to the right intervention.</strong> Students left the discussion emphasizing a person-centered, flexible system that balances immediate housing stability with skill development, restoring dignity while promoting long-term recovery and independence.</li>
 </ul>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" class="form-control summary-markdown-editor">- **Students vigorously debated whether Housing First is the only sensible model, with Student 2 championing its high retention rates, cost-effectiveness, and autonomy support, while Student 1 highlighted the structured skill-building of transitional housing.** As the discussion progressed, both acknowledged that the optimal approach varies by population—chronically homeless individuals may benefit most from Housing First, whereas youth or domestic violence survivors often need the scaffolding of transitional programs.  
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" class="form-control summary-markdown-editor">- **Students vigorously debated whether Housing First is the only sensible model, with Student 2 championing its high retention rates, cost-effectiveness, and autonomy support, while Student 1 highlighted the structured skill-building of transitional housing.** As the discussion progressed, both acknowledged that the optimal approach varies by population—chronically homeless individuals may benefit most from Housing First, whereas youth or domestic violence survivors often need the scaffolding of transitional programs.  
 - **Guide played a central role in sourcing and summarizing research, swiftly providing references, comparative statistics, and theoretical frameworks to underpin both Housing First and transitional housing discussions.** Its on-demand compilation of evidence—from eviction rates and cost savings to harm reduction practices and preference assessments—helped students deepen their arguments and reconcile differing viewpoints.  
 - **The conversation matured into a nuanced consensus on integrating both models, using standardized assessments like VI-SPDAT and motivational interviewing to match individuals’ preferences and needs to the right intervention.** Students left the discussion emphasizing a person-centered, flexible system that balances immediate housing stability with skill development, restoring dignity while promoting long-term recovery and independence.</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr14a9d930610::student-c2hwlnj1dgdlcnmuzwr1b05141aa10::03dae91d50::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Outpatient
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Outpatient
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
+                                <ul>
 <li>
 <p><strong>Students engaged in a detailed debate on whether outpatient commitment can be considered a humane alternative.</strong> Student 1 argued that involuntary outpatient services risk dehumanizing care and advocated for voluntary, peer-run programs, while Student 2 acknowledged the challenges in accessing voluntary services and pointed to the potential benefits of intended protections.</p>
 </li>
@@ -3116,56 +3024,56 @@
 <p><strong>The dialogue evolved into a nuanced exploration of the trade-offs between reducing harm and preserving dignity in mental health care.</strong> Both students recognized that while involuntary outpatient commitment might reduce hospitalizations and improve community safety, careful regulation is needed to avoid potential abuses and maintain patient trust.</p>
 </li>
 </ul>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" class="form-control summary-markdown-editor">- **Students engaged in a detailed debate on whether outpatient commitment can be considered a humane alternative.** Student 1 argued that involuntary outpatient services risk dehumanizing care and advocated for voluntary, peer-run programs, while Student 2 acknowledged the challenges in accessing voluntary services and pointed to the potential benefits of intended protections.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" class="form-control summary-markdown-editor">- **Students engaged in a detailed debate on whether outpatient commitment can be considered a humane alternative.** Student 1 argued that involuntary outpatient services risk dehumanizing care and advocated for voluntary, peer-run programs, while Student 2 acknowledged the challenges in accessing voluntary services and pointed to the potential benefits of intended protections.
 
 - **Guide actively supported the discussion by offering concrete data and program examples, such as Oregon’s CAHOOTS model.** Its interventions provided context on the risks of inpatient treatment, detailed criteria for involuntary services, and research-backed evidence that helped students explore the balance between individual autonomy and community safety.
 
 - **The dialogue evolved into a nuanced exploration of the trade-offs between reducing harm and preserving dignity in mental health care.** Both students recognized that while involuntary outpatient commitment might reduce hospitalizations and improve community safety, careful regulation is needed to avoid potential abuses and maintain patient trust.</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-cnv0z2vycy5lzhu=1895fabe0f::student-cnv0z2vycy5lzhu=3af37e8e0f::aa6019dc81::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Outpatient
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Outpatient
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
+                                <ul>
 <li><strong>Students presented contrasting views on involuntary outpatient care, with Student 1 arguing that it preserves dignity and prevents harm by enabling tailored, community-based support.</strong> Student 2 countered that such measures risk infringing on personal autonomy and may have mixed long‐term outcomes, highlighting biases and potential coercion in implementation.</li>
 <li><strong>The discussion evolved to acknowledge that while outpatient commitment can be less restrictive than inpatient care, its humane application depends on rigorous evaluation of case specifics and reducing bias in service delivery.</strong> Both students gradually converged on the idea that involuntary outpatient care might be appropriate in extreme situations, provided there is ongoing emphasis on building trust and maintaining patient autonomy.</li>
 <li><strong>Guide played a central role by prompting deeper analysis and synthesis of ethical and practical considerations.</strong> It repeatedly challenged the students to articulate precise boundaries between immediate crisis intervention and long-term care measures, urging them to consider structural impacts such as bias and the limits of coercion.</li>
@@ -3173,57 +3081,57 @@
 <blockquote>
 <p><strong>Student 2, the disproportionate impact on marginalized communities is a significant concern. How would you address situations where someone's symptoms are severe enough to cause harm but they refuse all voluntary services? Is there a point where involuntary intervention becomes necessary despite these concerns?</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" class="form-control summary-markdown-editor">- **Students presented contrasting views on involuntary outpatient care, with Student 1 arguing that it preserves dignity and prevents harm by enabling tailored, community-based support.** Student 2 countered that such measures risk infringing on personal autonomy and may have mixed long‐term outcomes, highlighting biases and potential coercion in implementation.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" class="form-control summary-markdown-editor">- **Students presented contrasting views on involuntary outpatient care, with Student 1 arguing that it preserves dignity and prevents harm by enabling tailored, community-based support.** Student 2 countered that such measures risk infringing on personal autonomy and may have mixed long‐term outcomes, highlighting biases and potential coercion in implementation.
 - **The discussion evolved to acknowledge that while outpatient commitment can be less restrictive than inpatient care, its humane application depends on rigorous evaluation of case specifics and reducing bias in service delivery.** Both students gradually converged on the idea that involuntary outpatient care might be appropriate in extreme situations, provided there is ongoing emphasis on building trust and maintaining patient autonomy.
 - **Guide played a central role by prompting deeper analysis and synthesis of ethical and practical considerations.** It repeatedly challenged the students to articulate precise boundaries between immediate crisis intervention and long-term care measures, urging them to consider structural impacts such as bias and the limits of coercion.
 
   
 &gt; **Student 2, the disproportionate impact on marginalized communities is a significant concern. How would you address situations where someone&#39;s symptoms are severe enough to cause harm but they refuse all voluntary services? Is there a point where involuntary intervention becomes necessary despite these concerns?**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-c2hwlnj1dgdlcnmuzwr149aa71fc0b::student-cnv0z2vycy5lzhu=70609c520e::aa6019dc81::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-                  <div class="masonry-item">
-                    <div class="card thread-card" id="thread-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
-                      <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
-                          <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
-                              
-                                  Involuntary Commitment
-                              
-                          </h6>
-                          
-                          
-                      </div>
-                      <div class="card-body">
-                          
-                              <div class="thread-summary markdown-content" id="summary-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
-                                  <ul>
+                </div>
+              
+                <div class="masonry-item">
+                  <div class="card thread-card" id="thread-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
+                    <div class="card-header d-flex justify-content-between align-items-center flex-nowrap">
+                        <h6 class="mb-0 thread-heading" style="flex-shrink:1; min-width:0;">
+                            
+                                Involuntary Commitment
+                            
+                        </h6>
+                        
+                        
+                    </div>
+                    <div class="card-body">
+                        
+                            <div class="thread-summary markdown-content" id="summary-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
+                                <ul>
 <li><strong>Student 1 advocated for a more liberal approach to involuntary commitment, arguing that stricter criteria leave vulnerable individuals abandoned on the streets.</strong> They cited real-life urban examples and criticized the narrow definition of danger, suggesting that current laws overlook behaviors that signal serious mental illness.</li>
 <li><strong>Student 2 contended that easing commitment standards could undermine individual autonomy and trust in the mental health system.</strong> They emphasized the value of community support services and warned that overreliance on hospitalization might strain resources and stigmatize patients.</li>
 <li><strong>Guide played a pivotal role by challenging Student 1 to address concerns about autonomy and by urging both participants to consider the broader implications of their positions.</strong> Guide's interventions prompted a deeper examination of the balance between protecting individuals and preserving their right to choose alternative forms of community support.</li>
@@ -3231,95 +3139,95 @@
 <blockquote>
 <p><strong>Student 1, could you respond to Student 2's concerns about potential overreliance on hospitalization? Or perhaps explain why you believe these alternative approaches might be insufficient for the population you're concerned about? The progress meter will only advance when both of you are actively discussing the topic.</strong></p>
 </blockquote>
-                              </div>
-                          
-                          
-                          <div class="status-message thread-status" id="status-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;"></div>
-                          <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;">
-                              <span class="sr-only">Loading...</span>
-                          </div>
-                          
-                          <!-- Edit Summary Modal Content -->
-                          <div id="summary-editor-container-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" class="summary-editor-container" style="display: none;">
-                              <div class="alert alert-info">
-                                  <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
-                              </div>
-                              <textarea id="summary-markdown-editor-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" class="form-control summary-markdown-editor">- **Student 1 advocated for a more liberal approach to involuntary commitment, arguing that stricter criteria leave vulnerable individuals abandoned on the streets.** They cited real-life urban examples and criticized the narrow definition of danger, suggesting that current laws overlook behaviors that signal serious mental illness.
+                            </div>
+                        
+                        
+                        <div class="status-message thread-status" id="status-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;"></div>
+                        <div class="spinner-border spinner-border-sm text-orange" role="status" id="spinner-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;">
+                            <span class="sr-only">Loading...</span>
+                        </div>
+                        
+                        <!-- Edit Summary Modal Content -->
+                        <div id="summary-editor-container-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" class="summary-editor-container" style="display: none;">
+                            <div class="alert alert-info">
+                                <i class="fas fa-info-circle mr-2"></i> Edit the summary in markdown format.
+                            </div>
+                            <textarea id="summary-markdown-editor-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" class="form-control summary-markdown-editor">- **Student 1 advocated for a more liberal approach to involuntary commitment, arguing that stricter criteria leave vulnerable individuals abandoned on the streets.** They cited real-life urban examples and criticized the narrow definition of danger, suggesting that current laws overlook behaviors that signal serious mental illness.
 - **Student 2 contended that easing commitment standards could undermine individual autonomy and trust in the mental health system.** They emphasized the value of community support services and warned that overreliance on hospitalization might strain resources and stigmatize patients.
 - **Guide played a pivotal role by challenging Student 1 to address concerns about autonomy and by urging both participants to consider the broader implications of their positions.** Guide&#39;s interventions prompted a deeper examination of the balance between protecting individuals and preserving their right to choose alternative forms of community support.
 
 
   
 &gt; **Student 1, could you respond to Student 2&#39;s concerns about potential overreliance on hospitalization? Or perhaps explain why you believe these alternative approaches might be insufficient for the population you&#39;re concerned about? The progress meter will only advance when both of you are actively discussing the topic.**</textarea>
-                              <div class="mt-3">
-                                  <button class="btn btn-primary save-summary-btn" data-session-id="student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
-                                      <i class="fas fa-save mr-1"></i> Save Changes
-                                  </button>
-                                  <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
-                                      <i class="fas fa-times mr-1"></i> Cancel
-                                  </button>
-                                  <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;">
-                                      <span class="sr-only">Saving...</span>
-                                  </div>
-                              </div>
-                              <div class="status-message summary-editor-status" id="summary-editor-status-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;"></div>
-                          </div>
-                      </div>
+                            <div class="mt-3">
+                                <button class="btn btn-primary save-summary-btn" data-session-id="student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
+                                    <i class="fas fa-save mr-1"></i> Save Changes
+                                </button>
+                                <button class="btn btn-secondary ml-2 cancel-summary-edit-btn" data-session-id="student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939">
+                                    <i class="fas fa-times mr-1"></i> Cancel
+                                </button>
+                                <div class="spinner-border text-primary ml-2 summary-editor-spinner" role="status" id="summary-editor-spinner-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;">
+                                    <span class="sr-only">Saving...</span>
+                                </div>
+                            </div>
+                            <div class="status-message summary-editor-status" id="summary-editor-status-student-cnv0z2vycy5lzhu=9da7cea009::student-dwjoyy5ydxrnzxjzlmvkdq==36a6e5f00f::37f5e689ef::cbe30f2939" style="display: none;"></div>
+                        </div>
                     </div>
                   </div>
-                
-              </div>
-            
-          </div>
+                </div>
+              
+            </div>
+          
         </div>
       </div>
-      
-      <div style="clear:both; height:20px;"></div>
-      
-      <!-- Add Qualtrics Survey Data Card - if data exists -->
-      
-      <div class="row mb-4">
-        <div class="col-12">
-          <div class="py-4 mb-4">
-            <h5 class="section-title">
-              <div class="title-text"><i class="fas fa-chart-bar mr-1"></i> Post-Chat Survey Data</div>
-            </h5>
-            <div class="card-body pt-0">
-              <div class="row">
-                <div class="col-md-4 d-flex flex-column align-items-center justify-content-center py-3">
-                  <h3>20</h3>
-                  <p class="text-muted">Total Survey Responses</p>
-                </div>
-                <div class="col-md-4 d-flex flex-column align-items-center justify-content-center py-3">
-                  <h3>10</h3>
-                  <p class="text-muted">Threads With Surveys</p>
-                </div>
-                <div class="col-md-4 d-flex flex-column align-items-center justify-content-center py-3">
-                  <h3>90.9%</h3>
-                  <p class="text-muted">Response Rate</p>
-                </div>
+    </div>
+    
+    <div style="clear:both; height:20px;"></div>
+    
+    <!-- Add Qualtrics Survey Data Card - if data exists -->
+    
+    <div class="row mb-4">
+      <div class="col-12">
+        <div class="py-4 mb-4">
+          <h5 class="section-title">
+            <div class="title-text"><i class="fas fa-chart-bar mr-1"></i> Post-Chat Survey Data</div>
+          </h5>
+          <div class="card-body pt-0">
+            <div class="row">
+              <div class="col-md-4 d-flex flex-column align-items-center justify-content-center py-3">
+                <h3>20</h3>
+                <p class="text-muted">Total Survey Responses</p>
               </div>
-              <div class="d-flex justify-content-between align-items-center text-muted small mb-0" style="gap: 1rem;">
-                <span class="ml-auto text-right" style="flex:1; text-align:right;">Last updated: 2025-05-06 22:34:06.949301</span>
-                
+              <div class="col-md-4 d-flex flex-column align-items-center justify-content-center py-3">
+                <h3>10</h3>
+                <p class="text-muted">Threads With Surveys</p>
               </div>
+              <div class="col-md-4 d-flex flex-column align-items-center justify-content-center py-3">
+                <h3>90.9%</h3>
+                <p class="text-muted">Response Rate</p>
+              </div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center text-muted small mb-0" style="gap: 1rem;">
+              <span>Last updated: 2025-05-06T22:34:06.949301</span>
+              
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Separate row for survey histogram charts floating on background -->
-      <div class="row mb-4">
-        <div class="col-12">
-          
-            <!-- Overall Rating and Guide Feedback -->
-            <div class="row">
-              
-              <div class="col-md-6 mb-4">
-                <div class="card h-100 thread-card">
-                  <div class="card-body p-0">
-                    
-                    
+    <!-- Separate row for survey histogram charts floating on background -->
+    <div class="row mb-4">
+      <div class="col-12">
+        
+          <!-- Overall Rating and Guide Feedback -->
+          <div class="row">
+            
+            <div class="col-md-6 mb-4">
+              <div class="card h-100 thread-card">
+                <div class="card-body p-0">
+                  
+                  
 <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
     <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
         <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">How was your chat?</div>
@@ -3380,18 +3288,18 @@
         <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 1.68 <span style="opacity:0.7;">(95% confidence interval: 1.32–2.05)</span></div>
     </div>
 </div>
-                  </div>
                 </div>
               </div>
-              
-              
-              
-              <div class="col-md-6 mb-4">
-                <div class="card h-100 thread-card">
-                  <div class="card-body p-0">
+            </div>
+            
+            
+            
+            <div class="col-md-6 mb-4">
+              <div class="card h-100 thread-card">
+                <div class="card-body p-0">
+                  
+                  
                     
-                    
-                      
 <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
     <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
         <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">Guide contributed the right amount</div>
@@ -3432,31 +3340,238 @@
         <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 0.53 <span style="opacity:0.7;">(95% confidence interval: 0.19–0.86)</span></div>
     </div>
 </div>
-                    
-                  </div>
+                  
                 </div>
               </div>
-              
             </div>
             
-            <div style="height: 2rem;"></div>
-            <div class="row">
+          </div>
+          
+          <div style="height: 2rem;"></div>
+          <div class="row">
+            
+            
               
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100 thread-card">
+                    <div class="card-body p-0">
+                      
+                      
+<div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
+    <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
+        <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">Guide's contributions improved the discussion</div>
+    </div>
+    <div style="padding:25px;">
+        <div style="position:relative; width:100%;">
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly agree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">3 (30.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:30.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Agree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">5 (50.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:50.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Neutral</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">1 (10.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:10.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Disagree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">0 (0.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:0.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly disagree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">1 (10.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:10.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 0.90 <span style="opacity:0.7;">(95% confidence interval: 0.04–1.76)</span></div>
+    </div>
+</div>
+                    </div>
+                  </div>
+                </div>
               
-                
+            
               
-                
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100 thread-card">
+                    <div class="card-body p-0">
+                      
+                      
+<div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
+    <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
+        <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">My partner was respectful</div>
+    </div>
+    <div style="padding:25px;">
+        <div style="position:relative; width:100%;">
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly agree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">7 (77.8%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:77.77777777777779%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Agree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">2 (22.2%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:22.22222222222222%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Neutral</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">0 (0.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:0.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Disagree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">0 (0.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:0.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly disagree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">0 (0.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:0.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 1.78 <span style="opacity:0.7;">(95% confidence interval: 1.44–2.12)</span></div>
+    </div>
+</div>
+                    </div>
+                  </div>
+                </div>
               
-                
+            
               
-                
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100 thread-card">
+                    <div class="card-body p-0">
+                      
+                      
+<div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
+    <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
+        <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">This discussion improved my perception of my partner</div>
+    </div>
+    <div style="padding:25px;">
+        <div style="position:relative; width:100%;">
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly agree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">6 (50.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:50.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Agree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">3 (25.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:25.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Neutral</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">3 (25.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:25.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Disagree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">0 (0.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:0.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+
+            <div style="margin-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
+                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly disagree</span>
+                    <span style="font-size:0.9rem; color:#a9adc1;">0 (0.0%)</span>
+                </div>
+                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
+                    <div style="height:100%; width:0.0%; background-color:#8a8aff; border-radius:4px;"></div>
+                </div>
+            </div>
+        </div>
+        <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 1.25 <span style="opacity:0.7;">(95% confidence interval: 0.70–1.80)</span></div>
+    </div>
+</div>
+                    </div>
+                  </div>
+                </div>
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 thread-card">
-                      <div class="card-body p-0">
-                        
-                        
+            
+              
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100 thread-card">
+                    <div class="card-body p-0">
+                      
+                      
 <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
     <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
         <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">I felt comfortable sharing my honest opinions with my partner</div>
@@ -3517,19 +3632,19 @@
         <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 1.73 <span style="opacity:0.7;">(95% confidence interval: 1.41–2.04)</span></div>
     </div>
 </div>
-                      </div>
                     </div>
                   </div>
-                
+                </div>
               
-                
+            
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 thread-card">
-                      <div class="card-body p-0">
-                        
-                        
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100 thread-card">
+                    <div class="card-body p-0">
+                      
+                      
 <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
     <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
         <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">I was not offended by my partner's perspective</div>
@@ -3590,17 +3705,17 @@
         <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 1.91 <span style="opacity:0.7;">(95% confidence interval: 1.71–2.11)</span></div>
     </div>
 </div>
-                      </div>
                     </div>
                   </div>
-                
+                </div>
               
-                
-                  <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 thread-card">
-                      <div class="card-body p-0">
-                        
-                        
+            
+              
+                <div class="col-md-6 col-lg-4 mb-4">
+                  <div class="card h-100 thread-card">
+                    <div class="card-body p-0">
+                      
+                      
 <div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
     <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
         <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">It was valuable to chat with a student who did not share my perspective</div>
@@ -3661,94 +3776,24 @@
         <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 1.50 <span style="opacity:0.7;">(95% confidence interval: 1.07–1.93)</span></div>
     </div>
 </div>
-                      </div>
                     </div>
                   </div>
-                
+                </div>
               
-                
-              
-                
-                  <div class="col-md-6 col-lg-4 mb-4">
-                    <div class="card h-100 thread-card">
-                      <div class="card-body p-0">
-                        
-                        
-<div style="font-family:'Segoe UI',Roboto,Helvetica,Arial,sans-serif; background:#1e1e2d; color:#e4e6eb; border-radius:10px; overflow:hidden; padding:0; height:100%;">
-    <div style="background:#18182b; padding:20px 25px 10px 25px; border-bottom:1px solid #23233a;">
-        <div style="font-size:1.1rem; font-weight:500; line-height:1.3; height:2.6em; max-height:2.6em; overflow:hidden; text-overflow:ellipsis; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;">It would be good if more students and classes used Sway</div>
-    </div>
-    <div style="padding:25px;">
-        <div style="position:relative; width:100%;">
-
-            <div style="margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly agree</span>
-                    <span style="font-size:0.9rem; color:#a9adc1;">2 (20.0%)</span>
-                </div>
-                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
-                    <div style="height:100%; width:20.0%; background-color:#8a8aff; border-radius:4px;"></div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span style="font-size:0.9rem; color:#e4e6eb;">Agree</span>
-                    <span style="font-size:0.9rem; color:#a9adc1;">3 (30.0%)</span>
-                </div>
-                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
-                    <div style="height:100%; width:30.0%; background-color:#8a8aff; border-radius:4px;"></div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span style="font-size:0.9rem; color:#e4e6eb;">Neutral</span>
-                    <span style="font-size:0.9rem; color:#a9adc1;">4 (40.0%)</span>
-                </div>
-                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
-                    <div style="height:100%; width:40.0%; background-color:#8a8aff; border-radius:4px;"></div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span style="font-size:0.9rem; color:#e4e6eb;">Disagree</span>
-                    <span style="font-size:0.9rem; color:#a9adc1;">0 (0.0%)</span>
-                </div>
-                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
-                    <div style="height:100%; width:0.0%; background-color:#8a8aff; border-radius:4px;"></div>
-                </div>
-            </div>
-
-            <div style="margin-bottom:12px;">
-                <div style="display:flex; justify-content:space-between; margin-bottom:4px;">
-                    <span style="font-size:0.9rem; color:#e4e6eb;">Strongly disagree</span>
-                    <span style="font-size:0.9rem; color:#a9adc1;">1 (10.0%)</span>
-                </div>
-                <div style="height:20px; background:rgba(255,255,255,0.1); border-radius:4px; overflow:hidden;">
-                    <div style="height:100%; width:10.0%; background-color:#8a8aff; border-radius:4px;"></div>
-                </div>
-            </div>
-        </div>
-        <div style="text-align:center; color:#b0b3c7; font-size:13px; margin-top:10px; letter-spacing:0.01em;">mean = 0.50 <span style="opacity:0.7;">(95% confidence interval: -0.34–1.34)</span></div>
-    </div>
-</div>
-                      </div>
-                    </div>
-                  </div>
-                
-              
-            </div>
             
-            <!-- Opinion Changes Section -->
+              
             
+              
+            
+          </div>
           
-        </div>
+          <!-- Opinion Changes Section -->
+          
+        
       </div>
-      
-      <!-- End Qualtrics Survey Data Section -->
     </div>
+    
+    <!-- End Qualtrics Survey Data Section -->
   </div>
   
 <!-- Modal containers will be dynamically injected here by JS if needed -->
@@ -4928,19 +4973,10 @@
             }
             nodesToMove.forEach(node => { hiddenContentWrapper.appendChild(node); });
             reportContent.appendChild(hiddenContentWrapper);
-            
             const showMoreBtn = document.createElement('button');
             showMoreBtn.className = 'btn btn-thread-toggle show-toggle-btn';
-            showMoreBtn.innerHTML = 'Continue Reading <i class="fas fa-chevron-down"></i>';
-            showMoreBtn.style.marginTop = '1.5rem';
+            showMoreBtn.innerHTML = 'Show More <i class="fas fa-chevron-down"></i>';
             reportContent.insertBefore(showMoreBtn, hiddenContentWrapper);
-            
-            // Add a spacer div ABOVE the Continue Reading button for extra spacing
-            const spacerDiv = document.createElement('div');
-            spacerDiv.style.height = '1rem';
-            spacerDiv.style.clear = 'both';
-            reportContent.insertBefore(spacerDiv, showMoreBtn);
-            
             showMoreBtn.addEventListener('click', function() {
               const expanded = hiddenContentWrapper.classList.contains('collapsed');
               if (expanded) {
@@ -4950,92 +4986,77 @@
               } else {
                 hiddenContentWrapper.classList.add('collapsed');
                 showMoreBtn.classList.remove('expanded');
-                showMoreBtn.innerHTML = 'Continue Reading <i class="fas fa-chevron-down"></i>';
+                showMoreBtn.innerHTML = 'Show More <i class="fas fa-chevron-down"></i>';
               }
             });
           }
         }
       };
-      // Threads Masonry Show More
+      // Threads Masonry Show More (move nodes in/out of DOM for perfect layout)
       const setupThreadsShowMore = function() {
         const masonryGrid = document.querySelector('.masonry-grid');
-        if (!masonryGrid || masonryGrid.children.length <= 2) {
-          return; // Do nothing if 2 or fewer items
-        }
-
-        const masonryItems = Array.from(masonryGrid.querySelectorAll('.masonry-item'));
-        const itemsToShowInitially = 2;
-
-        const performHideAndSetupButtons = () => {
-          // Hide items beyond the initial set
-          for (let i = itemsToShowInitially; i < masonryItems.length; i++) {
-            if (masonryItems[i]) { // Ensure item exists
-              masonryItems[i].classList.add('hidden-thread');
-            }
-          }
-
-          const hiddenItemCount = masonryGrid.querySelectorAll('.masonry-item.hidden-thread').length;
-          if (hiddenItemCount === 0 && masonryItems.length > itemsToShowInitially) {
-            // Fallback or logging if hiding didn't work as expected but should have
-            console.warn("Masonry items were expected to be hidden but were not.");
-            // Potentially, if itemsToShowInitially is high, this might be normal if total items < itemsToShowInitially
-          }
+        if (masonryGrid && masonryGrid.children.length > 2) {
+          const masonryItems = Array.from(masonryGrid.querySelectorAll('.masonry-item'));
+          // Keep track of which items should be hidden
+          const extraItems = masonryItems.slice(2); // items to hide/show
           
-          // Only proceed with buttons if there are actually items to unhide
-          if (masonryItems.length <= itemsToShowInitially) {
-            return;
-          }
-
+          // Add the hidden-thread class to extra items instead of removing them from DOM
+          setTimeout(() => {
+            extraItems.forEach(item => {
+              item.classList.add('hidden-thread');
+            });
+          }, 50);
+          
+          let hiddenCount = extraItems.length;
           const showMoreThreadsBtn = document.createElement('button');
           showMoreThreadsBtn.className = 'btn btn-thread-toggle show-toggle-btn';
-
           const updateShowMoreText = () => {
-            const currentHiddenCount = masonryGrid.querySelectorAll('.masonry-item.hidden-thread').length;
-            showMoreThreadsBtn.innerHTML = `Show ${currentHiddenCount} More Threads`;
-            // Show button only if there are hidden threads
-            showMoreThreadsBtn.style.display = currentHiddenCount > 0 ? 'block' : 'none';
+            showMoreThreadsBtn.innerHTML = `Show ${hiddenCount} More Threads <i class="fas fa-chevron-down"></i>`;
           };
-          
+          updateShowMoreText();
           const showFewerThreadsBtn = document.createElement('button');
           showFewerThreadsBtn.className = 'btn btn-thread-toggle show-toggle-btn';
-          showFewerThreadsBtn.innerHTML = 'Show Fewer Threads';
-          showFewerThreadsBtn.style.display = 'none'; // Initially hidden
-
+          showFewerThreadsBtn.innerHTML = 'Show Fewer Threads <i class="fas fa-chevron-up"></i>';
+          showFewerThreadsBtn.style.display = 'none';
           const threadListSection = document.querySelector('.thread-list');
-          let spacerDiv;
           if (threadListSection) {
-            spacerDiv = document.createElement('div');
-            spacerDiv.style.height = '4px';
+            const spacerDiv = document.createElement('div');
+            spacerDiv.style.height = '20px';
             spacerDiv.style.clear = 'both';
             spacerDiv.style.display = 'none';
             threadListSection.appendChild(spacerDiv);
             threadListSection.appendChild(showFewerThreadsBtn);
           }
+          masonryGrid.parentNode.insertBefore(showMoreThreadsBtn, masonryGrid.nextSibling);
           
-          // Insert Show More button only if there's a chance it will be displayed
-          if (masonryItems.length > itemsToShowInitially) {
-             masonryGrid.parentNode.insertBefore(showMoreThreadsBtn, masonryGrid.nextSibling);
-             updateShowMoreText(); // Set initial text and visibility
-          }
-
-
           showMoreThreadsBtn.addEventListener('click', function() {
-            masonryItems.forEach(item => item.classList.remove('hidden-thread'));
-            updateShowMoreText(); // Button should hide itself
+            // Show all items by removing the hidden-thread class
+            extraItems.forEach(item => {
+              item.classList.remove('hidden-thread');
+            });
+            hiddenCount = 0;
+            updateShowMoreText();
+            showMoreThreadsBtn.style.display = 'none';
             showFewerThreadsBtn.style.display = 'block';
-            if (spacerDiv) spacerDiv.style.display = 'block';
-          });
-
-          showFewerThreadsBtn.addEventListener('click', function() {
-            for (let i = itemsToShowInitially; i < masonryItems.length; i++) {
-              if (masonryItems[i]) {
-                masonryItems[i].classList.add('hidden-thread');
-              }
+            if (threadListSection && threadListSection.lastChild.previousSibling) {
+              threadListSection.lastChild.previousSibling.style.display = 'block';
             }
-            updateShowMoreText(); // Button should reappear and update count
+          });
+          
+          showFewerThreadsBtn.addEventListener('click', function() {
+            // Hide extra items by adding the hidden-thread class
+            extraItems.forEach(item => {
+              item.classList.add('hidden-thread');
+            });
+            hiddenCount = extraItems.length;
+            updateShowMoreText();
+            showMoreThreadsBtn.style.display = 'block';
             showFewerThreadsBtn.style.display = 'none';
-            if (spacerDiv) spacerDiv.style.display = 'none';
+            if (threadListSection && threadListSection.lastChild.previousSibling) {
+              threadListSection.lastChild.previousSibling.style.display = 'none';
+            }
             
+            // Scroll to the beginning of the thread section
             const chatThreadsSectionTitle = document.querySelector('h5.section-title .fa-comments');
             if (chatThreadsSectionTitle && chatThreadsSectionTitle.closest('h5.section-title')) {
               chatThreadsSectionTitle.closest('h5.section-title').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -5043,45 +5064,41 @@
               masonryGrid.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
           });
-        };
-
-        if (window.requestAnimationFrame) {
-          window.requestAnimationFrame(() => {
-            setTimeout(performHideAndSetupButtons, 75); // Delay to allow layout to settle
-          });
-        } else {
-          setTimeout(performHideAndSetupButtons, 75); // Fallback
         }
       };
-
       setupReportShowMore();
       setupThreadsShowMore();
-
+      
       // Opinion Distribution Show More/Less
-      const histogramCards = document.querySelectorAll('.opinion-histogram-card');
+      const histogramCards = document.querySelectorAll('.histogram-card');
       const showMoreBtn = document.getElementById('show-more-histograms-btn');
       const showFewerBtn = document.getElementById('show-fewer-histograms-btn');
       const maxVisible = 6;
+      
       if (histogramCards.length > maxVisible) {
         for (let i = maxVisible; i < histogramCards.length; i++) {
-          histogramCards[i].classList.add('hidden-histogram');
+          histogramCards[i].closest('.col-md-6.col-lg-4').classList.add('hidden-histogram');
         }
         showMoreBtn.style.display = 'inline-block';
       }
+      
       if (showMoreBtn && showFewerBtn) {
         showMoreBtn.addEventListener('click', function() {
-          for (let i = maxVisible; i < histogramCards.length; i++) {
-            histogramCards[i].classList.remove('hidden-histogram');
-          }
+          const hiddenHistograms = document.querySelectorAll('.hidden-histogram');
+          hiddenHistograms.forEach(card => {
+            card.classList.remove('hidden-histogram');
+          });
           showMoreBtn.style.display = 'none';
           showFewerBtn.style.display = 'inline-block';
         });
+        
         showFewerBtn.addEventListener('click', function() {
           for (let i = maxVisible; i < histogramCards.length; i++) {
-            histogramCards[i].classList.add('hidden-histogram');
+            histogramCards[i].closest('.col-md-6.col-lg-4').classList.add('hidden-histogram');
           }
           showMoreBtn.style.display = 'inline-block';
           showFewerBtn.style.display = 'none';
+          
           // Scroll to the top of the histogram section
           const sectionTitle = document.querySelector('.section-title .fa-chart-bar');
           if (sectionTitle && sectionTitle.closest('.section-title')) {
@@ -5113,6 +5130,5 @@
       document.head.appendChild(style);
     });
   </script>
-  </div> <!-- Close content-wrapper -->
 </body>
 </html>
