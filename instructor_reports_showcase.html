@@ -6,6 +6,15 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" name="viewport"/>
 <title>Sway Instructor Reports Showcase</title>
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-J46TTYN1WR"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-J46TTYN1WR');
+</script>
+<!-- End Google Analytics -->
 <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" id="theme-css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
@@ -542,6 +551,37 @@
 </div>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+      // Track page view time
+      let pageViewStartTime = new Date().getTime();
+      let currentCategory = 'all'; // Default active category
+      let currentView = 'showcase';
+      let currentReport = '';
+      let reportViewStartTime = 0;
+      
+      // Function to record time spent when leaving page
+      window.addEventListener('beforeunload', function() {
+        const timeSpent = Math.round((new Date().getTime() - pageViewStartTime) / 1000);
+        
+        // Track overall time spent
+        gtag('event', 'time_spent', {
+          'event_category': 'Engagement',
+          'event_label': 'Instructor Reports Showcase',
+          'value': timeSpent,
+          'last_category': currentCategory,
+          'last_view': currentView
+        });
+        
+        // Track time spent on current report if viewing one
+        if (currentView === 'report' && currentReport) {
+          const reportTimeSpent = Math.round((new Date().getTime() - reportViewStartTime) / 1000);
+          gtag('event', 'report_view_duration', {
+            'event_category': 'Engagement',
+            'event_label': currentReport,
+            'value': reportTimeSpent
+          });
+        }
+      });
+      
       // Category filter
       const categoryPills = document.querySelectorAll('.category-pill');
       const reportCards = document.querySelectorAll('.report-card');
@@ -556,7 +596,28 @@
         });
         categoryPills.forEach(p => p.classList.remove('active'));
         if (categoryPills[0]) categoryPills[0].classList.add('active');
+        
+        // Track showing all reports
+        gtag('event', 'view_category', {
+          'event_category': 'Navigation',
+          'event_label': 'all',
+          'triggered_by': 'mobile_view'
+        });
+        
+        currentCategory = 'all';
       }
+      
+      // Track initial category on page load
+      setTimeout(() => {
+        const initialCategory = document.querySelector('.category-pill.active').getAttribute('data-category') || 'all';
+        currentCategory = initialCategory;
+        
+        gtag('event', 'view_category', {
+          'event_category': 'Navigation',
+          'event_label': initialCategory,
+          'page_load': true
+        });
+      }, 500);
       
       categoryPills.forEach(pill => {
         pill.addEventListener('click', function() {
@@ -564,21 +625,44 @@
             showAllReports();
             return;
           }
+          
+          const selectedCategory = this.getAttribute('data-category');
+          const previousCategory = currentCategory;
+          currentCategory = selectedCategory;
+          
+          // Track category change
+          gtag('event', 'category_click', {
+            'event_category': 'Navigation',
+            'event_label': selectedCategory,
+            'previous_category': previousCategory
+          });
+          
           categoryPills.forEach(p => p.classList.remove('active'));
           this.classList.add('active');
-          const selectedCategory = this.getAttribute('data-category');
+          
+          let visibleCount = 0;
           reportCards.forEach(card => {
             if (selectedCategory === 'all') {
               card.style.display = 'flex';
+              visibleCount++;
             } else {
               const cardCategories = card.getAttribute('data-categories');
               if (cardCategories && cardCategories.includes(selectedCategory)) {
                 card.style.display = 'flex';
+                visibleCount++;
               } else {
                 card.style.display = 'none';
               }
             }
           });
+          
+          // Track how many reports are shown for this category
+          gtag('event', 'view_category', {
+            'event_category': 'Content',
+            'event_label': selectedCategory,
+            'visible_reports': visibleCount
+          });
+          
           document.querySelector('.report-cards').style.opacity = '0';
           setTimeout(() => {
             document.querySelector('.report-cards').style.opacity = '1';
@@ -610,12 +694,34 @@
         link.addEventListener('click', function(e) {
           e.preventDefault();
           const reportUrl = this.getAttribute('href');
+          const reportTitle = this.textContent || this.innerText || reportUrl.split('/').pop();
+          
+          // Track report click
+          gtag('event', 'report_click', {
+            'event_category': 'Content',
+            'event_label': reportTitle,
+            'report_url': reportUrl,
+            'current_category': currentCategory
+          });
+          
           reportIframe.src = reportUrl;
           showcaseContainer.style.display = 'none';
           reportContainer.style.display = 'flex';
           categoryBar.style.display = 'none';
           backButtonContainer.style.display = 'block';
           if (header) header.style.display = 'none';
+          
+          // Update tracking state
+          currentView = 'report';
+          currentReport = reportTitle;
+          reportViewStartTime = new Date().getTime();
+          
+          // Track report view start
+          gtag('event', 'report_view_start', {
+            'event_category': 'Engagement',
+            'event_label': reportTitle,
+            'report_url': reportUrl
+          });
           
           // Scroll to the top inside the iframe and the parent window
           window.scrollTo(0, 0);
@@ -633,11 +739,33 @@
       
       // Handle back button
       backButton.addEventListener('click', function() {
+        // Track report view end if viewing a report
+        if (currentView === 'report' && currentReport) {
+          const reportViewDuration = Math.round((new Date().getTime() - reportViewStartTime) / 1000);
+          
+          gtag('event', 'report_view_end', {
+            'event_category': 'Engagement',
+            'event_label': currentReport,
+            'duration': reportViewDuration
+          });
+        }
+        
         showcaseContainer.style.display = 'block';
         reportContainer.style.display = 'none';
         categoryBar.style.display = 'flex';
         backButtonContainer.style.display = 'none';
         if (header) header.style.display = '';
+        
+        // Update tracking state
+        currentView = 'showcase';
+        currentReport = '';
+        
+        // Track back to showcase
+        gtag('event', 'navigate', {
+          'event_category': 'Navigation',
+          'event_label': 'back_to_showcase'
+        });
+        
         setTimeout(() => {
           reportIframe.src = '';
         }, 300);

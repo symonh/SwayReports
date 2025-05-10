@@ -4,6 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover">
   <title>Sway Student Feedback Showcase</title>
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-J46TTYN1WR"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-J46TTYN1WR');
+  </script>
+  <!-- End Google Analytics -->
   <!-- Immediately-executed iframe detection script -->
   <script>
     // Remove all injected overflow-x: hidden styles. Embedded mode is handled by CSS only.
@@ -827,13 +836,32 @@
       imagesLoaded('.feedback-cards').on('progress', function() {
         msnry.layout();
       });
+
+      // Track page view time
+      let pageViewStartTime = new Date().getTime();
+      let visibleCardCount = 0;
+      let currentCategory = 'peer-connection'; // Default active category
+      
+      // Function to record time spent before leaving page
+      window.addEventListener('beforeunload', function() {
+        const timeSpent = Math.round((new Date().getTime() - pageViewStartTime) / 1000);
+        gtag('event', 'time_spent', {
+          'event_category': 'Engagement',
+          'event_label': 'Student Feedback Showcase',
+          'value': timeSpent,
+          'last_category': currentCategory
+        });
+      });
+      
       // Category filter functionality
       const categoryPills = document.querySelectorAll('.category-pill');
       const feedbackCards = document.querySelectorAll('.feedback-card');
+      
       // On load, apply the filter for the default active category
       const defaultActivePill = document.querySelector('.category-pill.active');
       if (defaultActivePill) {
         const selectedCategory = defaultActivePill.getAttribute('data-category');
+        currentCategory = selectedCategory;
         feedbackCards.forEach(card => {
           if (selectedCategory === 'all') {
             card.style.display = 'block';
@@ -846,28 +874,80 @@
             }
           }
         });
+        
+        // Count visible cards
+        visibleCardCount = document.querySelectorAll('.feedback-card[style*="display: block"]').length;
+        
+        // Track initial category view
+        gtag('event', 'view_category', {
+          'event_category': 'Navigation',
+          'event_label': selectedCategory,
+          'visible_cards': visibleCardCount
+        });
+        
         setTimeout(() => msnry.layout(), 100);
       }
+      
       categoryPills.forEach(pill => {
         pill.addEventListener('click', function() {
+          const selectedCategory = this.getAttribute('data-category');
+          const previousCategory = currentCategory;
+          currentCategory = selectedCategory;
+          
+          // Track category change with analytics
+          gtag('event', 'category_click', {
+            'event_category': 'Navigation',
+            'event_label': selectedCategory,
+            'previous_category': previousCategory
+          });
+          
           categoryPills.forEach(p => p.classList.remove('active'));
           this.classList.add('active');
-          const selectedCategory = this.getAttribute('data-category');
+          
+          let visibleCount = 0;
           feedbackCards.forEach(card => {
             if (selectedCategory === 'all') {
               card.style.display = 'block';
+              visibleCount++;
             } else {
               const cardCategories = card.getAttribute('data-categories');
               if (cardCategories && cardCategories.includes(selectedCategory)) {
                 card.style.display = 'block';
+                visibleCount++;
               } else {
                 card.style.display = 'none';
               }
             }
           });
+          
+          visibleCardCount = visibleCount;
+          
+          // Track how many cards are shown for this category
+          gtag('event', 'view_category', {
+            'event_category': 'Content',
+            'event_label': selectedCategory,
+            'visible_cards': visibleCount
+          });
+          
           setTimeout(() => msnry.layout(), 100);
         });
       });
+      
+      // Track clicks on feedback cards
+      feedbackCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const cardCategories = this.getAttribute('data-categories') || '';
+          const cardText = this.querySelector('p').textContent.substring(0, 50) + '...'; // First 50 chars of feedback
+          
+          gtag('event', 'feedback_card_click', {
+            'event_category': 'Engagement',
+            'event_label': cardText,
+            'categories': cardCategories,
+            'current_filter': currentCategory
+          });
+        });
+      });
+      
       // Re-layout Masonry on window resize
       let resizeTimer;
       window.addEventListener('resize', function() {
