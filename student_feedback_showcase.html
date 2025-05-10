@@ -116,8 +116,9 @@
 
     .category-bar {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      white-space: nowrap;
       gap: 0.6rem;
       margin-bottom: 40px;
       position: sticky;
@@ -128,9 +129,18 @@
       width: 100%;
       box-shadow: 0 2px 10px rgba(0,0,0,0.1);
       border-bottom: 1px solid var(--border-color);
+      justify-content: center;
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    
+    .category-bar::-webkit-scrollbar {
+      display: none;
     }
     
     .category-pill {
+      flex: 0 0 auto;
+      white-space: nowrap;
       background-color: var(--category-pill-bg);
       color: var(--text-color);
       border: 1px solid var(--border-color);
@@ -275,11 +285,6 @@
       .header h1 { font-size: 1.6rem; }
       .header p { font-size: 0.9rem; }
       .category-bar {
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        white-space: nowrap;
-        -ms-overflow-style: none;
-        scrollbar-width: none;
         justify-content: flex-start;
       }
       .category-bar::-webkit-scrollbar {
