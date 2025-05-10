@@ -75,7 +75,7 @@
     .header h1 {
       font-family: 'Roboto Mono', monospace;
       font-weight: 700;
-      font-size: 35.7px;
+      font-size: 45px;
       /* 34px * 1.05 = 35.7px */
       margin-bottom: 1.5rem;
       color: #fff;
@@ -602,6 +602,7 @@
       const categoryBar = document.getElementById('category-bar');
       const backButtonContainer = document.getElementById('back-button-container');
       const reportLinks = document.querySelectorAll('[data-report-link]');
+      const header = document.querySelector('.header');
       
       // Handle report links
       reportLinks.forEach(link => {
@@ -613,6 +614,7 @@
           reportContainer.style.display = 'flex';
           categoryBar.style.display = 'none';
           backButtonContainer.style.display = 'block';
+          if (header) header.style.display = 'none';
           
           // Scroll to the top inside the iframe and the parent window
           window.scrollTo(0, 0);
@@ -634,6 +636,7 @@
         reportContainer.style.display = 'none';
         categoryBar.style.display = 'flex';
         backButtonContainer.style.display = 'none';
+        if (header) header.style.display = '';
         setTimeout(() => {
           reportIframe.src = '';
         }, 300);
