@@ -7,46 +7,18 @@
   <!-- Immediately-executed iframe detection script -->
   <script>
     (function() {
-      // Multiple methods to detect iframe embedding
-      function detectIframe() {
-        var isEmbedded = false;
-        
-        // Method 1: Try direct comparison
-        try {
-          isEmbedded = window.self !== window.top;
-        } catch (e) {
-          // If access is denied, we're in an iframe
-          isEmbedded = true;
-        }
-        
-        // Method 2: Check for URL parameters
-        if (window.location.href.indexOf('embedded=true') > -1) {
-          isEmbedded = true;
-        }
-        
-        // Method 3: Check referrer
-        if (document.referrer && document.referrer.indexOf('sites.google.com') > -1) {
-          isEmbedded = true;
-        }
-        
-        return isEmbedded;
-      }
+      // Always apply embedded styles regardless of iframe detection
+      window.isEmbedded = true;
       
-      // Apply the embedded class as early as possible
-      if (detectIframe()) {
-        // Set a flag that can be checked later when body is available
-        window.isEmbedded = true;
-        
-        // Create a style element immediately
-        var style = document.createElement('style');
-        style.textContent = '.header { display: none !important; } ' + 
-                           '.feedback-categories { padding-top: 0.5rem !important; padding-left: 0 !important; padding-right: 0 !important; }' +
-                           '.container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }' +
-                           '.feedback-cards { width: 100% !important; margin: 0 !important; padding: 0 !important; }' +
-                           'body { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; width: 100% !important; }' +
-                           'html { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; width: 100% !important; }';
-        document.head.appendChild(style);
-      }
+      // Create a style element immediately
+      var style = document.createElement('style');
+      style.textContent = '.header { display: none !important; } ' + 
+                         '.category-bar { padding-top: 0.5rem !important; padding-left: 0 !important; padding-right: 0 !important; }' +
+                         '.container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }' +
+                         '.feedback-cards { width: 100% !important; margin: 0 !important; padding: 0 !important; }' +
+                         'body { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; width: 100% !important; }' +
+                         'html { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; width: 100% !important; }';
+      document.head.appendChild(style);
     })();
   </script>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" id="theme-css">
@@ -163,7 +135,7 @@
       margin: 0;
     }
 
-    .feedback-categories {
+    .category-bar {
       display: flex;
       flex-wrap: nowrap;
       justify-content: center;
@@ -178,14 +150,15 @@
       overflow-x: auto;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* IE and Edge */
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
     }
 
-    .feedback-categories::-webkit-scrollbar {
+    .category-bar::-webkit-scrollbar {
       display: none; /* Chrome, Safari, Opera */
     }
 
-    /* Adjust for embedded mode */
-    body.embedded .feedback-categories {
+    /* Remove embedded/iframe-specific overrides for .feedback-categories that break sticky */
+    body.embedded .category-bar {
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
       margin-bottom: 1rem;
@@ -287,8 +260,8 @@
     }
 
     .feedback-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      transform: none !important;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
     }
 
     .feedback-card::before {
@@ -434,7 +407,7 @@
         font-size: 1.1rem;
       }
       
-      .feedback-categories {
+      .category-bar {
         padding: 0.8rem 0;
       }
     }
@@ -472,7 +445,7 @@
         font-size: 1.5rem;
       }
       
-      .feedback-categories {
+      .category-bar {
         overflow-x: auto;
         justify-content: flex-start;
         padding: 0.7rem 0;
@@ -481,7 +454,7 @@
         -ms-overflow-style: none; /* For Internet Explorer and Edge */
       }
       
-      .feedback-categories::-webkit-scrollbar {
+      .category-bar::-webkit-scrollbar {
         display: none; /* For Chrome, Safari, and Opera */
       }
       
@@ -539,7 +512,7 @@
   </div>
 
   <div class="container">
-    <div class="feedback-categories">
+    <div class="category-bar" id="category-bar">
       <button class="category-pill active" data-category="peer-connection">Peer Connection</button>
       <button class="category-pill" data-category="critical-thinking">Critical Thinking</button>
       <button class="category-pill" data-category="classroom-comparison">Classroom Comparison</button>
@@ -1024,22 +997,9 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Better iframe detection
-      function detectIframe() {
-        var isEmbedded = false;
-        try {
-          isEmbedded = window.self !== window.top;
-        } catch (e) {
-          isEmbedded = true;
-        }
-        return isEmbedded;
-      }
-      
-      // Apply embedded class to body if needed
-      if (window.isEmbedded || detectIframe()) {
-        document.body.classList.add('embedded');
-        document.documentElement.classList.add('embedded');
-      }
+      // Always apply embedded class
+      document.body.classList.add('embedded');
+      document.documentElement.classList.add('embedded');
       
       // Initialize Masonry layout
       const masonryOptions = {
