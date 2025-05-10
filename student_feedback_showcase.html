@@ -225,33 +225,6 @@
       border-radius: 50px;
     }
 
-    .theme-toggle {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      background-color: var(--card-bg);
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
-      cursor: pointer;
-      z-index: 100;
-      transition: all 0.3s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .theme-toggle:hover {
-      transform: scale(1.1);
-    }
-
-    .theme-toggle i {
-      font-size: 1.5rem;
-      color: var(--text-color);
-    }
-
     .section-header {
       text-align: center;
       margin: 3rem 0 2rem;
@@ -301,17 +274,21 @@
       .header { padding: 1.5rem 0.8rem; margin-bottom: 1.2rem; }
       .header h1 { font-size: 1.6rem; }
       .header p { font-size: 0.9rem; }
-      .category-bar { 
-        overflow-x: auto; 
-        justify-content: flex-start; 
-        padding: 0.8rem 1rem; 
-        margin-bottom: 1.5rem; 
-        scrollbar-width: none; 
+      .category-bar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        white-space: nowrap;
         -ms-overflow-style: none;
+        scrollbar-width: none;
+        justify-content: flex-start;
       }
-      .category-bar::-webkit-scrollbar { display: none; }
-      .category-pill { padding: 0.5rem 1rem; font-size: 0.85rem; white-space: nowrap; }
-      .theme-toggle { bottom: 1.5rem; right: 1.5rem; width: 45px; height: 45px; }
+      .category-bar::-webkit-scrollbar {
+        display: none;
+      }
+      .category-pill {
+        flex: 0 0 auto;
+        white-space: nowrap;
+      }
       
       /* Restore Masonry grid settings */
       .grid-sizer,
@@ -344,11 +321,6 @@
       .container, .header, .footer {
         padding-left: max(1rem, env(safe-area-inset-left));
         padding-right: max(1rem, env(safe-area-inset-right));
-      }
-      
-      .theme-toggle {
-        right: max(1rem, env(safe-area-inset-right));
-        bottom: max(1rem, env(safe-area-inset-bottom));
       }
     }
   </style>
@@ -839,10 +811,6 @@
     </div>
   </div>
 
-  <div class="theme-toggle" id="theme-toggle">
-    <i class="fas fa-moon"></i>
-  </div>
-
   <script>
     document.addEventListener('DOMContentLoaded', function() {
       // Remove all embedded/iframe logic and always show header
@@ -857,22 +825,6 @@
       const msnry = new Masonry('.feedback-cards', masonryOptions);
       imagesLoaded('.feedback-cards').on('progress', function() {
         msnry.layout();
-      });
-      // Theme toggle functionality
-      const themeToggle = document.getElementById('theme-toggle');
-      const themeIcon = themeToggle.querySelector('i');
-      const htmlElement = document.documentElement;
-      themeToggle.addEventListener('click', function() {
-        if (htmlElement.classList.contains('light-mode')) {
-          htmlElement.classList.remove('light-mode');
-          themeIcon.classList.remove('fa-sun');
-          themeIcon.classList.add('fa-moon');
-        } else {
-          htmlElement.classList.add('light-mode');
-          themeIcon.classList.remove('fa-moon');
-          themeIcon.classList.add('fa-sun');
-        }
-        setTimeout(() => msnry.layout(), 100);
       });
       // Category filter functionality
       const categoryPills = document.querySelectorAll('.category-pill');
