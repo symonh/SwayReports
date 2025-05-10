@@ -14,22 +14,23 @@
   <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
   <!-- Add imagesLoaded for better performance with Masonry -->
   <script src="https://unpkg.com/imagesloaded@5/imagesloaded.pkgd.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
       /* Darkened dark mode theme */
-      --bg-color: #050505;          /* Near-black background */
-      --card-bg: #0e0e1a;           /* Deeper navy card */
-      --card-header-bg: #141422;     /* Darker header */
-      --text-color: #e4e6eb;
+      --bg-color: #000000;          /* Near-black background */
+      --card-bg: #000000;           /* Deeper navy card */
+      --card-header-bg: #0f0f1d;     /* Darker header */
+      --text-color: #ffffff;
       --muted-text-color: #a9adc1;
       --border-color: #1f1f2d;
-      --button-bg: #252538;
+      --button-bg: #391960;
       --button-hover-bg: #3a3a59; 
       --primary-color: #8a8aff;
       --link-color: #a3a3ff;
       --input-bg: #252538;
       --highlight-bg: rgba(138, 138, 255, 0.1);
-      --category-pill-bg: #252538;
+      --category-pill-bg: #141422;
       --category-pill-active-bg: #8a8aff;
       --category-pill-active-text: #ffffff;
     }
@@ -60,55 +61,50 @@
       margin: 0;
       padding: 0;
       width: 100%;
-      /* overflow-x: hidden; */
     }
 
     body { 
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       line-height: 1.6;
       padding: 0;
       margin: 0;
-      /* overflow-x: hidden; */
-    }
-
-    /* Force full width in iframe */
-    body.embedded, 
-    html.embedded {
-      width: 100% !important;
-      /* overflow-x: hidden; */
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .header {
-      background-color: var(--card-header-bg);
-      padding: 2rem 0;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    /* Hide header when embedded in iframe/Google Site */
-    body.embedded .header,
-    html.embedded .header {
-      display: none !important;
+      background-color: var(--bg-color);
+      padding: 2.5rem 0 1.8rem 0;
+      margin-bottom: 0.05rem;
+      position: relative;
+      text-align: left;
+      width: 100%;
+      max-width: none;
+      margin-left: 0;
+      padding-left: 0;
     }
 
     .header h1 {
+      font-family: 'Roboto Mono', monospace;
       font-weight: 700;
-      font-size: 2.5rem;
-      margin-bottom: 0.5rem;
-      background: linear-gradient(90deg, #8a8aff, #ff8a8a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
+      font-size: 45px;
+      margin-bottom: 1.5rem;
+      color: #fff;
+      letter-spacing: 0.01em;
     }
 
     .header p {
-      font-size: 1.2rem;
-      color: var(--muted-text-color);
-      max-width: 800px;
-      margin: 0 auto;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.05rem;
+      color: #fff;
+      line-height: 1.7;
+      margin: 0;
+      max-width: none;
+      margin-left: 0;
+      text-align: left;
     }
 
     .container {
@@ -116,13 +112,6 @@
       max-width: 100%;
       padding: 0;
       margin: 0 auto;
-    }
-
-    /* For embedded mode */
-    body.embedded .container {
-      max-width: 100%;
-      padding: 0;
-      margin: 0;
     }
 
     .category-bar {
@@ -167,43 +156,11 @@
       box-shadow: 0 3px 8px rgba(138, 138, 255, 0.3);
     }
     
-    /* Ensure category-bar still works in embedded mode */
-    body.embedded .category-bar,
-    html.embedded .category-bar {
-      padding-top: 0.5rem;
-      padding-bottom: 0.5rem;
-      margin-bottom: 1rem;
-    }
-    
-    /* Make category bar scrollable on mobile */
-    @media (max-width: 768px) {
-      .category-bar {
-        overflow-x: auto;
-        justify-content: flex-start;
-        padding: 0.8rem 1rem;
-        margin-bottom: 1.5rem;
-        scrollbar-width: none;
-        -ms-overflow-style: none;
-      }
-      .category-bar::-webkit-scrollbar {
-        display: none;
-      }
-      .category-pill {
-        padding: 0.5rem 1rem;
-        font-size: 0.85rem;
-        white-space: nowrap;
-      }
-    }
-
     .feedback-cards {
       width: 100%;
       margin-bottom: 3rem;
     }
     
-    body.embedded .feedback-cards {
-      margin-bottom: 1rem;
-    }
-
     /* Create grid-sizer element for Masonry */
     .grid-sizer,
     .feedback-card {
@@ -211,45 +168,11 @@
       margin-bottom: 1.5rem;
     }
     
-    /* In embedded mode, use less margin and fill more width */
-    body.embedded .grid-sizer,
-    body.embedded .feedback-card {
-      width: 32.66%;
-      margin-bottom: 1rem;
-    }
-    
     /* Add gutter width between columns */
     .gutter-sizer {
       width: 2%;
     }
     
-    body.embedded .gutter-sizer {
-      width: 1%;
-    }
-    
-    /* Mobile Responsive Adjustments */
-    @media (max-width: 768px) {
-      body.embedded .grid-sizer,
-      body.embedded .feedback-card {
-        width: 49%;
-      }
-      
-      body.embedded .gutter-sizer {
-        width: 2%;
-      }
-    }
-    
-    @media (max-width: 480px) {
-      body.embedded .grid-sizer,
-      body.embedded .feedback-card {
-        width: 100%;
-      }
-      
-      body.embedded .gutter-sizer {
-        width: 0;
-      }
-    }
-
     .feedback-card {
       background-color: var(--card-bg);
       border-radius: 12px;
@@ -262,11 +185,6 @@
       /* More compact for embedded view */
     }
     
-    body.embedded .feedback-card,
-    html.embedded .feedback-card {
-      padding: 1rem;
-    }
-
     .feedback-card:hover {
       transform: none !important;
       box-shadow: 0 4px 15px rgba(0,0,0,0.1) !important;
@@ -380,9 +298,9 @@
     
     @media (max-width: 768px) {
       .container { padding: 0 0.75rem; max-width: 100%; }
-      .header { padding: 1.5rem 0; margin-bottom: 1.2rem; }
-      .header h1 { font-size: 1.8rem; }
-      .header p { font-size: 1rem; }
+      .header { padding: 1.5rem 0.8rem; margin-bottom: 1.2rem; }
+      .header h1 { font-size: 1.6rem; }
+      .header p { font-size: 0.9rem; }
       .category-bar { 
         overflow-x: auto; 
         justify-content: flex-start; 
@@ -408,10 +326,8 @@
     
     /* Special case for embedded narrow view */
     @media (max-width: 580px) {
-      body.embedded .grid-sizer,
-      body.embedded .feedback-card,
-      html.embedded .grid-sizer,
-      html.embedded .feedback-card {
+      .grid-sizer,
+      .feedback-card {
         width: 100%; /* Single column for very narrow embedded view */
       }
     }
@@ -438,12 +354,10 @@
   </style>
 </head>
 <body>
-  <div class="header">
-    <div class="container text-center">
-      <h1>Student Feedback Showcase</h1>
-      <p>Discover what students love about their Sway experience</p>
-    </div>
-  </div>
+  <header class="header">
+    <h1>student feedback</h1>
+    <p>After each Sway discussion and Understanding Quiz, students share their experiences through our post-chat survey. Their responses reveal how Sway creates space for thoughtful expression, encourages clear thinking and argumentation, and facilitates meaningful peer connections—even for students who typically remain quiet in traditional classroom settings. Browse below to discover what students appreciate most about their Sway experience.</p>
+  </header>
 
   <div class="category-bar" id="category-bar">
     <button class="category-pill active" data-category="peer-connection">Peer Connection</button>
@@ -931,10 +845,7 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Always apply embedded class
-      document.body.classList.add('embedded');
-      document.documentElement.classList.add('embedded');
-      
+      // Remove all embedded/iframe logic and always show header
       // Initialize Masonry layout
       const masonryOptions = {
         itemSelector: '.feedback-card',
@@ -943,19 +854,14 @@
         percentPosition: true,
         transitionDuration: '0s'
       };
-      
       const msnry = new Masonry('.feedback-cards', masonryOptions);
-      
-      // Initialize after images are loaded (if there are any)
       imagesLoaded('.feedback-cards').on('progress', function() {
         msnry.layout();
       });
-      
       // Theme toggle functionality
       const themeToggle = document.getElementById('theme-toggle');
       const themeIcon = themeToggle.querySelector('i');
       const htmlElement = document.documentElement;
-      
       themeToggle.addEventListener('click', function() {
         if (htmlElement.classList.contains('light-mode')) {
           htmlElement.classList.remove('light-mode');
@@ -966,14 +872,11 @@
           themeIcon.classList.remove('fa-moon');
           themeIcon.classList.add('fa-sun');
         }
-        // Re-layout masonry when theme changes
         setTimeout(() => msnry.layout(), 100);
       });
-      
-      // Category filter functionality - updated to use .category-bar
+      // Category filter functionality
       const categoryPills = document.querySelectorAll('.category-pill');
       const feedbackCards = document.querySelectorAll('.feedback-card');
-      
       // On load, apply the filter for the default active category
       const defaultActivePill = document.querySelector('.category-pill.active');
       if (defaultActivePill) {
@@ -992,18 +895,11 @@
         });
         setTimeout(() => msnry.layout(), 100);
       }
-      
       categoryPills.forEach(pill => {
         pill.addEventListener('click', function() {
-          // Remove active class from all pills
           categoryPills.forEach(p => p.classList.remove('active'));
-          
-          // Add active class to current pill
           this.classList.add('active');
-          
           const selectedCategory = this.getAttribute('data-category');
-          
-          // Show/hide cards based on category
           feedbackCards.forEach(card => {
             if (selectedCategory === 'all') {
               card.style.display = 'block';
@@ -1016,12 +912,9 @@
               }
             }
           });
-          
-          // Re-layout Masonry after filtering
           setTimeout(() => msnry.layout(), 100);
         });
       });
-      
       // Re-layout Masonry on window resize
       let resizeTimer;
       window.addEventListener('resize', function() {
@@ -1030,8 +923,6 @@
           msnry.layout();
         }, 100);
       });
-      
-      // Force layout after initial load and after a slight delay
       msnry.layout();
       setTimeout(() => msnry.layout(), 500);
     });
