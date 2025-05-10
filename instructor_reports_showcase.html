@@ -110,7 +110,7 @@
     
     .category-bar {
       display: flex;
-      flex-wrap: wrap;
+      flex-wrap: wrap; /* Will be overridden at smaller breakpoints */
       justify-content: center;
       gap: 0.6rem;
       margin-bottom: 1rem;
@@ -364,7 +364,20 @@
       .header { padding: 1.8rem 0; margin-bottom: 1.5rem; }
       .header h1 { font-size: 2.2rem; }
       .header p { font-size: 1.1rem; }
-      .category-bar { padding: 0.8rem 0; }
+      .category-bar {
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        overflow-x: auto;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none; /* IE and Edge */
+        padding: 0.8rem 1rem;
+      }
+      .category-bar::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Opera */
+      }
+      .category-pill {
+        white-space: nowrap;
+      }
       .header { display: none; }
     }
     
@@ -381,6 +394,7 @@
         margin-bottom: 1.5rem; 
         scrollbar-width: none; 
         -ms-overflow-style: none;
+        flex-wrap: nowrap;
       }
       .category-bar::-webkit-scrollbar { display: none; }
       .category-pill { padding: 0.5rem 1rem; font-size: 0.85rem; white-space: nowrap; }
