@@ -352,12 +352,12 @@
   </header>
 
   <div class="category-bar" id="category-bar">
-    <button class="category-pill active" data-category="peer-connection">Peer Connection</button>
+    <button class="category-pill active" data-category="all">All Feedback</button>
+    <button class="category-pill" data-category="peer-connection">Peer Connection</button>
     <button class="category-pill" data-category="critical-thinking">Critical Thinking</button>
     <button class="category-pill" data-category="classroom-comparison">Classroom Comparison</button>
     <button class="category-pill" data-category="guided-conversation">Guided Conversation</button>
     <button class="category-pill" data-category="shy-students">Student Comfort</button>
-    <button class="category-pill" data-category="all">All Feedback</button>
   </div>
 
   <div class="container">
@@ -840,7 +840,7 @@
       // Track page view time
       let pageViewStartTime = new Date().getTime();
       let visibleCardCount = 0;
-      let currentCategory = 'peer-connection'; // Default active category
+      let currentCategory = 'all'; // Default active category
       
       // Function to record time spent before leaving page
       window.addEventListener('beforeunload', function() {
