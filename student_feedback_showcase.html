@@ -328,6 +328,12 @@
         padding-right: max(1rem, env(safe-area-inset-right));
       }
     }
+
+    @media (max-width: 1024px) {
+      .category-bar {
+        justify-content: flex-start;
+      }
+    }
   </style>
 </head>
 <body>
@@ -351,9 +357,9 @@
       <div class="grid-sizer"></div>
       <div class="gutter-sizer"></div>
       
-      <!-- Student Comfort -->
-      <div class="feedback-card" data-categories="shy-students">
-        <p>This was my first time using Sway, and the experience was great! I like having discussions through Sway more than I like having them in the classroom specifically because I'm a bit shy. I'm introverted and reserved, so I often find myself hesitant to share my honest opinion in the classroom environment. Sway has given me the opportunity to share my honest opinion without feeling like I will be judged.</p>
+      <!-- Reordered cards according to the specified sequence -->
+      <div class="feedback-card" data-categories="shy-students classroom-comparison">
+        <p>I really enjoy talking on Sway because I feel that I am able openly express my opinion without the stresses of speaking in front of a whole class!</p>
         <div class="categories">
           <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
@@ -368,16 +374,205 @@
         </div>
       </div>
 
+      <div class="feedback-card" data-categories="classroom-comparison guided-conversation">
+        <p>It was definitely easier to engage in an actual discussion here than on Canvas because on Canvas the replies can be very superficial and there is a lack of flow, also people don't post until the due date. So here having to meet that 100% kept the engagement going and having the AI guide there was helpful in case anything needed clarifying.</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="classroom-comparison peer-connection">
+        <p>It was helpful to be matched with someone who disagreed because that obviously makes for a more interesting discussion than when both people are in agreement.</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+          <span class="category-tag">Peer Connection</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="classroom-comparison shy-students">
+        <p>It's nice that we can speak our mind without the fear of judgement but also have a space to dig into the topic and learn, maybe even changing our opinion or perspective.</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+          <span class="category-tag">Student Comfort</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>I feel like the AI was really helpful in guiding the conversation. It led to more fruitful conversation and was really insightful.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>I think Guide's approach keeps everyone engaged because it truly pays attention to our separate ideas and somehow unites them.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation classroom-comparison">
+        <p>Guide's approach mirrors good classroom discussions. Asking smart questions, discussing character flaws, and using evidence from our readings. It pushed deep thinking while keeping the debate respectful and focused on the topic question, like good [redacted] classes do.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+          <span class="category-tag">Classroom Comparison</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="critical-thinking classroom-comparison">
+        <p>I would say this was a (s)way more effective method than participating in classroom discussions. It forced us to not only argue our points, but dig between the cracks and focus on some of the underlying issues involved with the topic.</p>
+        <div class="categories">
+          <span class="category-tag">Critical Thinking</span>
+          <span class="category-tag">Classroom Comparison</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>Guide gave unexpectedly thoughtful feedback and clearly understood the discussion and brought it to a deeper, more insightful place.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="critical-thinking guided-conversation">
+        <p>I think Guide helps both students better understand why they believe what they do. It also challenges us to test whether we genuinely stand by our beliefs by asking more profound questions about our answers. This approach pushes us to think critically and refine our reasoning rather than just stating opinions without reflection.</p>
+        <div class="categories">
+          <span class="category-tag">Critical Thinking</span>
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>It was very interesting to see this type of activity. I've never seen anything like that so far. Especially the quiz after the discussion based on what we discussed was fantastic. The tool could capture ideas very profoundly and make reasonable questions that were not too easy or hard.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>Guide's approach was very helpful and more thorough than if it was in-person. Guide gave detailed feedback and interesting points to think about when replying to the other person. I felt as though I was in a debate, while receiving helpful points to formulate a good response.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+          <span class="category-tag">Classroom Comparison</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="classroom-comparison">
+        <p>it is much less bias, since it is a one-on-one conversation, i also think everyone gets to talk since usually the same people talk in class and others feel like they shouldn't speak out.</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+          <span class="category-tag">Student Comfort</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="classroom-comparison">
+        <p>It allows for classmates to have deeper conversations about controversial topics as this isn't a part of in classroom discussions.</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>I liked having guide facilitate the conversation. The real-time incorporation of our responses definitely helped keep the conversation engaging and flowing.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>It was actually so cool. I loved the AI guide and the quiz at the end made me feel heard.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="classroom-comparison">
+        <p>Guide's approach mirrors what I value in classroom discussions -- open, honest, and respectful communication. I appreciate how Guide balances the mix of understanding individual circumstances and maintaining accountability, especially with the scenario we discussed. It isn't as good as getting advice from a real-life human. But it is definitely getting there!</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
       <div class="feedback-card" data-categories="shy-students classroom-comparison">
-        <p>I really enjoy talking on Sway because I feel that I am able openly express my opinion without the stresses of speaking in front of a whole class!</p>
+        <p>I love talking on Sway because I have more time to compose my opinions in an organized and articulate way than if I were talking in class in front of other people</p>
         <div class="categories">
           <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
         </div>
       </div>
 
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>Sway is extremely interesting concept that I wish I had in middle and high school. I appreciate the mediator asking furthering questions to keep the conversation by bringing in points that both of us made.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>Guide's approach was critical in moving the conversation toward a more balanced and researched approach. I enjoyed the affirmations and the push in the right direction that allowed for more breadth of conversation.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="critical-thinking guided-conversation">
+        <p>I don't even like homework or school to be honest, but having to articulate your argument and then do a quiz on the debate after is cool!</p>
+        <div class="categories">
+          <span class="category-tag">Critical Thinking</span>
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>Guide was also just specific enough to where we could continue with our main conversation without it butting in too much.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
       <div class="feedback-card" data-categories="shy-students classroom-comparison">
-        <p>I love talking on Sway because I have more time to compose my opinions in an organized and articulate way than if I were talking in class in front of other people</p>
+        <p>I feel that having a one-on-one conversation makes the experience more personal and allows more freedom to express opinions!</p>
+        <div class="categories">
+          <span class="category-tag">Student Comfort</span>
+          <span class="category-tag">Classroom Comparison</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>I love when Guide intervenes. It refocuses the argument.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="classroom-comparison">
+        <p>I appreciate how I can say my entire opinion and have the opportunity to hear (read) my opponents and can respond without interruption, and vice versa.</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="guided-conversation">
+        <p>I really enjoyed this discussion! The semi-anonymous way of chatting with a classmate, the timely guidance from Guide, and the understanding quiz are all fascinating. It's a new experience for me, and I feel so lucky and grateful to have the opportunity.</p>
+        <div class="categories">
+          <span class="category-tag">Guided Conversation</span>
+          <span class="category-tag">Peer Connection</span>
+        </div>
+      </div>
+
+      <div class="feedback-card" data-categories="classroom-comparison">
+        <p>It is just as valuable! I love how a student can text their opinions over the phone and get promoted by a non-biased AI to talk about difficult subjects.</p>
+        <div class="categories">
+          <span class="category-tag">Classroom Comparison</span>
+          <span class="category-tag">Guided Conversation</span>
+        </div>
+      </div>
+
+      <!-- Remaining feedback cards (not part of the first 28) -->
+      <div class="feedback-card" data-categories="shy-students">
+        <p>This was my first time using Sway, and the experience was great! I like having discussions through Sway more than I like having them in the classroom specifically because I'm a bit shy. I'm introverted and reserved, so I often find myself hesitant to share my honest opinion in the classroom environment. Sway has given me the opportunity to share my honest opinion without feeling like I will be judged.</p>
         <div class="categories">
           <span class="category-tag">Student Comfort</span>
           <span class="category-tag">Classroom Comparison</span>
@@ -392,7 +587,6 @@
         </div>
       </div>
 
-      <!-- New Student Comfort & Classroom Comparison quotes -->
       <div class="feedback-card" data-categories="shy-students classroom-comparison guided-conversation">
         <p>I enjoy talking on Sway as there is a guide that leads the conversation when we get stuck on a topic/question.</p>
         <div class="categories">
@@ -402,33 +596,8 @@
         </div>
       </div>
 
-      <div class="feedback-card" data-categories="shy-students classroom-comparison">
-        <p>I feel that having a one-on-one conversation makes the experience more personal and allows more freedom to express opinions!</p>
-        <div class="categories">
-          <span class="category-tag">Student Comfort</span>
-          <span class="category-tag">Classroom Comparison</span>
-        </div>
-      </div>
-
-      <!-- Critical Thinking -->
-      <div class="feedback-card" data-categories="critical-thinking guided-conversation">
-        <p>I think Guide helps both students better understand why they believe what they do. It also challenges us to test whether we genuinely stand by our beliefs by asking more profound questions about our answers. This approach pushes us to think critically and refine our reasoning rather than just stating opinions without reflection.</p>
-        <div class="categories">
-          <span class="category-tag">Critical Thinking</span>
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
       <div class="feedback-card" data-categories="critical-thinking guided-conversation">
         <p>I think that debating via AI is helpful to avoid saying things without thinking them through and pushes people to provide more insightful comments.</p>
-        <div class="categories">
-          <span class="category-tag">Critical Thinking</span>
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="critical-thinking guided-conversation">
-        <p>I don't even like homework or school to be honest, but having to articulate your argument and then do a quiz on the debate after is cool!</p>
         <div class="categories">
           <span class="category-tag">Critical Thinking</span>
           <span class="category-tag">Guided Conversation</span>
@@ -450,7 +619,6 @@
         </div>
       </div>
 
-      <!-- New Critical Thinking quotes -->
       <div class="feedback-card" data-categories="critical-thinking">
         <p>I felt this was a very engaging way to get us to discuss, and I appreciated the chance to play devil's advocate against my own belief. It did force me to look even deeper into the counter argument (the one I was made to defend).</p>
         <div class="categories">
@@ -458,27 +626,10 @@
         </div>
       </div>
 
-      <div class="feedback-card" data-categories="critical-thinking classroom-comparison">
-        <p>I would say this was a (s)way more effective method than participating in classroom discussions. It forced us to not only argue our points, but dig between the cracks and focus on some of the underlying issues involved with the topic.</p>
-        <div class="categories">
-          <span class="category-tag">Critical Thinking</span>
-          <span class="category-tag">Classroom Comparison</span>
-        </div>
-      </div>
-
       <div class="feedback-card" data-categories="critical-thinking">
         <p>It was interesting to see a new perspective. While we were talking, it made me understand that certain perspectives are influenced by cultural factors; therefore, it is important to see how that cultural influence drives certain ideas.</p>
         <div class="categories">
           <span class="category-tag">Critical Thinking</span>
-        </div>
-      </div>
-
-      <!-- Guided Conversation -->
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>Guide's approach was very helpful and more thorough than if it was in-person. Guide gave detailed feedback and interesting points to think about when replying to the other person. I felt as though I was in a debate, while receiving helpful points to formulate a good response.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-          <span class="category-tag">Classroom Comparison</span>
         </div>
       </div>
 
@@ -491,27 +642,6 @@
       </div>
 
       <div class="feedback-card" data-categories="guided-conversation">
-        <p>Guide gave unexpectedly thoughtful feedback and clearly understood the discussion and brought it to a deeper, more insightful place.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>I love when Guide intervenes. It refocuses the argument.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>I liked having guide facilitate the conversation. The real-time incorporation of our responses definitely helped keep the conversation engaging and flowing.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
         <p>The AI brought up excellent points of discussion for guiding and continuing the conversation.</p>
         <div class="categories">
           <span class="category-tag">Guided Conversation</span>
@@ -519,21 +649,7 @@
       </div>
 
       <div class="feedback-card" data-categories="guided-conversation">
-        <p>Sway is extremely interesting concept that I wish I had in middle and high school. I appreciate the mediator asking furthering questions to keep the conversation by bringing in points that both of us made.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
         <p>I definitely think Guide was very useful in leading the discussion. When we got off track, Guide made sure to point us in the right direction. I think this will be very useful!</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>Guide's approach was critical in moving the conversation toward a more balanced and researched approach. I enjoyed the affirmations and the push in the right direction that allowed for more breadth of conversation.</p>
         <div class="categories">
           <span class="category-tag">Guided Conversation</span>
         </div>
@@ -554,15 +670,6 @@
         </div>
       </div>
 
-      <!-- Classroom Comparison -->
-      <div class="feedback-card" data-categories="classroom-comparison">
-        <p>Guide's approach mirrors what I value in classroom discussions -- open, honest, and respectful communication. I appreciate how Guide balances the mix of understanding individual circumstances and maintaining accountability, especially with the scenario we discussed. It isn't as good as getting advice from a real-life human. But it is definitely getting there!</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
       <div class="feedback-card" data-categories="classroom-comparison">
         <p>It's less intimidating on Sway because of the lack of face-to-face confrontation and one can go back in the chat and review what the other person has said. The AI also helps keep the conversation going.</p>
         <div class="categories">
@@ -575,14 +682,6 @@
         <p>I feel that it is better because it doesn't allow for that awkward face to face argumentation and slows things down a lot allowing you to fully understand and think about the question presented to you.</p>
         <div class="categories">
           <span class="category-tag">Classroom Comparison</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="classroom-comparison">
-        <p>it is much less bias, since it is a one-on-one conversation, i also think everyone gets to talk since usually the same people talk in class and others feel like they shouldn't speak out.</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Student Comfort</span>
         </div>
       </div>
 
@@ -603,28 +702,6 @@
       </div>
 
       <div class="feedback-card" data-categories="classroom-comparison">
-        <p>I appreciate how I can say my entire opinion and have the opportunity to hear (read) my opponents and can respond without interruption, and vice versa.</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="classroom-comparison">
-        <p>It allows for classmates to have deeper conversations about controversial topics as this isn't a part of in classroom discussions.</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="classroom-comparison">
-        <p>It is just as valuable! I love how a student can text their opinions over the phone and get promoted by a non-biased AI to talk about difficult subjects.</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="classroom-comparison">
         <p>You can definitely have more time to think out your statement which is nice for someone who maybe isn't as quick witted or doesn't like to talk aloud a lot</p>
         <div class="categories">
           <span class="category-tag">Classroom Comparison</span>
@@ -632,15 +709,6 @@
         </div>
       </div>
 
-      <div class="feedback-card" data-categories="classroom-comparison shy-students">
-        <p>It's nice that we can speak our mind without the fear of judgement but also have a space to dig into the topic and learn, maybe even changing our opinion or perspective.</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Student Comfort</span>
-        </div>
-      </div>
-      
-      <!-- Peer Connection -->
       <div class="feedback-card" data-categories="peer-connection">
         <p>Guide was very useful, and the leading questions helped us find we didn't disagree as much as we would have thought. Crazy stuff!</p>
         <div class="categories">
@@ -677,7 +745,6 @@
         </div>
       </div>
 
-      <!-- New Peer Connection quotes -->
       <div class="feedback-card" data-categories="peer-connection">
         <p>I had a great time discussing the chat topic. I kept swinging between my own thoughts and opinions, and it was because I was open to his viewpoint and dialogues. It was also a respectful chat.</p>
         <div class="categories">
@@ -721,14 +788,6 @@
         </div>
       </div>
 
-      <!-- Additional Feedback -->
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>It was very interesting to see this type of activity. I've never seen anything like that so far. Especially the quiz after the discussion based on what we discussed was fantastic. The tool could capture ideas very profoundly and make reasonable questions that were not too easy or hard.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
       <div class="feedback-card" data-categories="guided-conversation">
         <p>I thoroughly enjoyed how Guide was able to help the conversation stay engaging by offering multiple questions that kept the conversation moving forward!</p>
         <div class="categories">
@@ -737,75 +796,12 @@
       </div>
 
       <div class="feedback-card" data-categories="guided-conversation">
-        <p>I feel like the AI was really helpful in guiding the conversation. It led to more fruitful conversation and was really insightful.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>I really enjoyed this discussion! The semi-anonymous way of chatting with a classmate, the timely guidance from Guide, and the understanding quiz are all fascinating. It's a new experience for me, and I feel so lucky and grateful to have the opportunity.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-          <span class="category-tag">Peer Connection</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>It was actually so cool. I loved the AI guide and the quiz at the end made me feel heard.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <!-- New Guided Conversation quotes -->
-      <div class="feedback-card" data-categories="guided-conversation">
         <p>Guide was surprisingly accurate in talking about our more fundamental points of disagreement. Sometimes guide didn't want to give us perfect answers or pieces of evidence which would strongly support our sides, but instead offered a nuanced enough take to where we could ease off on a point.</p>
         <div class="categories">
           <span class="category-tag">Guided Conversation</span>
         </div>
       </div>
 
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>Guide was also just specific enough to where we could continue with our main conversation without it butting in too much.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation classroom-comparison">
-        <p>Guide's approach mirrors good classroom discussions. Asking smart questions, discussing character flaws, and using evidence from our readings. It pushed deep thinking while keeping the debate respectful and focused on the topic question, like good [redacted] classes do.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-          <span class="category-tag">Classroom Comparison</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="guided-conversation">
-        <p>I think Guide's approach keeps everyone engaged because it truly pays attention to our separate ideas and somehow unites them.</p>
-        <div class="categories">
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <!-- New Classroom Comparison quotes -->
-      <div class="feedback-card" data-categories="classroom-comparison guided-conversation">
-        <p>It was definitely easier to engage in an actual discussion here than on Canvas because on Canvas the replies can be very superficial and there is a lack of flow, also people don't post until the due date. So here having to meet that 100% kept the engagement going and having the AI guide there was helpful in case anything needed clarifying.</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Guided Conversation</span>
-        </div>
-      </div>
-
-      <div class="feedback-card" data-categories="classroom-comparison peer-connection">
-        <p>It was helpful to be matched with someone who disagreed because that obviously makes for a more interesting discussion than when both people are in agreement.</p>
-        <div class="categories">
-          <span class="category-tag">Classroom Comparison</span>
-          <span class="category-tag">Peer Connection</span>
-        </div>
-      </div>
-
-      <!-- New Peer Connection quote -->
       <div class="feedback-card" data-categories="peer-connection classroom-comparison">
         <p>I thought that this was much more effective than the discussion posts in class. It allowed us to cover this topic in more granular detail while also forcing us to acknowledge some of the other reasons for the argument behind involuntary commitment. Great exercise.</p>
         <div class="categories">
