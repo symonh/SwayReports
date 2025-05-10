@@ -8,13 +8,14 @@
 <title>Sway Instructor Reports Showcase</title>
 <link href="https://stackpath.bootstrapcdn.com/bootswatch/4.5.2/darkly/bootstrap.min.css" id="theme-css" rel="stylesheet"/>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
 <style>
     :root {
       /* Darkened dark mode theme - matching instructor reports */
-      --bg-color: #000000;          /* Near-black background */
+      --bg-color: #000000;          /* Pure black background */
       --card-bg: #000000;           /* Deeper navy card */
       --card-header-bg: #0f0f1d;   /* Darker header */
-      --text-color: #ffffff;
+      --text-color: #ffffff;        /* Pure white text */
       --muted-text-color: #0a0a0c;
       --border-color: #1f1f2d;
       --button-bg: #391960;
@@ -50,7 +51,7 @@
     body {
       background-color: var(--bg-color);
       color: var(--text-color);
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      font-family: 'Roboto', -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
       line-height: 1.6;
       padding: 0;
       margin: 0;
@@ -60,33 +61,35 @@
     }
     
     .header {
-      background-color: var(--card-header-bg);
+      background-color: var(--bg-color);
       padding: 2.5rem 0 1.8rem 0;
       margin-bottom: 2rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
       position: relative;
+      text-align: left;
+      width: 100%;
+      max-width: none;
+      margin-left: 0;
+      padding-left: 0;
     }
     
     .header h1 {
+      font-family: 'Roboto Mono', monospace;
       font-weight: 700;
-      font-size: 2.5rem;
-      margin-bottom: 0.7rem;
-      color: var(--primary-color);
-      /* Preserve the gradient effect from the original */
-      background: linear-gradient(90deg, #8a8aff, #ff8a8a);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
-      letter-spacing: -0.01em;
+      font-size: 35.7px;
+      /* 34px * 1.05 = 35.7px */
+      margin-bottom: 1.5rem;
+      color: #fff;
+      letter-spacing: 0.01em;
     }
     
     .header p {
-      font-size: 1.15rem;
-      color: var(--muted-text-color);
-      max-width: 800px;
-      margin: 0 auto;
-      line-height: 1.5;
+      font-family: 'Roboto', sans-serif;
+      font-size: 1.05rem;
+      color: #fff;
+      line-height: 1.7;
+      margin: 0;
+      max-width: none;
+      margin-left: 0;
     }
     
     .container {
@@ -401,6 +404,9 @@
       }
       .back-button { font-size: 0.8rem; }
       .report-iframe { height: calc(100vh - 120px); }
+      .header {
+        display: none;
+      }
     }
     
     @media (hover: none) {
@@ -423,6 +429,11 @@
 </head>
 <body>
 <div class="container">
+<header class="header">
+  <h1>instructor reports</h1>
+  <p>At the end of each Sway chat, instructors get a concise, anonymized report highlighting core themes, persistent disagreements, and areas of common ground. Each report synthesizes thread summaries, standout student exchanges, Guide interventions, and post-chat survey data to show how ideas evolve—without sacrificing student privacy. Browse our showcase to see how Sway turns complex debates in ethics, literature, policy, and more into nuanced student discussions and actionable insights.</p>
+</header>
+
 <div class="category-bar" id="category-bar">
   <button class="category-pill active" data-category="all">All Reports</button>
   <button class="category-pill" data-category="healthcare-&amp;-science">Healthcare &amp; Science</button>
@@ -602,6 +613,18 @@
           reportContainer.style.display = 'flex';
           categoryBar.style.display = 'none';
           backButtonContainer.style.display = 'block';
+          
+          // Scroll to the top inside the iframe and the parent window
+          window.scrollTo(0, 0);
+          
+          // Attempt to communicate with parent frame to scroll to top (if embedded)
+          try {
+            if (window.parent !== window) {
+              window.parent.postMessage({ action: 'scrollToTop' }, '*');
+            }
+          } catch (e) {
+            console.log('Could not communicate with parent frame');
+          }
         });
       });
       

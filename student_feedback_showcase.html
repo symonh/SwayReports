@@ -40,7 +40,7 @@
         // Create a style element immediately
         var style = document.createElement('style');
         style.textContent = '.header { display: none !important; } ' + 
-                           '.feedback-categories { padding-top: 0.5rem !important; padding-left: 0 !important; padding-right: 0 !important; position: sticky !important; top: 0 !important; z-index: 1000 !important; }' +
+                           '.feedback-categories { padding-top: 0.5rem !important; padding-left: 0 !important; padding-right: 0 !important; }' +
                            '.container { max-width: 100% !important; padding: 0 !important; margin: 0 !important; width: 100% !important; }' +
                            '.feedback-cards { width: 100% !important; margin: 0 !important; padding: 0 !important; }' +
                            'body { margin: 0 !important; padding: 0 !important; overflow-x: hidden !important; width: 100% !important; }' +
@@ -173,39 +173,11 @@
       top: 0;
       padding: 1rem 0;
       background-color: var(--bg-color);
-      z-index: 1000;
+      z-index: 10;
       width: 100%;
       overflow-x: auto;
       scrollbar-width: none; /* Firefox */
       -ms-overflow-style: none; /* IE and Edge */
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      transition: box-shadow 0.3s ease, padding 0.3s ease;
-    }
-    
-    .feedback-categories.scrolled {
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-      padding-top: 0.8rem;
-      padding-bottom: 0.8rem;
-    }
-    
-    html.light-mode .feedback-categories {
-      background-color: var(--bg-color);
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
-    
-    html.light-mode .feedback-categories.scrolled {
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    
-    .feedback-categories:after {
-      content: '';
-      position: absolute;
-      bottom: -5px;
-      left: 0;
-      right: 0;
-      height: 5px;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.05), transparent);
-      pointer-events: none;
     }
 
     .feedback-categories::-webkit-scrollbar {
@@ -568,13 +540,12 @@
 
   <div class="container">
     <div class="feedback-categories">
-      <button class="category-pill active" data-category="all">All Feedback</button>
-      <button class="category-pill" data-category="shy-students">Student Comfort</button>
+      <button class="category-pill active" data-category="peer-connection">Peer Connection</button>
       <button class="category-pill" data-category="critical-thinking">Critical Thinking</button>
-      <button class="category-pill" data-category="guided-conversation">Guided Conversation</button>
       <button class="category-pill" data-category="classroom-comparison">Classroom Comparison</button>
-      <button class="category-pill" data-category="peer-connection">Peer Connection</button>
-
+      <button class="category-pill" data-category="guided-conversation">Guided Conversation</button>
+      <button class="category-pill" data-category="shy-students">Student Comfort</button>
+      <button class="category-pill" data-category="all">All Feedback</button>
     </div>
 
     <div class="feedback-cards">
@@ -1069,23 +1040,6 @@
         document.body.classList.add('embedded');
         document.documentElement.classList.add('embedded');
       }
-      
-      // Enhance sticky category navigation
-      const categoryNav = document.querySelector('.feedback-categories');
-      let lastScrollTop = 0;
-      
-      window.addEventListener('scroll', function() {
-        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-        
-        // Add shadow when scrolling down
-        if (scrollTop > 10) {
-          categoryNav.classList.add('scrolled');
-        } else {
-          categoryNav.classList.remove('scrolled');
-        }
-        
-        lastScrollTop = scrollTop;
-      });
       
       // Initialize Masonry layout
       const masonryOptions = {
